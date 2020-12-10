@@ -41,3 +41,7 @@ cmd를 실행하고 아래 명령어를 입력한다.
   - `.gitignore` 파일을 지워봤더니 약 38000개의 파일 변경내역이 떴다..
   - 그래도 혹시몰라 [gitignore.io](https://www.toptal.com/developers/gitignore) 사이트에서 `Node` , `React`, `ReactNative`로 내용 생성 후 `.gitignore` 파일에 추가했다.
   - 총 18개의 변경내역만 git에 기록됐다.
+
+# Reference
+- [[React 따라하기 #1] React 개발에 필요한 도구 설치](https://hello-bryan.tistory.com/97?category=695724)
+- [윈도우10 에서 React js (create-react-app 도구) 설치하기](https://leeph.tistory.com/25?category=680041)
