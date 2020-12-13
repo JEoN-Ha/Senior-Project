@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import Subject from "./components/Subject";
+import List from "./components/List";
 
 /* Component를 만드는 틀
 class Subject extends Component {
@@ -8,33 +10,6 @@ class Subject extends Component {
   }
 }
 */
-
-class Subject extends Component {   //Subject라는 태그를 생성
-  render() {
-    return (
-      <header>
-        <h1>{this.props.title}</h1>
-        <h3>{this.props.sub}</h3>
-        <h3>{this.props.desc}</h3>
-      </header>
-    );
-  }
-}
-
-class List extends Component {
-  render() {
-    return (
-      <nav>
-        <ul>
-          <li><a href="1.html">메뉴판</a></li>
-          <li><a href="2.html">주문내역</a></li>
-          <li><a href="3.html">장바구니</a></li>
-          <li><a href="4.html">쿠폰</a></li>
-        </ul>
-      </nav>
-    );
-  }
-}
 
 class App extends Component {   
   render() {
