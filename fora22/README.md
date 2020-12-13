@@ -31,6 +31,7 @@ cmd를 실행하고 아래 명령어를 입력한다.
 - cmd 창에서 프로젝트를 만들 폴더로 이동한다.
 - `create-react-app hello_world` 명령어를 치면 현재 디렉토리 아래에 `hello_world` 폴더가 생가고 필요한 라이브러리들이 준비된다.
 - **그런데 Windows의 경우 npx를 이용해야지 정상적으로 생성된다고 하니 npx 명령어를 쓰자(위 명령어는 터미널 환경 같다).**
+  - `npm install npx -g`으로 npx를 설치한다.
   - `npx create-react-app hello_world`
   - 폴더 생성 후 프로젝트 폴더로 이동한다 : `cd hello_world`
   - yarn으로 프로젝트를 시작해본다 : `yarn start`
