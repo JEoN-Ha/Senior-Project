@@ -5,6 +5,7 @@ import List from "./components/List";
 import ReadContent from "./components/ReadContent";
 import LoginContent from "./components/LoginContent";
 import Control from "./components/Control";
+import CustomerList from "./components/CustomerList";
 
 /* Component를 만드는 틀
 class Subject extends Component {
@@ -97,6 +98,7 @@ class App extends Component {
         })        
       }.bind(this)}></Control>
       {_article}
+      <CustomerList></CustomerList>
       </div>
     );
   }
