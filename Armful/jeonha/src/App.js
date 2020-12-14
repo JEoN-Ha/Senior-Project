@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Subject from "./components/Subject";
 import List from "./components/List";
-import Content from "./components/Content";
+import ReadContent from "./components/ReadContent";
+import LoginContent from "./components/LoginContent";
+import Control from "./components/Control";
 
 /* Component를 만드는 틀
 class Subject extends Component {
@@ -15,8 +17,9 @@ class Subject extends Component {
 class App extends Component {
   constructor(props){   //Component를 실행할 때 constructor가 가장 먼저 실행되어 초기화를 담당
     super(props);
+    this.max_list_id = 4;
     this.state = {
-      mode : 'welcome',  //현재 어떤 페이지에 있는지 구별하기위해
+      mode : 'login',  //현재 어떤 페이지에 있는지 구별하기위해
       selected_content_id:2,
       subject : {title:'JEoN-Ha', sub:'안녕하세요. JEoN-Ha입니다.', 
         desc:'Untact로 안전하게 이용이 가능한 무인 드라이브 스루입니다.'},
@@ -31,10 +34,11 @@ class App extends Component {
 
   }   
   render() {    //어떤 Html을 그릴것인가?
-    var _title, _desc = null;
+    var _title, _desc, _article = null;
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if(this.state.mode === 'read'){
       var i = 0;
       while(i < this.state.Lists.length){
@@ -46,6 +50,27 @@ class App extends Component {
         }
         i = i + 1;
       }
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+    } else if(this.state.mode === 'login'){
+      _article = <LoginContent onSubmit={function(_ID, _PW) {
+        this.max_list_id = this.max_list_id + 1;
+
+        /* 새로운 데이터를 추가할 때 push 쓰지말고 concat을 쓰면 나중에 데이터 성능 개선할 때 도움이 됨
+        this.state.Lists.push(
+          {id:this.max_list_id, title:_ID, desc:_PW}
+        );
+        this.setState({
+          lists:this.state.lists
+        });
+        */
+       
+        var _lists = this.state.Lists.concat(
+          {id:this.max_list_id, title:_ID, desc:_PW}
+        )
+        this.setState({
+          Lists:_lists
+        });
+      }.bind(this)}></LoginContent>
     }
     return (
       <div className="App">
@@ -66,7 +91,12 @@ class App extends Component {
         }.bind(this)}
         data={this.state.Lists}
         ></List>
-      <Content title={_title} desc={_desc}></Content>
+      <Control onChangeMode={function (_mode) {
+        this.setState({
+          mode:_mode
+        })        
+      }.bind(this)}></Control>
+      {_article}
       </div>
     );
   }
