@@ -2,13 +2,13 @@
     box-sizing:border-box;
 }
 
-
 body{
     margin : 0;
     padding:0;
     background-color: #f2f2f2;
     height:100%;
 }
+
 
 html,
 body,
@@ -18,6 +18,11 @@ body,
     display: flex;
     justify-content:center;
 }
+.container{
+    position: relative;
+    top: 150px;
+}
+
 .loader{
     width: 100%;
     height: 100%;
@@ -28,6 +33,7 @@ body,
 }
 
 .movies{
+ 
     display:flex;
     justify-content: space-between;
     align-items: flex-start;

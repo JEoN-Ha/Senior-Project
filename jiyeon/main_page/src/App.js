@@ -11,7 +11,7 @@ function App(){
     <HashRouter>
       <Navigation/>
         <Route path ="/" exact = {true} component = {Home} />
-        <Route path ="/about" component = {About} />
+        <Route path ="/login" component = {About}/>
         <Route path = "/movie/:id" component = {Detail} />
     </HashRouter>
   );

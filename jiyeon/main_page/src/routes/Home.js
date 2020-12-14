@@ -22,15 +22,16 @@ class Home extends React.Component{
   }
 
   render(){
+    <h1>Welcome MuinBurger</h1>
     const {isLoading, movies} = this.state;
-
-    return (
+     return (
       <section className ="container">
         {isLoading ? (
         <div className ="loader">
           <span className = "loader_text">Loading...</span>
         </div>
         ) : (
+        
           <div className="movies">
             {movies.map(movie =>(
               <Movie
