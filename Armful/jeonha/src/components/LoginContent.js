@@ -16,7 +16,7 @@ class LoginContent extends Component {
                 }.bind(this)}>
 
                 <p><input type="text" name="ID" placeholder="ID"></input></p>
-                <p><input type="text" name="PW" placeholder="Password"></input><input type="submit"></input></p>
+                <p><input type="text" name="PW" placeholder="Password"></input><button type="submit">Login</button></p>
               </form>
           </article>
       );

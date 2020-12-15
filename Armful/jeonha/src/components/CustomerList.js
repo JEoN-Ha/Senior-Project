@@ -5,7 +5,7 @@ class CustomerList extends Component {
       return (
         <nav>
             <ul>
-                
+                {coustomerLists}
             </ul>
         </nav>
       );
