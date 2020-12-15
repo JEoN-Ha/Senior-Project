@@ -21,8 +21,8 @@ class App extends Component {
     super(props);
     this.max_list_id = 4;
     this.state = {
-      mode : 'login',  //현재 어떤 페이지에 있는지 구별하기위해
-      selected_content_id:2,
+      mode : 'welcome',  //현재 어떤 페이지에 있는지 구별하기위해
+      selected_list_id:2,
       subject : {title:'JEoN-Ha', sub:'안녕하세요. JEoN-Ha입니다.', 
         desc:'Untact로 안전하게 이용이 가능한 무인 드라이브 스루입니다.'},
       welcome : {title:'Welcome', desc:'Hello, customer!'},
@@ -40,7 +40,7 @@ class App extends Component {
     var i = 0;
       while(i < this.state.Lists.length){
         var data = this.state.Lists[i];
-        if(data.id === this.state.selected_content_id){
+        if(data.id === this.state.selected_list_id){
           return data;
           break;
         }
@@ -73,18 +73,27 @@ class App extends Component {
           {id:this.max_list_id, title:_ID, desc:_PW}
         )
         this.setState({
-          Lists:_lists
+          Lists:_lists,
+          mode:'read',
+          selected_list_id:this.max_list_id
         });
       }.bind(this)}></LoginContent>
     } else if(this.state.mode === 'update'){
-      var _content = this.getReadContent();
-      _article = <UpdateContent data={_content} onSubmit={function(_ID, _PW) {
-        this.max_list_id = this.max_list_id + 1;
-        var _lists = this.state.Lists.concat(
-          {id:this.max_list_id, title:_ID, desc:_PW}
-        )
-        this.setState({
-          Lists:_lists
+      _content = this.getReadContent();
+      _article = <UpdateContent data={_content} onSubmit={
+        function(_id,_ID, _PW) {
+          var _lists = Array.from(this.state.Lists); // Lists를 복사한 새로운 배열 생성
+          var i = 0;
+          while(i < _lists.length){
+            if(_lists[i].id === _id){
+              _lists[i] = {id:_id, title:_ID, desc:_PW};
+              break;
+            }
+            i = i + 1;
+          }
+          this.setState({
+            Lists:_lists,
+            mode:'read'
         });
       }.bind(this)}></UpdateContent>
     }
@@ -106,12 +115,30 @@ class App extends Component {
         onChangePage={function(id) {
           this.setState({
             mode:'read',
-            selected_content_id:Number(id)  //Number():문자를 숫자로 바꿔줌
+            selected_list_id:Number(id)  //Number():문자를 숫자로 바꿔줌
           });             
         }.bind(this)}
         data={this.state.Lists}
         ></List>
       <Control onChangeMode={function (_mode) {
+        if(_mode === 'logout'){
+          if(window.confirm('로그아웃하시겠습니까?')){
+            var _lists = Array.from(this.state.Lists);
+            var i = 0;
+            while(i < _lists.length){
+              if(_lists[i].id === this.state.selected_list_id){
+                _lists.splice(i,1);   //어디서부터 어디까지 지울것인가 (i부터 1개)
+                break;
+              }
+              i = i + 1;
+            }
+            this.setState({
+              mode:'welcome',
+              Lists:_lists
+            });
+            alert('로그아웃되었습니다.');
+          }
+        }
         this.setState({
           mode:_mode
         })        

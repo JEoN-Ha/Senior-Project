@@ -12,9 +12,9 @@ class Control extends Component {
                 e.preventDefault();
                 this.props.onChangeMode('update');                
             }.bind(this)}>update</a></li>
-            <li><input type="button" value="delete" onClick={function (e) {
+            <li><input type="button" value="logout" onClick={function (e) {
                 e.preventDefault();
-                this.props.onChangeMode('delete');                
+                this.props.onChangeMode('logout');                
             }.bind(this)}></input></li>
       </ul>
       );
