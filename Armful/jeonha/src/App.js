@@ -4,6 +4,7 @@ import Subject from "./components/Subject";
 import List from "./components/List";
 import ReadContent from "./components/ReadContent";
 import LoginContent from "./components/LoginContent";
+import UpdateContent from "./components/UpdateContent";
 import Control from "./components/Control";
 import CustomerList from "./components/CustomerList";
 
@@ -33,25 +34,28 @@ class App extends Component {
       ]
     }
 
-  }   
-  render() {    //어떤 Html을 그릴것인가?
+  }
+
+  getReadContent(){
+    var i = 0;
+      while(i < this.state.Lists.length){
+        var data = this.state.Lists[i];
+        if(data.id === this.state.selected_content_id){
+          return data;
+          break;
+        }
+        i = i + 1;
+      }
+  }
+  getContent(){
     var _title, _desc, _article = null;
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if(this.state.mode === 'read'){
-      var i = 0;
-      while(i < this.state.Lists.length){
-        var data = this.state.Lists[i];
-        if(data.id === this.state.selected_content_id){
-          _title = data.title;
-          _desc = data.desc;
-          break;
-        }
-        i = i + 1;
-      }
-      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+      var _content = this.getReadContent();
+      _article = <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
     } else if(this.state.mode === 'login'){
       _article = <LoginContent onSubmit={function(_ID, _PW) {
         this.max_list_id = this.max_list_id + 1;
@@ -72,7 +76,22 @@ class App extends Component {
           Lists:_lists
         });
       }.bind(this)}></LoginContent>
+    } else if(this.state.mode === 'update'){
+      var _content = this.getReadContent();
+      _article = <UpdateContent data={_content} onSubmit={function(_ID, _PW) {
+        this.max_list_id = this.max_list_id + 1;
+        var _lists = this.state.Lists.concat(
+          {id:this.max_list_id, title:_ID, desc:_PW}
+        )
+        this.setState({
+          Lists:_lists
+        });
+      }.bind(this)}></UpdateContent>
     }
+    return _article;
+  }   
+  render() {    //어떤 Html을 그릴것인가?
+    
     return (
       <div className="App">
       <Subject 
@@ -97,7 +116,7 @@ class App extends Component {
           mode:_mode
         })        
       }.bind(this)}></Control>
-      {_article}
+      {this.getContent()}
       <CustomerList></CustomerList>
       </div>
     );

@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 
 class List extends Component {
+    shouldComponentUpdate(newProps, newState){  //바뀐 부분이 있을 때만 렌더
+      if(this.props.data === newProps.data){
+        return false;
+      } else {
+        return true;
+      }
+    }
+
     render() {
       var lists = [];
       var data = this.props.data;
