@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import Movie from "../components/Movie";
-import "./Home.css";
+import "./Main.css";
 
 class Home extends React.Component{
 
@@ -22,7 +22,7 @@ class Home extends React.Component{
   }
 
   render(){
-    <h1>Welcome MuinBurger</h1>
+    
     const {isLoading, movies} = this.state;
      return (
       <section className ="container">

@@ -1,57 +1,96 @@
+body{
+  margin:0;
+}
 
-  @media screen and (max-width: 1000px) {
-    .nav {
-      left: initial;
-      top: initial;
-      bottom: 0px;
-      width: 100%;
-    }
-  }
-  
-  .nav a[href = "#/"]{
-
-    z-index: 1;
+@media screen and (min-width: 300px) {
+  .nav{
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 187, 0);
+    list-style-type: none;
     position: fixed;
-    top: 70px;
-    left: 10px;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    padding: 10px 20px;
-    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-      0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-    border-radius: 5px;
-  
-    text-decoration:#01d3a4;
-    color: rgb(228, 49, 4);
-    text-transform:uppercase;
-    font-size: 20px;
-    text-align: center;
-    font-weight: 600;
-  }
-
-  .nav a[href = "#/login"]{
-    z-index: 1;
-    position: fixed;
-    top: 50px;
-    left: 1000px;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    padding: 10px 20px;
-    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-      0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-    border-radius: 5px;
-
-    text-decoration:#df0f0f;
-    color: rgb(0, 0, 0);
-    text-transform:uppercase;
-    font-size: 20px;
-    text-align:center;
-    font-weight: 600;
+    top:150px;
+    
   }
   
- 
-  .nav a:not(:last-child) {
-    margin-bottom: 20px;
-  }
+}
+
+
+.nav a{
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  text-decoration:#fafafa;
+  color: rgb(0, 0, 0);
+  text-transform:uppercase;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+
+}
+
+.nav a{
+  z-index: 2;
+  text-align: center;
+  text-decoration: none;
+  color:rgb(0, 0, 0);
+}
+
+.nav a:nth-child(1){
+  z-index: 2;
+  background-color: rgb(255, 0, 0);
+}
+
+
+.nav a[href = "#/login"]{
+  z-index: 2;
+  position: fixed;
+  top: 155px;
+  right: 80px;
+  display: flex;
+  flex-direction: column;
+
+  text-decoration:#df0f0f;
+  color: rgb(0, 0, 0);
+  text-transform:uppercase;
+  font-size: 15px;
+  text-align:center;
+  font-weight: 600;
+}
+
+.nav a[href = "#/logout"]{
+  z-index: 2;
+  position: fixed;
+  top: 155px;
+  right: 3px;
+  display: flex;
+  flex-direction: column;
+
+  text-decoration:#df0f0f;
+  color: rgb(0, 0, 0);
+  text-transform:uppercase;
+  font-size: 15px;
+  text-align:center;
+  font-weight: 600;
+}
+
+.nav a[href = "#/"]{
+  z-index: 2;
+  position: fixed;
+  top: 5px;
+  right: 500px;
+  left : 500px;
+  display: flex;
+  flex-direction: column;
+
+  text-decoration:#df0f0f;
+  color: rgb(0, 0, 0);
+  text-transform:uppercase;
+  font-size: 65px;
+  text-align:center;
+  font-weight: 600;
+}

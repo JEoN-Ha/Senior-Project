@@ -12,15 +12,10 @@
   }
   
   .about__container span:first-child {
-    font-size: 30px;
+    font-size: 20px;
   }
   
   .about__container span:last-child {
     display: block;
     margin-top: 10px;
-  }
-
-  .span{
-    position: fixed;
-    top:300px;
   }
