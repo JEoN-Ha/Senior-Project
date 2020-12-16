@@ -149,7 +149,6 @@ class App extends Component {
     return _article;
   }   
   render() {    //어떤 Html을 그릴것인가?
-    
     return (
       <div className="App">
       <Subject 

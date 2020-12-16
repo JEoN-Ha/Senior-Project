@@ -9,3 +9,7 @@
 .SubTitle{
     font-size: 20px;
 }
+
+.Login{
+  flex-direction: 'row';
+}

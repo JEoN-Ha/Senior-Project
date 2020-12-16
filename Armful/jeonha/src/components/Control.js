@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Control extends Component {
     render() {
       return (
-        <ul>
+        <div>
             {/* <li><a href="/login" onClick={function (e) {
                 e.preventDefault();
                 this.props.onChangeMode('login');                
@@ -12,11 +12,11 @@ class Control extends Component {
                 e.preventDefault();
                 this.props.onChangeMode('update');                
             }.bind(this)}>update</a></li> */}
-            <li><input type="button" value="logout" onClick={function (e) {
+            <input type="button" value="Logout" onClick={function (e) {
                 e.preventDefault();
                 this.props.onChangeMode('logout');                
-            }.bind(this)}></input></li>
-      </ul>
+            }.bind(this)}></input>
+      </div>
       );
     }
   }
