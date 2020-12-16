@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, createElement } from 'react';
 // import logo from './logo.svg';
 import JeonhaLogo from './components/JeonhaLogo';
 import JeonhaNav from './components/JeonhaNav';
+import JeonhaLoginControl from './components/JeonhaLoginControl';
 
 import './App.css';
 
@@ -9,22 +10,36 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      navPosition:18,
-      nav: {menu: "Menu", store: "Store", new:"What's New", story: "story" }
+      navPosition: 22,
+      nav: [ 'Menu', 'Store', "What's New", 'Story' ],
+      isLogin: false
     }
   }
   render() {
-
+    let loginWindow = null;
+    if (this.state.isLogin === false) {
+      loginWindow = <JeonhaLoginControl 
+      loginCheck={this.state.isLogin} 
+      appOnSubmit={function () {
+        this.setState({isLogin: true});
+      }.bind(this)}
+      ></JeonhaLoginControl>
+    } else {
+      loginWindow = <JeonhaLoginControl 
+        loginCheck={this.state.isLogin} 
+        appOnSubmit={function () {
+          this.setState({isLogin: false});
+        }.bind(this)}
+        ></JeonhaLoginControl>
+    }
     return (
       <div className="App">
         <JeonhaLogo></JeonhaLogo>
-        <JeonhaNav text={this.state.nav.menu} position={this.state.navPosition}></JeonhaNav>
-        <JeonhaNav text={this.state.nav.store} position={this.state.navPosition * 2}></JeonhaNav>
-        <JeonhaNav text={this.state.nav.new} position={this.state.navPosition * 3}></JeonhaNav>
-        <JeonhaNav text={this.state.nav.story} position={this.state.navPosition * 4}></JeonhaNav>
-        {/* store={this.state.nav.store}
-          new = {this.state.nav.new}
-          story = {this.state.nav.story} */}
+        <JeonhaNav desc = {this.state.nav[0]} position={this.state.navPosition * 1}></JeonhaNav>
+        <JeonhaNav desc = {this.state.nav[1]} position={this.state.navPosition * 2}></JeonhaNav>
+        <JeonhaNav desc = {this.state.nav[2]} position={this.state.navPosition * 3}></JeonhaNav>
+        <JeonhaNav desc = {this.state.nav[3]} position={this.state.navPosition * 4}></JeonhaNav>
+        {loginWindow}
       </div>
     );
   }

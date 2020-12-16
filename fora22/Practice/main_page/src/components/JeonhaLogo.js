@@ -4,10 +4,13 @@ import JeonhaLogoImage from '../_img/logo.png';
 
 class JeonhaLogo extends Component {
     render() {
+        const logoSize = 8;
         const logoStyle = {
             position: 'fixed',
-            top: '2%',
-            left: '5%'
+            top: '5%',
+            left: '3%',
+            width: logoSize + '%',
+            heigth: logoSize + '%'
         }
         return (
             <img src={JeonhaLogoImage} 

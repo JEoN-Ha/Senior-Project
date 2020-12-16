@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import './JeonhaNav.css'
 
 class JeonhaNav extends Component {
     render() {
         // console.log(this.props.position);
         const navStyle={
-            top: '6%',
+            top: '10%',
             left: this.props.position + '%',
             position: 'fixed',
             // fontSize: '16px',
@@ -13,7 +12,7 @@ class JeonhaNav extends Component {
             
         }
         return (
-            <div style={navStyle}>{this.props.text}</div>
+            <div style={navStyle}>{this.props.desc}</div>
             
         );
     }
