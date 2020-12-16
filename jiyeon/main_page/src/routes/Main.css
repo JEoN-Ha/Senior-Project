@@ -14,19 +14,19 @@ html,
 body,
 #potato,
 .container{
-    z-index: 1;
+  
     height : 80%;
     display: flex;
     justify-content:center;
 }
 .container{
-    z-index: 1;
+  
     position: relative;
-    top: 250px;
+    top: 20px;
 }
 
 .loader{
-    z-index: 1;
+  
     width: 100%;
     height: 100%;
     display: flex;
@@ -36,18 +36,18 @@ body,
 }
 
 .movies{
-    z-index: 1;
+  
     display:flex;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    padding: 50px;
-    padding-top: 70px;
+    padding: 20px;
+    padding-top: 0px;
     width:80%
 }
 
 .movies .movie{
-    z-index: 1;
+  
     width: 45%;
     background-color: white;
     margin-bottom: 70px;
@@ -66,7 +66,7 @@ body,
 }
 
 .movie img{
-    z-index: 1;
+  
     position: relative;
     top:-50px;
     max-width: 180px;
@@ -79,21 +79,21 @@ body,
 
 .movie .movie_title,
  .movie .movie_year{
-    z-index: 1;
+  
      margin: 0;
     font-weight: 300;
 
 }
 
 .movie .movie_title{
-    z-index: 1;
+  
     margin-bottom: 5px;
     font-size:24px;
     color : #2c2c2c;
 }
 
 .movie .movie_genres{
-    z-index: 1;
+  
     list-style: none;
     padding:0;
     margin: 0;
@@ -102,7 +102,7 @@ body,
 }
 
 .movie_genres li{
-    z-index: 1;
+  
     margin-right:10;
     font-size:14px;
 
