@@ -12,7 +12,8 @@ import CustomerList from "./components/CustomerList";
 /* Component를 만드는 틀
 class Subject extends Component {
   render() {
-    return ();
+    return (
+    );
   }
 }
 */
@@ -26,6 +27,7 @@ class App extends Component {
       mode1 : 'login',  //현재 어떤 페이지에 있는지 구별하기위해
       mode2 : 'welcome',
       selected_list_id:2,
+      selected_customerlist_id:1,
       subject : {title:'JEoN-Ha', sub:'안녕하세요. JEoN-Ha입니다.', 
         desc:'Untact로 안전하게 이용이 가능한 무인 드라이브 스루입니다.'},
       welcome : {title:'Welcome', desc:'customer'},
@@ -42,12 +44,42 @@ class App extends Component {
 
   }
 
+  getLogout(){
+    var _article = null;
+    if(this.state.mode1 === 'readCustomer')
+    {
+      _article = <Control onChangeMode={function (_mode) {
+        if(_mode === 'logout'){
+          if(window.confirm('로그아웃하시겠습니까?')){
+            var _lists = Array.from(this.state.customerLists);
+            var i = 0;
+            while(i < _lists.length){
+              if(_lists[i].id === this.state.selected_customerlist_id){
+                _lists.splice(i,1);   //어디서부터 어디까지 지울것인가 (i부터 1개)
+                break;
+              }
+              i = i + 1;
+            }
+            this.setState({
+              mode1:'login',
+              customerLists:_lists
+            });
+            alert('로그아웃되었습니다.')
+          }
+        }
+        this.setState({
+          mode2:_mode
+        })        
+      }.bind(this)}></Control>
+      return _article;
+    }
+  }
+
   getReadCustomer(){
     var i = 0;
       while(i < this.state.customerLists.length){
         var data = this.state.customerLists[i];
         if(data.id === this.state.selected_customerlist_id){
-          debugger;
           return data;
         }
         i = i + 1;
@@ -113,48 +145,7 @@ class App extends Component {
     } else if(this.state.mode2 === 'read'){
       var _content = this.getReadContent();
       _article = <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
-    } /*else if(this.state.mode === 'login'){
-      _article = <LoginContent onSubmit={function(_ID, _PW) {
-        this.max_customerList_id = this.max_customerList_id + 1;
-
-        /* 새로운 데이터를 추가할 때 push 쓰지말고 concat을 쓰면 나중에 데이터 성능 개선할 때 도움이 됨
-        this.state.Lists.push(
-          {id:this.max_list_id, title:_ID, desc:_PW}
-        );
-        this.setState({
-          lists:this.state.lists
-        });
-        
-       
-        var _lists = this.state.Lists.concat(
-          {id:this.max_customerList_id, title:_ID, desc:_PW}
-        )
-        this.setState({
-          Lists:_lists,
-          mode:'read',
-          selected_list_id:this.max_customerList_id
-        });
-      }.bind(this)}></LoginContent>
-    } else if(this.state.mode === 'update'){
-      _content = this.getReadContent();
-      _article = <UpdateContent data={_content} onSubmit={
-        function(_id,_ID, _PW) {
-          var _lists = Array.from(this.state.Lists); // Lists를 복사한 새로운 배열 생성
-          var i = 0;
-          while(i < _lists.length){
-            if(_lists[i].id === _id){
-              _lists[i] = {id:_id, title:_ID, desc:_PW};
-              break;
-            }
-            i = i + 1;
-          }
-          this.setState({
-            Lists:_lists,
-            mode:'read'
-        });
-      }.bind(this)}></UpdateContent>
-      
-    }*/
+    } 
     return _article;
   }   
   render() {    //어떤 Html을 그릴것인가?
@@ -169,7 +160,12 @@ class App extends Component {
           this.setState({mode2:'welcome'});  //함수안에서 state 바꿀 때 무조건 setState 사용          
         }.bind(this)}   //this를 함수안에서 쓸 때 무조건 쓰기
         ></Subject>
+
+      {/* 로그인 폼 */}
       {this.getLogin()}
+
+      {/* 로그아웃 버튼*/}
+      {this.getLogout()} 
 
       <List 
         onChangePage={function(id) {
@@ -180,29 +176,7 @@ class App extends Component {
         }.bind(this)}
         data={this.state.Lists}
         ></List>
-      <Control onChangeMode={function (_mode) {
-        if(_mode === 'logout'){
-          if(window.confirm('로그아웃하시겠습니까?')){
-            var _lists = Array.from(this.state.Lists);
-            var i = 0;
-            while(i < _lists.length){
-              if(_lists[i].id === this.state.selected_list_id){
-                _lists.splice(i,1);   //어디서부터 어디까지 지울것인가 (i부터 1개)
-                break;
-              }
-              i = i + 1;
-            }
-            this.setState({
-              mode2:'welcome',
-              Lists:_lists
-            });
-            alert('로그아웃되었습니다.')
-          }
-        }
-        this.setState({
-          mode2:_mode
-        })        
-      }.bind(this)}></Control>
+    
       {this.getContent()}
       </div>
     );
