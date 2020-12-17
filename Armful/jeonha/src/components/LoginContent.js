@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./Component.css";
 
 class LoginContent extends Component {
     render() {
@@ -14,9 +15,14 @@ class LoginContent extends Component {
                   );
                   alert('로그인이 완료됐습니다.');
                 }.bind(this)}>
-
-                <p><input type="text" name="ID" placeholder="ID"></input></p>
-                <p><input type="text" name="PW" placeholder="Password"></input><input type="submit"></input></p>
+                <view style={{flex: 1, flexDirection: 'low'}}>
+                  <view style={{flex: 1, flexDirection: 'column'}}>
+                    <p><input style={{flex: 1}} type="text" name="ID" placeholder="ID"></input></p>
+                    <p><input style={{flex: 1}} type="text" name="PW" placeholder="Password"></input></p>
+                  </view>
+                  <button style={{flex: 1}} type="submit">Login</button>
+                </view>
+                
               </form>
           </article>
       );
