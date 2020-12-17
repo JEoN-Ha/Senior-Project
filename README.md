@@ -1,4 +1,3 @@
-[TOC]
 # Overview
 # Untact Drive Thru
 ## 배경 및 필요성
