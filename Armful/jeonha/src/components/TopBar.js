@@ -14,28 +14,51 @@ class TopBar extends Component {
             const title2Style = {
                 position: 'fixed',
                 top: 120,
-                left: standardPositionLeft + 200
+                left: standardPositionLeft + 250
             }
 
             const title3Style = {
                 position: 'fixed',
                 top: 120,
-                left: standardPositionLeft + 400
+                left: standardPositionLeft + 450
             }
 
             const title4Style = {
                 position: 'fixed',
                 top: 120,
-                left: standardPositionLeft + 600
+                left: standardPositionLeft + 650
             }
 
         
       return (
         <div style = {TopBarStyle}>
-            <text>{this.props.title1}</text>
-            <text style={title2Style}>{this.props.title2}</text>
-            <text style={title3Style}>{this.props.title3}</text>
-            <text style={title4Style}>{this.props.title4}</text>
+            <text
+                onClick={function (e) {
+                    e.preventDefault();
+                    this.props.onChangePage(e.target.innerText);                    
+                }.bind(this)}
+            >{this.props.title1}</text>
+            <text 
+                style={title2Style}
+                onClick={function (e) {
+                    e.preventDefault();
+                    this.props.onChangePage(e.target.innerText);                    
+                }.bind(this)}
+            >{this.props.title2}</text>
+            <text 
+                style={title3Style}
+                onClick={function (e) {
+                    e.preventDefault();
+                    this.props.onChangePage(e.target.innerText);                    
+                }.bind(this)}
+            >{this.props.title3}</text>
+            <text 
+                style={title4Style}
+                onClick={function (e) {
+                    e.preventDefault();
+                    this.props.onChangePage(e.target.innerText);                    
+                }.bind(this)}
+            >{this.props.title4}</text>
         </div>
          );
     }

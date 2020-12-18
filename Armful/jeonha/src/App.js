@@ -13,12 +13,14 @@ class App extends Component {
     this.max_customerList_id = 1;
     this.state = {
       mode1 : 'login',  //현재 어떤 페이지에 있는지 구별하기위해
+      mode2 : 'welcome',
       selected_customerlist_id:1,
+      selected_topBar : null,
       subject : {title:'JEoN-Ha'},  
       customerLists : [
         {id:null, ID:null, PW:null}
       ],
-      TopBar : {title1:'MENU', title2:'매장검색', title3:'Coupon', title4:'Event'}
+      TopBar : [ 'MENU', '매장검색', 'Coupon', 'Event']
     }
 
   }
@@ -97,11 +99,19 @@ class App extends Component {
         {this.getLogout()} 
 
         <TopBar
-          title1={this.state.TopBar.title1}
-          title2={this.state.TopBar.title2}
-          title3={this.state.TopBar.title3}
-          title4={this.state.TopBar.title4}
+          title1={this.state.TopBar[0]}
+          title2={this.state.TopBar[1]}
+          title3={this.state.TopBar[2]}
+          title4={this.state.TopBar[3]}
+          onChangePage = { function (title) {
+            this.setState({
+              mode2:'read',
+              selected_topBar : title});
+          }.bind(this)}
+          debugger
         ></TopBar>
+
+        {/* {this.getContent()} */}
       </div>
     );
   }
