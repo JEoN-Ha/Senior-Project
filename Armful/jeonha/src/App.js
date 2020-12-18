@@ -5,6 +5,7 @@ import ReadCustomer from "./components/ReadCustomer";
 import LoginContent from "./components/LoginContent";
 import Logout from "./components/Logout";
 import TopBar from "./components/TopBar";
+import Welcome from "./components/Welcome";
 
 class App extends Component {
   constructor(props){   //Component를 실행할 때 constructor가 가장 먼저 실행되어 초기화를 담당
@@ -16,6 +17,7 @@ class App extends Component {
       mode2 : 'welcome',
       selected_customerlist_id:1,
       selected_topBar : null,
+      welcome : {title:'Welcome!', desc:'JEoN-Ha 무인 드라이브 스루입니다.'},
       subject : {title:'JEoN-Ha'},  
       customerLists : [
         {id:null, ID:null, PW:null}
@@ -23,6 +25,20 @@ class App extends Component {
       TopBar : [ 'MENU', '매장검색', 'Coupon', 'Event']
     }
 
+  }
+
+  getContent(){
+    let _title, _desc, _article = null;
+    if(this.state.mode2 === 'welcome'){
+      _title = this.state.welcome.title;
+      _desc = this.state.welcome.desc;
+      _article = <Welcome title={_title} desc={_desc}></Welcome>
+    // } else if(this.state.mode2 === 'read'){
+    //   let _content = this.getReadContent();
+    //   _article = <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
+    // } 
+    return _article;
+    }
   }
 
   getLogout(){
@@ -111,7 +127,7 @@ class App extends Component {
           debugger
         ></TopBar>
 
-        {/* {this.getContent()} */}
+        {this.getContent()}
       </div>
     );
   }
