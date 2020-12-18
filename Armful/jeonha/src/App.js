@@ -4,6 +4,7 @@ import Subject from "./components/Subject";
 import ReadCustomer from "./components/ReadCustomer";
 import LoginContent from "./components/LoginContent";
 import Logout from "./components/Logout";
+import TopBar from "./components/TopBar";
 
 class App extends Component {
   constructor(props){   //Component를 실행할 때 constructor가 가장 먼저 실행되어 초기화를 담당
@@ -16,7 +17,8 @@ class App extends Component {
       subject : {title:'JEoN-Ha'},  
       customerLists : [
         {id:null, ID:null, PW:null}
-      ]
+      ],
+      TopBar : {title1:'MENU', title2:'매장검색', title3:'Coupon', title4:'Event'}
     }
 
   }
@@ -93,6 +95,13 @@ class App extends Component {
 
         {/* 로그아웃 버튼*/}
         {this.getLogout()} 
+
+        <TopBar
+          title1={this.state.TopBar.title1}
+          title2={this.state.TopBar.title2}
+          title3={this.state.TopBar.title3}
+          title4={this.state.TopBar.title4}
+        ></TopBar>
       </div>
     );
   }
