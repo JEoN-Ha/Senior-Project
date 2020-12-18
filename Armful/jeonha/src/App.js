@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import Subject from "./components/Subject";
-import List from "./components/List";
-import ReadContent from "./components/ReadContent";
 import ReadCustomer from "./components/ReadCustomer";
 import LoginContent from "./components/LoginContent";
-import UpdateContent from "./components/UpdateContent";
-import Control from "./components/Control";
-import CustomerList from "./components/CustomerList";
+import Logout from "./components/Logout";
 
 class App extends Component {
   constructor(props){   //Component를 실행할 때 constructor가 가장 먼저 실행되어 초기화를 담당
@@ -16,8 +12,6 @@ class App extends Component {
     this.max_customerList_id = 1;
     this.state = {
       mode1 : 'login',  //현재 어떤 페이지에 있는지 구별하기위해
-      mode2 : 'welcome',
-      selected_list_id:2,
       selected_customerlist_id:1,
       subject : {title:'JEoN-Ha'},  
       customerLists : [
@@ -31,7 +25,7 @@ class App extends Component {
     let _article = null;
     if(this.state.mode1 === 'readCustomer')
     {
-      _article = <Control onChangeMode={function (_mode) {
+      _article = <Logout onChangeMode={function (_mode) {
         if(_mode === 'logout'){
           if(window.confirm('로그아웃하시겠습니까?')){
             let _lists = Array.from(this.state.customerLists);
@@ -49,11 +43,8 @@ class App extends Component {
             });
             alert('로그아웃되었습니다.')
           }
-        }
-        this.setState({
-          mode2:_mode
-        })        
-      }.bind(this)}></Control>
+        }       
+      }.bind(this)}></Logout>
       return _article;
     }
   }
@@ -83,27 +74,9 @@ class App extends Component {
           selected_customerlist_id : this.max_customerList_id
         });
       }.bind(this)}></LoginContent>
-    } else if(this.state.mode1 === 'update'){
-      _content = this.getReadContent();
-      _article = <UpdateContent data={_content} onSubmit={
-        function(_id,_ID, _PW) {
-          let _lists = Array.from(this.state.Lists); // Lists를 복사한 새로운 배열 생성
-          let i = 0;
-          while(i < _lists.length){
-            if(_lists[i].id === _id){
-              _lists[i] = {id:_id, title:_ID, desc:_PW};
-              break;
-            }
-            i = i + 1;
-          }
-          this.setState({
-            Lists:_lists,
-            mode1:'read'
-        });
-      }.bind(this)}></UpdateContent>
     } else if(this.state.mode1 === 'readCustomer'){
       let _data = this.getReadCustomer();
-      _article = <ReadCustomer title={'Welcome'}ID={_data.ID}></ReadCustomer>
+      _article = <ReadCustomer ID={_data.ID}></ReadCustomer>
     }
     return _article;
   }
