@@ -45,14 +45,14 @@ class App extends Component {
   }
 
   getLogout(){
-    var _article = null;
+    let _article = null;
     if(this.state.mode1 === 'readCustomer')
     {
       _article = <Control onChangeMode={function (_mode) {
         if(_mode === 'logout'){
           if(window.confirm('로그아웃하시겠습니까?')){
-            var _lists = Array.from(this.state.customerLists);
-            var i = 0;
+            let _lists = Array.from(this.state.customerLists);
+            let i = 0;
             while(i < _lists.length){
               if(_lists[i].id === this.state.selected_customerlist_id){
                 _lists.splice(i,1);   //어디서부터 어디까지 지울것인가 (i부터 1개)
@@ -76,9 +76,9 @@ class App extends Component {
   }
 
   getReadCustomer(){
-    var i = 0;
+    let i = 0;
       while(i < this.state.customerLists.length){
-        var data = this.state.customerLists[i];
+        let data = this.state.customerLists[i];
         if(data.id === this.state.selected_customerlist_id){
           return data;
         }
@@ -87,11 +87,11 @@ class App extends Component {
   }
 
   getLogin(){
-    var _article, _content = null;
+    let _article, _content = null;
     if(this.state.mode1 === 'login'){
       _article = <LoginContent onSubmit={function(_ID, _PW) {
         this.max_customerList_id = this.max_customerList_id + 1;
-        var _lists = this.state.customerLists.concat(
+        let _lists = this.state.customerLists.concat(
           {id:this.max_customerList_id, ID:_ID, PW:_PW}
         )
         this.setState({
@@ -104,8 +104,8 @@ class App extends Component {
       _content = this.getReadContent();
       _article = <UpdateContent data={_content} onSubmit={
         function(_id,_ID, _PW) {
-          var _lists = Array.from(this.state.Lists); // Lists를 복사한 새로운 배열 생성
-          var i = 0;
+          let _lists = Array.from(this.state.Lists); // Lists를 복사한 새로운 배열 생성
+          let i = 0;
           while(i < _lists.length){
             if(_lists[i].id === _id){
               _lists[i] = {id:_id, title:_ID, desc:_PW};
@@ -119,16 +119,16 @@ class App extends Component {
         });
       }.bind(this)}></UpdateContent>
     } else if(this.state.mode1 === 'readCustomer'){
-      var _data = this.getReadCustomer();
+      let _data = this.getReadCustomer();
       _article = <ReadCustomer title={this.state.welcome.title}ID={_data.ID}></ReadCustomer>
     }
     return _article;
   }
 
   getReadContent(){
-    var i = 0;
+    let i = 0;
       while(i < this.state.Lists.length){
-        var data = this.state.Lists[i];
+        let data = this.state.Lists[i];
         if(data.id === this.state.selected_list_id){
           return data;
           break;
@@ -137,13 +137,13 @@ class App extends Component {
       }
   }
   getContent(){
-    var _title, _desc, _article = null;
+    let _title, _desc, _article = null;
     if(this.state.mode2 === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if(this.state.mode2 === 'read'){
-      var _content = this.getReadContent();
+      let _content = this.getReadContent();
       _article = <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
     } 
     return _article;
