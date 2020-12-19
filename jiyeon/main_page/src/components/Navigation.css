@@ -1,0 +1,89 @@
+body{
+  margin:0;
+}
+
+@media screen and (min-width: 300px) {
+  .nav{
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 187, 0);
+    list-style-type: none;
+    position: fixed;
+    top:100px;
+    
+  }
+  
+}
+
+
+.nav a{
+  display: flex;
+  flex-direction: column;
+  padding: 30px 10px;
+  text-decoration:#fafafa;
+  color: rgb(0, 0, 0);
+  text-transform:uppercase;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+
+}
+
+.nav a{
+  text-align: center;
+  text-decoration: none;
+  color:rgb(0, 0, 0);
+}
+
+.nav a:nth-child(1){
+  background-color: rgb(255, 0, 0);
+}
+
+
+.nav a[href = "#/"]{
+
+  position: fixed;
+  top: 0px;
+  width : 100%;
+  text-decoration:#df0f0f;
+  color: rgb(0, 0, 0);
+  text-transform:uppercase;
+  font-size: 65px;
+  text-align:center;
+  font-weight: 600;
+}
+
+.nav a[href = "#/login"]{
+  
+  position: relative;
+  top:20px;
+  left:92.5%;
+  display: flex;
+  flex-direction: column;
+
+  text-decoration:#df0f0f;
+  color: rgb(0, 0, 0);
+  text-transform:uppercase;
+  font-size: 15px;
+  text-align:center;
+  font-weight: 600;
+}
+
+.nav a[href = "#/logout"]{
+
+  position: relative;
+  top:20px;
+  left:92%;
+  display: flex;
+  flex-direction: column;
+
+  text-decoration:#df0f0f;
+  color: rgb(0, 0, 0);
+  text-transform:uppercase;
+  font-size: 15px;
+  text-align:center;
+  font-weight: 600;
+}
