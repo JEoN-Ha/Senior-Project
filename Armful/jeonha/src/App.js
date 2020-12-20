@@ -6,6 +6,7 @@ import LoginContent from "./components/LoginContent";
 import Logout from "./components/Logout";
 import TopBar from "./components/TopBar";
 import Welcome from "./components/Welcome";
+import Menu from "./components/Menu";
 
 class App extends Component {
   constructor(props){   //Component를 실행할 때 constructor가 가장 먼저 실행되어 초기화를 담당
@@ -29,17 +30,21 @@ class App extends Component {
 
   getContent(){
     let _title, _desc, _article = null;
-    if(this.state.mode2 === 'welcome'){
+    if(this.state.mode2 === 'welcome'){   // 
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
       _article = <Welcome title={_title} desc={_desc}></Welcome>
-    // } else if(this.state.mode2 === 'read'){
-    //   let _content = this.getReadContent();
-    //   _article = <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
-    // } 
+    } else if(this.state.mode2 === 'read'){
+      if(this.state.selected_topBar === 'MENU'){
+        _article = <Menu/>
+      }
+
+      // let _content = this.getReadContent();
+      // _article = <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
+    } 
     return _article;
-    }
   }
+  
 
   getLogout(){
     let _article = null;

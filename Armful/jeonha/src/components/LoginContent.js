@@ -6,7 +6,8 @@ class LoginContent extends Component {
         const LoginStyle = {
           position: 'fixed',
           top: 90,
-          right: 30
+          right: 30,
+          minWidth: 50
         }
       return (
           <article style={LoginStyle}>

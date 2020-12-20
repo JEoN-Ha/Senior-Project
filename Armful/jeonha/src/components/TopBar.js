@@ -8,7 +8,8 @@ class TopBar extends Component {
             const TopBarStyle = {
               position: 'fixed',
               top: 120,
-              left: 30
+              left: 30,
+              minWidth:10
             }
 
             const title2Style = {
