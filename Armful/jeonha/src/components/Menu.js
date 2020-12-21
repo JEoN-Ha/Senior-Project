@@ -10,21 +10,35 @@ class Menu extends Component {
                     nameKorea : '아메리카노',
                     nameEnglish : 'Americano',
                     price : '4,400',
-                    count : 0
+                    count : 0,
+                    order : false
                 },
                 {
                     nameKorea : '돌체 블랙 밀크티',
                     nameEnglish : 'Dolce Black Milk Tea',
                     price : '5,800',
-                    count : 0
+                    count : 0,
+                    order : false
                 }
             ]
         };
     }
+
+    getCount = (_count) => {
+        this.setState({
+            count: _count
+        })
+        debugger
+    }
     render() {
       const mapToComponent = data => {
           return data.map((menu, i) => {
-              return (<MenuInfo menu={menu} key={i}/>);
+              return (<MenuInfo menu={menu} key={i}
+                onChange={function (_checked) {
+                this.menu.order = _checked;                    
+                }}
+                getCount = {this.getCount}
+                ></MenuInfo>);
           });
       };
       const menuStyle = {
