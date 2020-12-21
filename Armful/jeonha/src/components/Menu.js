@@ -10,13 +10,13 @@ class Menu extends Component {
                     nameKorea : '아메리카노',
                     nameEnglish : 'Americano',
                     price : '4,400',
-                    count : '0'
+                    count : 0
                 },
                 {
                     nameKorea : '돌체 블랙 밀크티',
                     nameEnglish : 'Dolce Black Milk Tea',
                     price : '5,800',
-                    count : '0'
+                    count : 0
                 }
             ]
         };
