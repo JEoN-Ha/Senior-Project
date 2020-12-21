@@ -4,6 +4,7 @@ class MenuInfo extends Component {
   constructor(props){
     super(props);
     this.state = {
+      id:this.props.menu.id,
       count:this.props.menu.count,
       order:this.props.menu.order
     }
@@ -11,11 +12,11 @@ class MenuInfo extends Component {
   };
 
   onIncrease = () => {
+    const countResult = this.state.count + 1;
     this.setState({
-      count: this.state.count + 1
+      count: countResult
     });
-    debugger
-    this.props.getCount(this.state.count);
+    this.props.getCount(countResult,this.state.id);
   };
   onDecrease = () => {
     this.setState({

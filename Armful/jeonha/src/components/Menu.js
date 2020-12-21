@@ -7,6 +7,7 @@ class Menu extends Component {
         this.state = {
             menuData : [        // menu 불러오기
                 {
+                    id : 1,
                     nameKorea : '아메리카노',
                     nameEnglish : 'Americano',
                     price : '4,400',
@@ -14,6 +15,7 @@ class Menu extends Component {
                     order : false
                 },
                 {
+                    id : 2,
                     nameKorea : '돌체 블랙 밀크티',
                     nameEnglish : 'Dolce Black Milk Tea',
                     price : '5,800',
@@ -24,12 +26,25 @@ class Menu extends Component {
         };
     }
 
-    getCount = (_count) => {
-        this.setState({
-            count: _count
-        })
-        debugger
-    }
+    // getCount(_count,_id){
+    //     let i = 0;
+    //     let data = Array.from(this.state.menuData);
+    //     while(i < data.length){
+    //         if(data[i].id === _id){
+    //             data[i] = {count:_count};
+    //             debugger
+    //             break;
+    //         }
+    //         i = i + 1;
+    //     }
+    //     this.setState({
+    //         menuData:data
+    //     });
+    //     // this.setState({
+    //     //     count: _count
+    //     // });
+    //     // debugger
+    // }
     render() {
       const mapToComponent = data => {
           return data.map((menu, i) => {
@@ -37,7 +52,24 @@ class Menu extends Component {
                 onChange={function (_checked) {
                 this.menu.order = _checked;                    
                 }}
-                getCount = {this.getCount}
+                getCount = {function(_count,_id){
+                    let i = 0;
+                    let data = Array.from(this.state.menuData);
+                    while(i < data.length){
+                        if(data[i].id === _id){
+                            data[i].count = _count;
+                            break;
+                        }
+                        i = i + 1;
+                    }
+                    this.setState({
+                        menuData:data
+                    });
+                    // this.setState({
+                    //     count: _count
+                    // });
+                    // debugger
+                }.bind(this)}
                 ></MenuInfo>);
           });
       };
