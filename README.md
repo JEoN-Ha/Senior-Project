@@ -91,7 +91,7 @@ Issue 또는 WIKI를 참고해주세요
 - 회의(의견을 묻거나, ~해줬으면 or ~했으면 좋겠다 싶은 거, 진행에 있는 결정 사항 의논 등) 내용이 생길 때마다 Issue에 올려서 대화한다.
   - 이 때 각 주제별로 새로 Issue를 올리고 Review Meeting Issue에 링크를 남긴다.
   - #을 쓰면 알아서 Issue와 PR에 대한 링크를 고를 수 있다.
-  - 만약 Issue를 올릴 정도로 복잡하지 않을 것 같다면 Review Meeting Issue에 올린다.
+  - 만약 Issue를 올릴 정도로 복잡하지 않을 것 같다면 Review Meeting Issue에 comment를 남긴다.
 - 회의 날짜까지 모든 Issue에 대하여 결론이 지어지면 해당 날짜의 회의는 없어진다.
 - 만약 결론이 지어지지 않거나 Comment로 이야기를 나누기 어렵다는 생각이 들 경우 회의날짜에 회의를 진행한다.
 
