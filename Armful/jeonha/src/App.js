@@ -36,7 +36,7 @@ class App extends Component {
       _article = <Welcome title={_title} desc={_desc}></Welcome>
     } else if(this.state.mode2 === 'read'){
       if(this.state.selected_topBar === 'MENU'){
-        _article = <Menu/>
+        _article = <Menu></Menu>
       }
 
       // let _content = this.getReadContent();
@@ -45,7 +45,6 @@ class App extends Component {
     return _article;
   }
   
-
   getLogout(){
     let _article = null;
     if(this.state.mode1 === 'readCustomer')
@@ -86,7 +85,7 @@ class App extends Component {
   }
 
   getLogin(){
-    let _article, _content = null;
+    let _article = null;
     if(this.state.mode1 === 'login'){
       _article = <LoginContent onSubmit={function(_ID, _PW) {
         this.max_customerList_id = this.max_customerList_id + 1;
@@ -129,7 +128,6 @@ class App extends Component {
               mode2:'read',
               selected_topBar : title});
           }.bind(this)}
-          debugger
         ></TopBar>
 
         {this.getContent()}
