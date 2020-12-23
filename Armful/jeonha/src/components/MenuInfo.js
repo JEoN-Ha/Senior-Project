@@ -37,9 +37,9 @@ class MenuInfo extends Component {
             <span>{this.props.menu.price}</span><br/>
             <input type="checkbox"
               onChange={function (e) {
-                e.preventDefault();
                 this.props.onChange(
-                  e.target.checked
+                  e.target.checked,
+                  this.state.id
                 );                
               }.bind(this)}
               ></input>    {/*체크 여부 확인은 event.target.ch*/}

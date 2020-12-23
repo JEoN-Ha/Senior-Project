@@ -26,32 +26,24 @@ class Menu extends Component {
         };
     }
 
-    // getCount(_count,_id){
-    //     let i = 0;
-    //     let data = Array.from(this.state.menuData);
-    //     while(i < data.length){
-    //         if(data[i].id === _id){
-    //             data[i] = {count:_count};
-    //             debugger
-    //             break;
-    //         }
-    //         i = i + 1;
-    //     }
-    //     this.setState({
-    //         menuData:data
-    //     });
-    //     // this.setState({
-    //     //     count: _count
-    //     // });
-    //     // debugger
-    // }
     render() {
       const mapToComponent = data => {
           return data.map((menu, i) => {
               return (<MenuInfo menu={menu} key={i}
-                onChange={function (_checked) {
-                this.menu.order = _checked;                    
-                }}
+                onChange={function (_checked,_id) {
+                    let i = 0;
+                    let data = Array.from(this.state.menuData);
+                    while(i < data.length){
+                        if(data[i].id === _id){
+                            data[i].order = _checked;
+                            break;
+                        }
+                        i = i + 1;
+                    }
+                    this.setState({
+                        menuData:data
+                    });
+                }.bind(this)}
                 getCount = {function(_count,_id){
                     let i = 0;
                     let data = Array.from(this.state.menuData);
@@ -65,10 +57,6 @@ class Menu extends Component {
                     this.setState({
                         menuData:data
                     });
-                    // this.setState({
-                    //     count: _count
-                    // });
-                    // debugger
                 }.bind(this)}
                 ></MenuInfo>);
           });
