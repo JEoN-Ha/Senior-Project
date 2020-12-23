@@ -19,9 +19,11 @@ class MenuInfo extends Component {
     this.props.getCount(countResult,this.state.id);
   };
   onDecrease = () => {
+    const countResult = this.state.count - 1;
     this.setState({
-      count: this.state.count - 1
+      count: countResult
     });
+    this.props.getCount(countResult,this.state.id);
   };
   // handleChange =(event) => {
   //   this.setState({order: event.target.checked});
