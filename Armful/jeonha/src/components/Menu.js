@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MenuInfo from "./MenuInfo";
+import Calculation from "./Calculation";
 
 class Menu extends Component {
     constructor(props){
@@ -69,6 +70,7 @@ class Menu extends Component {
       return (
         <div style={menuStyle}>
             {mapToComponent(this.state.menuData)}
+            <Calculation></Calculation>
         </div>  
       );
     }
