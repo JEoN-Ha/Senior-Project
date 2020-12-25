@@ -1,7 +1,13 @@
 import DisplayNumber from "../Component/DisplayNumber";
 import {connect} from 'react-redux';
 
-export default connect()(DisplayNumber);    // 아래의 모든 코드를 하지 않고 컴포넌트를 Return함
+function mapReduxStateToReactProps(state) { // state 값이 변경될 때마다 호출
+    return{
+        number:state.number     // 아래 코드의 state 초기화,store.subscribe부터 return까지의 코드 내용을 담고 있음
+    }
+}
+
+export default connect(mapReduxStateToReactProps)(DisplayNumber);    // 아래의 모든 코드를 하지 않고 컴포넌트를 Return함
 
 // import React,{Component} from "react";
 // import { compose } from "redux";
