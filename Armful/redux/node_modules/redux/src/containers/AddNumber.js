@@ -1,7 +1,15 @@
 import AddNumber from "../Component/AddNumber";
 import {connect} from 'react-redux';
 
-export default connect()(AddNumber);
+function mapDispatchToProps(dispatch){      //React의 Props로 전달
+    return {
+        onClick:function(_size){
+            dispatch({type:'INCREMENT', size:_size});
+        }
+    }
+}
+
+export default connect(null,mapDispatchToProps)(AddNumber);   //상태를 전달하는 인자는 없으므로 null
 
 // import React,{Component} from "react";
 // import { compose } from "redux";
