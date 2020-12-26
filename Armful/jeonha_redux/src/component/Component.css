@@ -1,0 +1,15 @@
+.MainTitle {
+    text-align: center;
+    color:"red";
+    border: 4px dashed #bcbcbc;
+    text-decoration: 'none' !important; 
+    /*underline 제거, 폰트 색상 제거가 안됨..*/
+  }
+
+.SubTitle{
+    font-size: 20px;
+}
+
+.Login{
+  flex-direction: 'row';
+}
