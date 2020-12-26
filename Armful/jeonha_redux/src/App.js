@@ -1,6 +1,7 @@
 import React, {Component} from 'react'; 
 import './App.css';
 import Subject from './component/Subject';
+import LoginRoot from './component/LoginRoot';
 
 class App extends Component {
   render() {
@@ -10,7 +11,7 @@ class App extends Component {
         <Subject></Subject>
 
         {/* 로그인 폼 */}
-        {this.getLogin()}
+        <LoginRoot></LoginRoot>
       </div>
     )
   }
