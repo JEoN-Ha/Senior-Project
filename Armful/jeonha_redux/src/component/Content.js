@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import store from '../store';
 import Welcome from './Welcome';
+import Menu from './Menu';
 
 export default class Content extends Component {
     state = {
@@ -19,7 +20,7 @@ export default class Content extends Component {
             _article = <Welcome></Welcome>
         }
         else if(this.state.mode_content === 'MENU'){
-            
+            _article = <Menu></Menu>
         }
         return _article;
     }
