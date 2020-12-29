@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import LoginContent from '../containers/LoginContent';
+import LogoutContent from '../containers/LogoutContent';
 import ReadCustomer from '../containers/ReadCustomer';
 import store from '../store';
 
@@ -13,6 +14,15 @@ export default class LoginRoot extends Component {
             this.setState({mode:store.getState().mode});           
         }.bind(this));
     }
+
+    getLogout(){
+        let _article = null;
+        if(this.state.mode === 'readCustomer'){
+            _article = <LogoutContent></LogoutContent>
+        }
+        return _article;
+    }
+
     getLogin(){
         let _article = null;
         if(this.state.mode === 'login'){
@@ -27,6 +37,7 @@ export default class LoginRoot extends Component {
         return (
             <div>
                 {this.getLogin()}
+                {this.getLogout()}
             </div>
         )
     }
