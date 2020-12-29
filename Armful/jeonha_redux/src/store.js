@@ -21,5 +21,8 @@ export default createStore(function(state, action){
     if(action.type === 'CHECK') {
         return {...state, orderData:action.orderData}
     }
+    if(action.type === 'UNCHECK') {
+        return {...state, orderData:action.orderData}
+    }
     return state; // 기본적으로 state를 리턴하게 됨
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
