@@ -5,17 +5,11 @@ function mapDispatchToProps(dispatch){
     return {
         onChange:function(_checked,_id){
             if(_checked === true){
-                dispatch({type:'CHECK',orderData:[{id:_id, count:null}]});  // count가 무조건 null되는 문제점 발생
+                dispatch({type:'CHECK',orderData:[{id:_id, count:null}]});  // count가 무조건 null되는 문제점
             }
             
         }
     }
 }
 
-function mapReduxStateToReactProps() {
-    return{
-        mode:'readCustomer'
-    }    
-}
-
-export default connect(mapReduxStateToReactProps,mapDispatchToProps)(MenuInfo);
+export default connect(null,mapDispatchToProps)(MenuInfo);
