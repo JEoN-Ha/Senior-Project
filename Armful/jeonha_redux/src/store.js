@@ -6,7 +6,8 @@ export default createStore(function(state, action){
             ID:null, PW:null, 
             mode:'login',
             mode_content:'welcome',
-            orderData:[{id:null,count:null}]
+            // orderData:[{id:null,count:null}]
+            orderID:null, orderCount:0
         }
     }
     if(action.type === 'LOGIN') {
@@ -19,10 +20,13 @@ export default createStore(function(state, action){
         return {...state, mode_content:'MENU'}    //...state는 이전 state를 복사
     }
     if(action.type === 'CHECK') {
-        return {...state, orderData:action.orderData}
+        return {...state, orderID:action.orderID}
     }
     if(action.type === 'UNCHECK') {
-        return {...state, orderData:action.orderData}
+        return {...state, orderID:action.orderID}
+    }
+    if(action.type === 'SELECT') {
+        return {...state, orderID:action.orderID}
     }
     return state; // 기본적으로 state를 리턴하게 됨
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

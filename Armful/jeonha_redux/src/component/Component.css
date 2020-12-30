@@ -13,3 +13,8 @@
 .Login{
   flex-direction: 'row';
 }
+
+.BasketTitle{
+  top: 200px;
+  left: 100px;
+}
