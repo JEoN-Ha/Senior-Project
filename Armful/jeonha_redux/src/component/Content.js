@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import store from '../store';
 import Welcome from './Welcome';
 import Menu from './Menu';
+import Basket from '../containers/Basket';
 
 export default class Content extends Component {
     state = {
@@ -12,6 +13,15 @@ export default class Content extends Component {
         store.subscribe(function () {
             this.setState({mode_content:store.getState().mode_content});           
         }.bind(this));
+    }
+
+    getBasket(){
+        let _article = null;
+        if(this.state.mode_content === 'MENU'){
+            _article = <Basket></Basket>
+        }
+        return _article;
+
     }
 
     getContent(){
@@ -28,6 +38,7 @@ export default class Content extends Component {
         return (
             <div>
                 {this.getContent()}
+                {this.getBasket()}
             </div>
         )
     }

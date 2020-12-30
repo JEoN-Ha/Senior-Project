@@ -40,14 +40,13 @@ class MenuInfo extends Component {
       return (
           <div>
             <span onClick={function(e) {
-              debugger
               this.props.onClick(e.target.innerText)
             }.bind(this)}>{this.props.menu.nameKorea}</span><br/>
             <span>{this.props.menu.nameEnglish}</span><br/>
             <span>{this.props.menu.price}</span><br/>
-            <input type="radio" onChange={function(e) {
+            {/* <input type="radio" onChange={function(e) {
                 this.props.onChange(e.target.checked, this.props.menu.id);                
-                }.bind(this)}></input>    
+                }.bind(this)}></input>     */}
             {/* 체크 여부 확인은 event.target.ch */}
             {/* <span>{this.state.count} </span>
             <button onClick={this.onDecrease}>-1</button>&nbsp;

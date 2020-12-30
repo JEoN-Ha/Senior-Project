@@ -19,9 +19,6 @@ class App extends Component {
         {/* MENU */}
         <TopBar></TopBar>
         <Content></Content>
-
-        {/* 장바구니 담기 */}
-        <Basket></Basket>
       </div>
     )
   }
