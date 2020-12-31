@@ -25,6 +25,12 @@ export default createStore(function(state, action){
     if(action.type === 'SELECT_CANSEL') {
         return {...state, orderName:action.orderName}
     }
+    if(action.type === 'INCREMENT') {
+        return {...state, orderCount: state.orderCount + 1}
+    }
+    if(action.type === 'DECREMENT') {
+        return {...state, orderCount: state.orderCount - 1}
+    }
 
     return state; // 기본적으로 state를 리턴하게 됨
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
