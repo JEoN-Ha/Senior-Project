@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import styles from "./Component.css";
+import "./Component.css";
 
 class Basket extends Component {
     render() {
       const basketStyle = {
         position : 'fixed',
-        top : 400,
+        top : 450,
         left : 20
       }
       return (
         <header style={basketStyle}>
-            <text className={styles.BasketTitle}>장바구니 {this.props.orderID}</text>
+            <text className="BasketTitle">선택상품 {this.props.orderName}</text>
         </header>
       );
     }

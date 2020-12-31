@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 function mapReduxStateToReactProps(state) {
     return{
-        orderID:state.orderID
+        orderName:state.orderName
     }    
 }
 

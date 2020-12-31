@@ -15,7 +15,6 @@
 }
 
 .BasketTitle{
-  position: fixed;
-  top: 100px;
-  right: 20px;
+  border: 1px solid black;
+  padding: 10px;
 }

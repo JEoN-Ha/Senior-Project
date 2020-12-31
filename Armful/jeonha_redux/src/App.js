@@ -4,7 +4,6 @@ import Subject from './component/Subject';
 import LoginRoot from './component/LoginRoot';
 import Content from './component/Content.js';
 import TopBar from './containers/TopBar';
-import Basket from './containers/Basket';
 
 class App extends Component {
   render() {
