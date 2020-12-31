@@ -3,16 +3,11 @@ import "./Component.css";
 import store from '../store';
 
 class Basket extends Component {
-  state = {
-      orderName:store.getState().orderName,
-      orderCount:store.getState().orderCount
-  }
+  state = {orderCount:store.getState().orderCount}
   constructor(props){
   super(props);
   store.subscribe(function () {
-      this.setState({orderName:store.getState().orderName,
-          orderCount:store.getState().orderCount}
-      );           
+      this.setState({orderCount:store.getState().orderCount});           
   }.bind(this));
   };
     render() {

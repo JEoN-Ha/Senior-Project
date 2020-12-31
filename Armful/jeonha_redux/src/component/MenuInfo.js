@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import store from '../store';
 
 class MenuInfo extends Component {
-    state = {
-        orderName:store.getState().orderName,
-        orderCount:store.getState().orderCount
-    }
+    state = {orderName:store.getState().orderName}
   constructor(props){
     super(props);
     store.subscribe(function () {
-        this.setState({orderName:store.getState().orderName,
-            orderCount:store.getState().orderCount}
+        this.setState({orderName:store.getState().orderName}
         );           
     }.bind(this));
   };
