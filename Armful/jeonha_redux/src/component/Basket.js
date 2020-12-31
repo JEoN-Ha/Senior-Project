@@ -4,9 +4,9 @@ import styles from "./Component.css";
 class Basket extends Component {
     render() {
       const basketStyle = {
-        Position : 'fixed',
-        Top : 200,
-        right : 20
+        position : 'fixed',
+        top : 400,
+        left : 20
       }
       return (
         <header style={basketStyle}>
