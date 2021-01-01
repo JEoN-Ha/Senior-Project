@@ -18,7 +18,7 @@ class Basket extends Component {
             <text>{this.state.orderCount}개</text>&nbsp;
             <button onClick={function(){this.props.onClickPlus()
               }.bind(this)}>+1</button>&nbsp;
-            <button onClick={function(){this.props.onClickMinus()
+            <button onClick={function(){this.props.onClickMinus(this.state.orderCount)
               }.bind(this)}>-1</button>
 
             {/* 장바구니에 담기 */}

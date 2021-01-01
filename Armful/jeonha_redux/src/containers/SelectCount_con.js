@@ -7,8 +7,13 @@ function mapDispatchToProps(dispatch){
         onClickPlus:function () {
             dispatch({type:'INCREMENT'})            
         },
-        onClickMinus:function () {
-            dispatch({type:'DECREMENT'})            
+        onClickMinus:function (_count) {
+            if(_count === 0){
+                // 0이하로 빼기 금지
+            }
+            else {
+                dispatch({type:'DECREMENT'}) 
+            }           
         },
         BasketClick:function (_count) {
             if(_count !== 0 ){
