@@ -37,7 +37,7 @@ class Basket extends Component {
           <div className="BasketTitle">
 
             {/* 선택 상품의 이름 */}
-            <text>선택상품 {this.props.orderName}</text>&nbsp;
+            <text>선택상품 : {this.props.orderName}</text>&nbsp;
 
             {/* 선택 상품의 개수 */}
             {this.getCount()}

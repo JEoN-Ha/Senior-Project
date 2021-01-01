@@ -14,6 +14,7 @@ class MenuInfo extends Component {
     render() {
       return (
           <div>
+            <hr/>
             <span onClick={function(e) {
               this.props.onClickName(e.target.innerText, this.state.orderName)
             }.bind(this)}>{this.props.menu.nameKorea}</span><br/>

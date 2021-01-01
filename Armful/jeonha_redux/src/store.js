@@ -17,13 +17,13 @@ export default createStore(function(state, action){
         return {...state, ID:action.ID, PW:action.PW, mode:'login'}
     }
     if(action.type === 'MENU') {
-        return {...state, mode_content:'MENU'}    //...state는 이전 state를 복사
+        return {...state, mode_content:'MENU'}  
     }
     if(action.type === 'SELECT') {
-        return {...state, orderName:action.orderName}
+        return {...state, orderName:action.orderName, orderCount:0}
     }
     if(action.type === 'SELECT_CANSEL') {
-        return {...state, orderName:action.orderName}
+        return {...state, orderName:action.orderName, orderCount:0}
     }
     if(action.type === 'INCREMENT') {
         return {...state, orderCount: state.orderCount + 1}
