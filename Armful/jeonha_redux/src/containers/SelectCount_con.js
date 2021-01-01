@@ -1,12 +1,5 @@
-import Basket from "../component/Basket";
+import SelectCount from "../component/SelectCount";
 import {connect} from 'react-redux';
-
-function mapReduxStateToReactProps(state) {
-    return{
-        orderName:state.orderName,
-        orderCount:state.orderCount
-    }    
-}
 
 function mapDispatchToProps(dispatch){
     
@@ -20,4 +13,4 @@ function mapDispatchToProps(dispatch){
     }
 }
 
-export default connect(mapReduxStateToReactProps,mapDispatchToProps)(Basket);
+export default connect(null,mapDispatchToProps)(SelectCount);

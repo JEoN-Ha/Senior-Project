@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import store from '../store';
 import Welcome from './Welcome';
 import Menu from './Menu';
-import Basket_con from '../containers/Basket_con';
+import Basket_con from '../containers/Basket.con';
 
 export default class Content extends Component {
     state = {
