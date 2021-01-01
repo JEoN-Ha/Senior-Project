@@ -14,11 +14,16 @@ class Basket extends Component {
     render() {
       return (
         <div>
+            {/* 선택 상품 개수 정하기 */}
             <text>{this.state.orderCount}개</text>&nbsp;
             <button onClick={function(){this.props.onClickPlus()
-                }.bind(this)}>+1</button>&nbsp;
+              }.bind(this)}>+1</button>&nbsp;
             <button onClick={function(){this.props.onClickMinus()
-                }.bind(this)}>-1</button>
+              }.bind(this)}>-1</button>
+
+            {/* 장바구니에 담기 */}
+            <button onClick={function () {this.props.BasketClick(this.state.orderCount)              
+              }.bind(this)}>장바구니 담기</button>
         </div>
       );      
     }

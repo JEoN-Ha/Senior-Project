@@ -9,6 +9,15 @@ function mapDispatchToProps(dispatch){
         },
         onClickMinus:function () {
             dispatch({type:'DECREMENT'})            
+        },
+        BasketClick:function (_count) {
+            if(_count !== 0 ){
+                dispatch({type:'BASKET'})
+            }
+            else {
+                alert('상품 개수를 입력해주세요.')
+            }
+                       
         }
     }
 }

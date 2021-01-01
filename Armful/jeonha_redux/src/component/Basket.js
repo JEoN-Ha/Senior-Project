@@ -41,7 +41,6 @@ class Basket extends Component {
 
             {/* 선택 상품의 개수 */}
             {this.getCount()}
-            
           </div>
             
         </header>

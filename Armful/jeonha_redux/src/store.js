@@ -31,6 +31,9 @@ export default createStore(function(state, action){
     if(action.type === 'DECREMENT') {
         return {...state, orderCount: state.orderCount - 1}
     }
+    if(action.type === 'BASKET') {
+        return {...state, orderName:'상품을 선택해주세요.'}   //DB에 넘겨주고 orderCount와 orderName을 null로 만들기
+    }
 
     return state; // 기본적으로 state를 리턴하게 됨
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
