@@ -1,7 +1,7 @@
 .MainTitle {
     text-align: center;
     color:"red";
-    border: 4px dashed #bcbcbc;
+    border: 4px dashed #815854;
     text-decoration: 'none' !important; 
     /*underline 제거, 폰트 색상 제거가 안됨..*/
   }
