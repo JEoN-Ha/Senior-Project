@@ -15,7 +15,7 @@ export default class Content extends Component {
         }.bind(this));
     }
 
-    getBasket(){
+    getBasketButton(){
         let _article = null;
         if(this.state.mode_content === 'MENU'){
             _article = <BasketButton_con></BasketButton_con>
@@ -38,7 +38,7 @@ export default class Content extends Component {
         return (
             <div>
                 {this.getContent()}
-                {this.getBasket()}
+                {this.getBasketButton()}
             </div>
         )
     }

@@ -10,12 +10,16 @@ export default createStore(function(state, action){
             orderName:'상품을 선택해주세요.', orderCount:0
         }
     }
+
+    // 로그인
     if(action.type === 'LOGIN') {
         return {...state, ID:action.ID, PW:action.PW, mode:'readCustomer'}    //...state는 이전 state를 복사
     }
     if(action.type === 'LOGOUT') {
         return {...state, ID:action.ID, PW:action.PW, mode:'login'}
     }
+
+    // MENU
     if(action.type === 'MENU') {
         return {...state, mode_content:'MENU'}  
     }
@@ -35,5 +39,12 @@ export default createStore(function(state, action){
         return {...state, orderName:'상품을 선택해주세요.'}   //DB에 넘겨주고 orderCount와 orderName을 null로 만들기
     }
 
+    // 장바구니
+    if(action.type === '장바구니') {
+        return {...state, mode_content:'장바구니'}  
+    }
+    if(action.type === 'BASKET MORE') {
+        return {...state, mode_content:'MENU'}  
+    }
     return state; // 기본적으로 state를 리턴하게 됨
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

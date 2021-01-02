@@ -39,14 +39,14 @@ class TopBar extends Component {
             <text
                 onClick={function (e) {
                     e.preventDefault();
-                    this.props.onClick(e.target.innerText);                   
+                    this.props.onClickMenu(e.target.innerText);                   
                 }.bind(this)}
             >{this.state.TopBar[0]}</text>
             <text 
                 style={title2Style}
                 onClick={function (e) {
                     e.preventDefault();
-                    this.props.onChangePage(e.target.innerText);                    
+                    this.props.onClickBasket(e.target.innerText);                    
                 }.bind(this)}
             >{this.state.TopBar[1]}</text>
             <text 
