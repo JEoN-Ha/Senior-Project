@@ -3,7 +3,7 @@ import "./Component.css";
 import store from '../store';
 import SelectCount_con from '../containers/SelectCount_con';
 
-class Basket extends Component {
+class BasketButton extends Component {
   state = {
     orderCount:store.getState().orderCount,
     orderName:store.getState().orderName
@@ -48,4 +48,4 @@ class Basket extends Component {
     }
   }
 
-  export default Basket;
+  export default BasketButton;

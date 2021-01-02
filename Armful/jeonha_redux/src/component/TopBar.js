@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class TopBar extends Component {
     state = {
-        TopBar : [ 'MENU', '매장검색', 'Coupon', 'Event']
+        TopBar : [ 'MENU', '장바구니', 'Coupon', 'Event']
     }
     render() {
         {
