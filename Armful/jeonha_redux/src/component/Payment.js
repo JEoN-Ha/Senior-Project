@@ -23,7 +23,7 @@ export default class Basket extends Component {
 
     render() {
         const paymentStyle = {
-            position: 'fixed',
+            position: 'relative',
             top: 150,
             left: 30
           }
@@ -75,6 +75,9 @@ export default class Basket extends Component {
                         onChange={this.handleRadio}
                         ></input> PAYCO
                 </article>
+                
+                {/* 결제 정보 DB로 보내기 */}
+                <button>결제하기</button>
             </div>
         )
     }

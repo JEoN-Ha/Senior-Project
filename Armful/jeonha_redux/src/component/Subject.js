@@ -5,8 +5,9 @@ class Subject extends Component {   //Subject라는 태그를 생성
     state = {title:'JEoN-Ha'}
     render() {
       const titleStyle = {
-        Position : 'fixed',
-        Top : 0
+        position : 'fixed',
+        top : 0,
+        left : 20
       }
       return (
         <header style={titleStyle}>
