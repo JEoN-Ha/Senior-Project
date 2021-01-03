@@ -49,5 +49,8 @@ export default createStore(function(state, action){
     if(action.type === 'PAYMENT') {
         return {...state, mode_content:'payment'}  
     }
+    if(action.type === 'PAYMENT_CLICK') {
+        return {...state, mode_content:'welcome'}  
+    }
     return state; // 기본적으로 state를 리턴하게 됨
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

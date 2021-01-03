@@ -36,16 +36,19 @@ export default class Basket extends Component {
                     이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="text" name="name" placeholder="이름을 입력하세요."
                         onChange={function (e) {
-                            this.setState({name:e.target.value});                            
+                            this.setState({name:e.target.value});
+                            // this.props.onChangeName(this.state.name)                         
                         }.bind(this)}></input> <br></br>
                     연락처&nbsp;&nbsp;&nbsp;
                     <input type="text" name="phone" placeholder="전화번호를 입력하세요."
                         onChange={function (e) {
-                            this.setState({phone:e.target.value});                            
+                            this.setState({phone:e.target.value});
+                            // this.props.onChangePhone(this.state.phone)                          
                         }.bind(this)}></input> <br></br>
                     차량번호<input type="text" name="carNumber" placeholder="차량번호를 입력하세요."
                         onChange={function (e) {
-                            this.setState({carNumber:e.target.value});                            
+                            this.setState({carNumber:e.target.value});
+                            // this.props.onChangeCarNumber(this.state.carNumber)                          
                         }.bind(this)}></input>
                 </article>
 
@@ -77,7 +80,9 @@ export default class Basket extends Component {
                 </article>
                 
                 {/* 결제 정보 DB로 보내기 */}
-                <button>결제하기</button>
+                <button onClick={function () {
+                    this.props.Payment(this.state.name,this.state.phone,this.state.carNumber)                   
+               }.bind(this)}>결제하기</button>
             </div>
         )
     }
