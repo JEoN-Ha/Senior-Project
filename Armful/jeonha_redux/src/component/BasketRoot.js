@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Basket from '../containers/Basket_con';
+import Payment from '../containers/Payment_con';
 import store from '../store';
 
 export default class BasketRoot extends Component {
@@ -11,6 +12,14 @@ export default class BasketRoot extends Component {
         store.subscribe(function () {
             this.setState({mode_content:store.getState().mode_content});           
         }.bind(this));
+    }
+
+    getPayment(){
+        let _article = null;
+        if(this.state.mode_content === 'payment'){
+          _article = <Payment></Payment>
+        }
+        return _article;
     }
 
     getBasket(){
@@ -25,6 +34,7 @@ export default class BasketRoot extends Component {
         return (
             <div>
                 {this.getBasket()}
+                {this.getPayment()}
             </div>
         )
     }
