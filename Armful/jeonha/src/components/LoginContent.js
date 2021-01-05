@@ -3,9 +3,14 @@ import "./Component.css";
 
 class LoginContent extends Component {
     render() {
+        const LoginStyle = {
+          position: 'fixed',
+          top: 90,
+          right: 30,
+          minWidth: 50
+        }
       return (
-          <article>
-              <h2>Login</h2>
+          <article style={LoginStyle}>
               <form action="/login_process" method="post"
                 onSubmit={function (e) {
                   e.preventDefault();
@@ -15,14 +20,10 @@ class LoginContent extends Component {
                   );
                   alert('로그인이 완료됐습니다.');
                 }.bind(this)}>
-                <view style={{flex: 1, flexDirection: 'low'}}>
-                  <view style={{flex: 1, flexDirection: 'column'}}>
-                    <p><input style={{flex: 1}} type="text" name="ID" placeholder="ID"></input></p>
-                    <p><input style={{flex: 1}} type="text" name="PW" placeholder="Password"></input></p>
-                  </view>
-                  <button style={{flex: 1}} type="submit">Login</button>
-                </view>
-                
+                  Login
+                  <input type="text" name="ID" placeholder="ID"></input>
+                  <input type="text" name="PW" placeholder="Password"></input>
+                  <button type="submit">Login</button>
               </form>
           </article>
       );

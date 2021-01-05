@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 class CustomerList extends Component {
     render() {
-      var customerLists = [];
-      var data = this.props.data;
-      var i = 0;
+      let customerLists = [];
+      let data = this.props.data;
+      let i = 0;
       while(i < data.length){
         customerLists.push(
         <li key={data[i].id}>
