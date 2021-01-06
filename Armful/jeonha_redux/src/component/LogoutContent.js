@@ -8,14 +8,14 @@ class Logout extends Component {
     }
     
     render() {
-      const LoginStyle = {
-        position: 'fixed',
-        top: 90,
-        right: 10
-      }
+      // const LoginStyle = {
+      //   position: 'fixed',
+      //   top: 90,
+      //   right: 10
+      // }
 
       return (
-      <div style={LoginStyle}>
+      <div>
         <input type="button" value="LOGOUT" onClick={function () {
             this.props.onClick()
           }.bind(this)}></input>

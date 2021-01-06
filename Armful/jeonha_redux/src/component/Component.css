@@ -1,9 +1,18 @@
 .MainTitle {
     text-align: center;
     color:"red";
-    /* border: 4px dashed #815854; */
+    border: 4px dashed #815854; 
     text-decoration: 'none' !important;
   }
+
+.Root {
+  display: flex;
+  flex-direction: column;
+}
+
+.RootTop {
+  display: flex;
+}
 
 .SubTitle{
     font-size: 20px;

@@ -22,13 +22,13 @@ export default class Basket extends Component {
     }
 
     render() {
-        const paymentStyle = {
-            position: 'relative',
-            top: 150,
-            left: 30
-          }
+        // const paymentStyle = {
+        //     position: 'relative',
+        //     top: 150,
+        //     left: 30
+        //   }
         return (
-            <div style={paymentStyle}>
+            <div>
 
                 {/* DB에서 사용자 정보 불러오기 */}
                <h2>1. 주문 정보</h2>

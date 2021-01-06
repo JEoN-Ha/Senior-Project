@@ -5,11 +5,12 @@ import LoginRoot from './component/LoginRoot';
 import Content from './component/Content.js';
 import TopBar from './containers/TopBar';
 import BasketRoot from './component/BasketRoot';
+import './component/Component.css';
 
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className = "Root">
         {/* JEoN-Ha 제목 */}
         <Subject></Subject>
 

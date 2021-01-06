@@ -24,11 +24,11 @@ class Menu extends Component {
     };
   }
     render() {
-      const menuStyle = {
-          position: 'fixed',
-          top: 200,
-          left: 30
-        }
+      // const menuStyle = {
+      //     position: 'fixed',
+      //     top: 200,
+      //     left: 30
+      //   }
         const mapToComponent = data => {
           return data.map((menu, i) => {
               return (<MenuInfo menu={menu} key={i}
@@ -51,7 +51,7 @@ class Menu extends Component {
           });
       };  
       return (
-        <div style={menuStyle}>
+        <div>
             {/* menu 여러개 그리기 */}
             {mapToComponent(this.state.menuData)} 
         </div>

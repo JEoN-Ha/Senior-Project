@@ -1,3 +1,4 @@
+import { findByLabelText } from '@testing-library/react';
 import React, {Component} from 'react';
 import LoginContent from '../containers/LoginContent';
 import LogoutContent from '../containers/LogoutContent';
@@ -32,8 +33,13 @@ export default class LoginRoot extends Component {
         }
         return _article;
       }
-
     render() {
+        // const LoginStyle = {
+        //     position: 'fixed',
+        //     top: 90,
+        //     left: 30,
+        //     minWidth: 50
+        //   }
         return (
             <div>
                 {this.getLogin()}
@@ -41,4 +47,6 @@ export default class LoginRoot extends Component {
             </div>
         )
     }
+    
 }
+
