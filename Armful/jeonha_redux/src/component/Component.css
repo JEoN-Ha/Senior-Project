@@ -10,16 +10,12 @@
   flex-direction: column;
 }
 
-.RootTop {
+.TopBarRoot {
   display: flex;
 }
 
-.SubTitle{
-    font-size: 20px;
-}
-
-.Login{
-  flex-direction: 'row';
+.TopBarItem {
+  width: 25%;
 }
 
 .BasketTitle{
