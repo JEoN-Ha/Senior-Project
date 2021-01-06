@@ -16,6 +16,19 @@
 
 .TopBarItem {
   width: 25%;
+  font-weight: bold;
+  text-align: center;
+}
+
+.Login {
+  display: flex;
+  font-weight: bold;
+}
+
+@media screen and (max-width:600px){
+  .Login{
+    flex-direction: column;
+  }
 }
 
 .BasketTitle{

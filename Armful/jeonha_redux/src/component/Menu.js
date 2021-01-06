@@ -24,11 +24,6 @@ class Menu extends Component {
     };
   }
     render() {
-      // const menuStyle = {
-      //     position: 'fixed',
-      //     top: 200,
-      //     left: 30
-      //   }
         const mapToComponent = data => {
           return data.map((menu, i) => {
               return (<MenuInfo menu={menu} key={i}

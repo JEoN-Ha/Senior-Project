@@ -27,11 +27,6 @@ class BasketButton extends Component {
   }
 
     render() {
-      // const basketStyle = {
-      //   position : 'fixed',
-      //   top : 500,
-      //   left : 20
-      // }
       return (
         <header>
           <div className="BasketTitle">

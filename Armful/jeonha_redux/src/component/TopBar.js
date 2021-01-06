@@ -6,35 +6,7 @@ class TopBar extends Component {
         TopBar : [ 'MENU', '장바구니', 'Coupon', 'Event']
     }
     render() {
-        {
-            // const standardPositionLeft = 30;
-            
-            // const TopBarStyle = {
-            //   position: 'fixed',
-            //   top: 120,
-            //   left: 30,
-            //   minWidth:10
-            // }
-
-            // const title2Style = {
-            //     position: 'fixed',
-            //     top: 120,
-            //     left: standardPositionLeft + 250
-            // }
-
-            // const title3Style = {
-            //     position: 'fixed',
-            //     top: 120,
-            //     left: standardPositionLeft + 450
-            // }
-
-            // const title4Style = {
-            //     position: 'fixed',
-            //     top: 120,
-            //     left: standardPositionLeft + 650
-            // }
-
-        
+        {   
       return (
         <div className="TopBarRoot">
             <text

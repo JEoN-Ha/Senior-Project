@@ -22,11 +22,6 @@ export default class Basket extends Component {
     }
 
     render() {
-        // const paymentStyle = {
-        //     position: 'relative',
-        //     top: 150,
-        //     left: 30
-        //   }
         return (
             <div>
 

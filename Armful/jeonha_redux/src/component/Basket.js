@@ -14,11 +14,6 @@ export default class Basket extends Component {
     }
 
     render() {
-        // const basketStyle = {
-        //     position: 'fixed',
-        //     top: 150,
-        //     left: 30
-        //   }
         return (
             <div>
 
