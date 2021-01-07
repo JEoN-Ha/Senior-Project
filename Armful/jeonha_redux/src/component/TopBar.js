@@ -3,7 +3,7 @@ import './Component.css'
 
 class TopBar extends Component {
     state = {
-        TopBar : [ 'MENU', '장바구니', 'Coupon', 'Event']
+        TopBar : [ 'MENU', '장바구니', 'MY PAGE', 'EVENT']
     }
     render() {
         {   
@@ -27,7 +27,7 @@ class TopBar extends Component {
                 className="TopBarItem"
                 onClick={function (e) {
                     e.preventDefault();
-                    this.props.onChangePage(e.target.innerText);                    
+                    this.props.onClickMyPage(e.target.innerText);                    
                 }.bind(this)}
             >{this.state.TopBar[2]}</text>
             <text
