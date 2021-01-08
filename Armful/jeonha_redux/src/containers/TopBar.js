@@ -3,8 +3,14 @@ import {connect} from 'react-redux';
 
 function mapDispatchToProps(dispatch){
     return {
-        onClick:function(_menu){
+        onClickMenu:function(_menu){
             dispatch({type:'MENU',mode_content:_menu});
+        },
+        onClickBasket:function(_basket){
+            dispatch({type:'장바구니',mode_content:_basket});
+        },
+        onClickMyPage:function(_MyPage){
+            dispatch({type:'MY PAGE',mode_content:_MyPage});
         }
     }
 }

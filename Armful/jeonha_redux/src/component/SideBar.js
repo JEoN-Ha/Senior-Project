@@ -1,10 +1,8 @@
-import { findByLabelText } from '@testing-library/react';
 import React, {Component} from 'react';
-import LoginContent from '../containers/LoginContent';
-import ReadCustomer from '../containers/ReadCustomer';
 import store from '../store';
+import LoginSignUpButton from '../containers/LoginSignUpButton_con';
 
-export default class LoginRoot extends Component {
+export default class SideBar extends Component {
     state = {
         mode:store.getState().mode
     }
@@ -15,22 +13,19 @@ export default class LoginRoot extends Component {
         }.bind(this));
     }
 
-    getLogin(){
+    getButton(){
         let _article = null;
         if(this.state.mode === 'login'){
-          _article = <LoginContent></LoginContent>}
-        else if(this.state.mode === 'readCustomer'){
-          _article = <ReadCustomer></ReadCustomer>
+          _article = <LoginSignUpButton></LoginSignUpButton>
         }
         return _article;
-      }
+    }
+
     render() {
         return (
             <div>
-                {this.getLogin()}
+                {this.getButton()}
             </div>
         )
     }
-    
 }
-

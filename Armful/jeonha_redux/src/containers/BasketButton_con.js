@@ -1,4 +1,4 @@
-import Basket from "../component/Basket";
+import BasketButton from "../component/BasketButton";
 import {connect} from 'react-redux';
 
 function mapReduxStateToReactProps(state) {
@@ -8,4 +8,4 @@ function mapReduxStateToReactProps(state) {
     }    
 }
 
-export default connect(mapReduxStateToReactProps)(Basket);
+export default connect(mapReduxStateToReactProps)(BasketButton);

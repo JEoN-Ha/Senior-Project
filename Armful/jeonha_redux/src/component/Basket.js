@@ -1,51 +1,36 @@
-import React, { Component } from 'react';
-import "./Component.css";
+import React, {Component} from 'react';
 import store from '../store';
-import SelectCount_con from '../containers/SelectCount_con';
+import "./Component.css";
 
-class Basket extends Component {
-  state = {
-    orderCount:store.getState().orderCount,
-    orderName:store.getState().orderName
-  }
-  constructor(props){
-  super(props);
-  store.subscribe(function () {
-      this.setState({
-        orderCount:store.getState().orderCount,
-        orderName:store.getState().orderName
-      });           
-  }.bind(this));
-  };
-
-  getCount(){   // 상품을 선택한 경우에만 개수 정하는 버튼 등장
-    let _article = null;
-    if(this.props.orderName !== '상품을 선택해주세요.'){
-      _article = <SelectCount_con></SelectCount_con>
+export default class Basket extends Component {
+    state = {
+        mode_content:store.getState().mode_content
     }
-    return _article
-  }
+    constructor(props){
+        super(props);
+        store.subscribe(function () {
+            this.setState({mode_content:store.getState().mode_content});           
+        }.bind(this));
+    }
 
     render() {
-      const basketStyle = {
-        position : 'fixed',
-        top : 500,
-        left : 20
-      }
-      return (
-        <header style={basketStyle}>
-          <div className="BasketTitle">
+        return (
+            <div>
 
-            {/* 선택 상품의 이름 */}
-            <text>선택상품 : {this.props.orderName}</text>&nbsp;
+                {/* DB에서 장바구니 내역 불러오기 */}
+               <h2>주문 메뉴 정보</h2>
+               <article className="OrderInfoTitle">아메리카노 1개</article>
+               <button onClick={function () {
+                    this.props.BasketMoreClick(this.state.mode_content)                   
+               }.bind(this)}>메뉴 더 담으러 가기</button>
 
-            {/* 선택 상품의 개수 */}
-            {this.getCount()}
-          </div>
-            
-        </header>
-      );
+               {/* DB에서 총 결제 금액 불러오기 */}
+               <h2>결제 금액</h2>
+               <article className="OrderInfoTitle">4400원</article>
+               <button onClick={function () {
+                    this.props.PaymentClick()                   
+               }.bind(this)}>결제하기</button>
+            </div>
+        )
     }
-  }
-
-  export default Basket;
+}

@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch){
         },
         BasketClick:function (_count) {
             if(_count !== 0 ){
-                dispatch({type:'BASKET'})
+                dispatch({type:'BASKET_CLICK'})
             }
             else {
                 alert('상품 개수를 입력해주세요.')
