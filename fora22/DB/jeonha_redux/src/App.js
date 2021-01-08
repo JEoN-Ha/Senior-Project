@@ -12,9 +12,16 @@ class App extends Component {
   
   
   componentDidMount() {
-    fetch('https://webappmainpage-fora22.azurewebsites.net/')
-    .then(response => response.json())
-    .then(data => console.log(data));
+    const all = fetch('http://localhost:3000/')
+    .then(response => {
+      console.log(response.text());
+    });
+    
+    // .then(data => {console.log(data);});    
+
+    // all.catch(function(err) {
+    //   console.log(err);
+    // });
   //   fetch('https://koreanjson.com/posts/1')
   // .then(response => response.json())
   // .then(json => console.log(json))

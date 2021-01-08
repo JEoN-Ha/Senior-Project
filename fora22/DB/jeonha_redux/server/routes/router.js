@@ -1,11 +1,18 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
+
+const path = require('path');
 const PORT = process.env.PORT||4000;
 // const os = require('os');
 // const router = express.Router();
 const db = require('../dbconnection');
 
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
+app.use((req, res, next) => {
+    console.log('time : ', Date.now());
+    next();
+});
 
 // app.use(app.json());
 
@@ -13,9 +20,10 @@ const bodyParser = require('body-parser');
 //     response.send({username: os.userInfo().username});
 // })
 
-app.get('/', (request, response) => {
+app.get('http://localhost:3000/', (request, response) => {
     db.query("select * from inventory", (err, rows) => {
         if(!err) {
+            console.log(rows);
             response.send(rows);
         } else {
             console.log(`query error: ${err}}`);
@@ -28,4 +36,4 @@ app.listen(PORT, () => {
     console.log(`check :${PORT}`);
 }) 
 
-module.exports = app;
+// module.exports = app;
