@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Subject from './component/Subject';
 import LoginRoot from './component/LoginRoot';
+import SignUpRoot from './component/SignUpRoot';
 import Content from './component/Content.js';
 import TopBar from './containers/TopBar';
 import BasketRoot from './component/BasketRoot';
@@ -28,6 +29,9 @@ class App extends Component {
 
         {/* LOGIN */}
         <LoginRoot></LoginRoot>
+
+        {/* 회원가입 */}
+        <SignUpRoot></SignUpRoot>
         
         {/* 장바구니 */}
         <BasketRoot></BasketRoot>

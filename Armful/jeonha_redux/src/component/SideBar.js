@@ -5,13 +5,12 @@ import ReadCustomer from '../containers/ReadCustomer';
 
 export default class SideBar extends Component {
     state = {
-        mode:store.getState().mode,
-        mode_content:store.getState().mo_mode_content
+        mode:store.getState().mode
     }
     constructor(props){
         super(props);
         store.subscribe(function () {
-            this.setState({mode:store.getState().mode, mode_content:store.getState().mode_content});           
+            this.setState({mode:store.getState().mode});           
         }.bind(this));
     }
 
