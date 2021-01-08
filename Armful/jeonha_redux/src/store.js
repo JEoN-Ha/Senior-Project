@@ -15,12 +15,12 @@ export default createStore(function(state, action){
     if(action.type === 'LOGIN') {
         return {...state, mode_content:'LOGIN'}    //...state는 이전 state를 복사
     }
-    // if(action.type === 'LOGIN') {
-    //     return {...state, ID:action.ID, PW:action.PW, mode:'readCustomer'}    //...state는 이전 state를 복사
-    // }
-    // if(action.type === 'LOGOUT') {
-    //     return {...state, ID:action.ID, PW:action.PW, mode:'login'}
-    // }
+    if(action.type === 'LOGIN_CLICK') {
+        return {...state, ID:action.ID, PW:action.PW, mode:'readCustomer', mode_content:'welcome'}    //...state는 이전 state를 복사
+    }
+    if(action.type === 'LOGOUT') {
+        return {...state, ID:action.ID, PW:action.PW, mode:'login'}
+    }
 
     // 회원가입
     if(action.type === '회원가입') {

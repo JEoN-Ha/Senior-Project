@@ -25,6 +25,10 @@
   text-align: center;
 }
 
+.LoginTotal {
+  display: flex;
+}
+
 .Login {
   display: flex;
   font-weight: bold;

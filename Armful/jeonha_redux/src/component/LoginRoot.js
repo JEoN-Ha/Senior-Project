@@ -1,27 +1,25 @@
 import { findByLabelText } from '@testing-library/react';
 import React, {Component} from 'react';
 import LoginContent from '../containers/LoginContent';
-import ReadCustomer from '../containers/ReadCustomer';
 import store from '../store';
 
 export default class LoginRoot extends Component {
     state = {
-        mode:store.getState().mode
+        mode:store.getState().mode,
+        mode_content:store.getState().mo_mode_content
     }
     constructor(props){
         super(props);
         store.subscribe(function () {
-            this.setState({mode:store.getState().mode});           
+            this.setState({mode:store.getState().mode, mode_content:store.getState().mode_content});           
         }.bind(this));
     }
 
     getLogin(){
         let _article = null;
-        if(this.state.mode === 'login'){
+        if(this.state.mode_content === 'LOGIN'){
           _article = <LoginContent></LoginContent>}
-        else if(this.state.mode === 'readCustomer'){
-          _article = <ReadCustomer></ReadCustomer>
-        }
+        
         return _article;
       }
     render() {

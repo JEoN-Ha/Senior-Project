@@ -15,6 +15,7 @@ class App extends Component {
         {/* JEoN-Ha 제목 */}
         <Subject></Subject>
 
+        {/* 로그인 & 회원가입 버튼 */}
         <SideBar></SideBar>
         {/* 로그인 폼
         <LoginRoot></LoginRoot> */}
@@ -24,6 +25,9 @@ class App extends Component {
         
         {/* MENU */}
         <Content></Content>
+
+        {/* LOGIN */}
+        <LoginRoot></LoginRoot>
         
         {/* 장바구니 */}
         <BasketRoot></BasketRoot>
