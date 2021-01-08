@@ -7,29 +7,20 @@ import TopBar from './containers/TopBar';
 import BasketRoot from './component/BasketRoot';
 
 
-class App extends Component {
-  state = {username: null};
 
+class App extends Component {
+  
+  
   componentDidMount() {
-    fetch('/api/getData')
+    fetch('https://webappmainpage-fora22.azurewebsites.net/')
     .then(response => response.json())
-    .then(data => this.setState({
-      username: data.rows
-    }));
+    .then(data => console.log(data));
+  //   fetch('https://koreanjson.com/posts/1')
+  // .then(response => response.json())
+  // .then(json => console.log(json))
   }
 
   render() {
-    const username = this.state.username;
-    const testStyle = {
-      position: 'fixed',
-      top: 500,
-      left: 20
-    }
-    const test = () => {
-      console.log('hello');
-      console.log({username});
-      
-    }
     return (
       <div className="App">
         {/* JEoN-Ha 제목 */}
@@ -46,12 +37,6 @@ class App extends Component {
         
         {/* 장바구니 */}
         <BasketRoot></BasketRoot>
-          {test()}
-      <p>
-        <div style={testStyle}>
-          {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. Please wait!</h1>}
-        </div>
-      </p>
       </div>
     )
   }

@@ -1,24 +1,31 @@
-const express = require('express');
-const os = require('os');
-const router = express.Router();
+const app = require('express')();
+const PORT = process.env.PORT||4000;
+// const os = require('os');
+// const router = express.Router();
 const db = require('../dbconnection');
 
+const bodyParser = require('body-parser');
 
 
-router.get('/api/getUsername', (req, res, next) => {
-    res.send({username: os.userInfo().username});
-})
+// app.use(app.json());
 
-router.get('/getData', (req, res) => {
+// app.get('/', (request, response, next) => {
+//     response.send({username: os.userInfo().username});
+// })
+
+app.get('/', (request, response) => {
     db.query("select * from inventory", (err, rows) => {
         if(!err) {
-            res.send(rows);
+            response.send(rows);
         } else {
             console.log(`query error: ${err}}`);
-
-            res.send(err);
+            response.send(err);
         }
     })
 })
 
-module.exports = router;
+app.listen(PORT, () => {
+    console.log(`check :${PORT}`);
+}) 
+
+module.exports = app;
