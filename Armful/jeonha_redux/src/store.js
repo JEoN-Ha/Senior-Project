@@ -4,9 +4,8 @@ export default createStore(function(state, action){
     if(state === undefined){    // 최초 실행일 경우
         return {
             ID:null, PW:null, 
-            mode:'login',
-            mode_content:'welcome',
-            // orderData:[{id:null,count:null}]
+            mode:'login',mode_content:'welcome',
+            PW_state:false,
             orderName:'상품을 선택해주세요.', orderCount:0
         }
     }
@@ -25,6 +24,15 @@ export default createStore(function(state, action){
     // 회원가입
     if(action.type === '회원가입') {
         return {...state, mode_content:'회원가입'}    //...state는 이전 state를 복사
+    }
+    if(action.type === 'PASSWORD_SAME') {
+        return {...state, PW_state:true}    //...state는 이전 state를 복사
+    }
+    if(action.type === 'PASSWORD_DIFF') {
+        return {...state, PW_state:false}    //...state는 이전 state를 복사
+    }
+    if(action.type === '회원가입 완료') {
+        return {...state, mode_content:'LOGIN'}    //...state는 이전 state를 복사
     }
 
     // MENU

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import SignUpContent from './SignUpContent';
+import SignUpContent from '../containers/SignUpContent';
 import store from '../store';
 
 export default class SignUpRoot extends Component {
     state = {
-        mode_content:store.getState().mo_mode_content
+        mode_content:store.getState().mode_content
     }
     constructor(props){
         super(props);

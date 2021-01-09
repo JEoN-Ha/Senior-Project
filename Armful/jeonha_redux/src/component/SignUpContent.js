@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import store from '../store';
 import "./Component.css";
 
 class SignUpContent extends Component {
     state = {
-        ID:null,PW:null,
-        name:null,phoneNum:null,carNum1:null,carNum2:null
+        ID:null,PW:null,PW_check:null,
+        name:null,phoneNum:null,carNum1:null,carNum2:null,
+        PW_state:store.getState().PW_state
+    }
+    constructor(props){
+        super(props);
+        store.subscribe(function () {
+            this.setState({PW_state:store.getState().PW_state});           
+        }.bind(this));
     }
     render() {
       return (
@@ -31,12 +39,15 @@ class SignUpContent extends Component {
                 onChange={function (e) {
                     this.setState({PW:e.target.value});                    
                 }.bind(this)}></input><br></br>
-            <input type="text" name="PW" placeholder="비밀번호를 한번 더 입력해주세요."
+            <input type="text" name="PW_check" placeholder="비밀번호를 한번 더 입력해주세요."
                 size="30"
-                PW={this.state.PW}
+                PW_check={this.state.PW_check}
                 onChange={function (e) {
-                    this.setState({PW:e.target.value});                    
+                    this.setState({PW_check:e.target.value});                    
                 }.bind(this)}></input><br></br>
+            <input type="button" value="passwordCheck" onClick={function () {
+                this.props.onClickCheck(this.state.PW,this.state.PW_check)                     
+            }.bind(this)}></input><br></br>
             차량번호 1<br></br>
             <input type="text" name="carNum1" placeholder="대표 차량번호를 입력해주세요."
                 size="30"
@@ -52,8 +63,9 @@ class SignUpContent extends Component {
                     this.setState({carNum2:e.target.value});                    
                 }.bind(this)}></input><br></br>
             <input type="button" value="Sign up" onClick={function(){
-            alert('회원가입이 완료됐습니다.');
-            }}></input>
+                this.props.onClickSignUp(this.state.name,this.state.ID,
+                    this.state.PW_state,this.state.carNum1)
+                }.bind(this)}></input>
         </div>
       );
     }
