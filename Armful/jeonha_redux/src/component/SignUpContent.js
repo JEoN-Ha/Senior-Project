@@ -15,6 +15,16 @@ class SignUpContent extends Component {
         }.bind(this));
     }
     render() {
+    const btnStyle = {
+        color: "white",
+        background: "#815854",
+        margin: "10px",
+        border: "1px solid #815854",
+        borderRadius: ".25rem",
+        fontSize: "1rem",
+        lineHeight: 1.5,
+        width: "230px"
+        }
       return (
         <div className="SignUp">
             <h2>JEoN-Ha 회원가입</h2>
@@ -45,7 +55,8 @@ class SignUpContent extends Component {
                 onChange={function (e) {
                     this.setState({PW_check:e.target.value});                    
                 }.bind(this)}></input><br></br>
-            <input type="button" value="passwordCheck" onClick={function () {
+            <input style={btnStyle}
+                type="button" value="확인" onClick={function () {
                 this.props.onClickCheck(this.state.PW,this.state.PW_check)                     
             }.bind(this)}></input><br></br>
             차량번호 1<br></br>
@@ -62,7 +73,8 @@ class SignUpContent extends Component {
                 onChange={function (e) {
                     this.setState({carNum2:e.target.value});                    
                 }.bind(this)}></input><br></br>
-            <input type="button" value="Sign up" onClick={function(){
+            <input style={btnStyle}
+                type="button" value="Sign up" onClick={function(){
                 this.props.onClickSignUp(this.state.name,this.state.ID,
                     this.state.PW_state,this.state.carNum1)
                 }.bind(this)}></input>

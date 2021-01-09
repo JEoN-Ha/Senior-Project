@@ -5,6 +5,22 @@
     text-decoration: 'none' !important;
   }
 
+.basicText {
+  margin: 10px;
+  font-size: large;
+}
+
+.basicBtn {
+  color: "white";
+  background: "#815854";
+  margin: "10px";
+  border: "1px solid #815854";
+  border-radius: ".25rem";
+  font-size: "1rem";
+  line-height: 1.5;
+  width: "230px";
+}
+
 .Root {
   display: flex;
   flex-direction: column;
@@ -30,8 +46,16 @@
 }
 
 .Login {
-  display: flex;
   font-weight: bold;
+  /* border: 2px solid #815854; */
+  margin-left: 35%;
+  margin-top: 30px;
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .SignUp {
@@ -51,7 +75,7 @@
 
 @media screen and (max-width:600px){
   .Login{
-    flex-direction: column;
+    margin-left: 10%;
   }
   .TopBarRoot{
     font-size: small;
