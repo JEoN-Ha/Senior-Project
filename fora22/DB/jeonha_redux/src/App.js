@@ -16,7 +16,7 @@ class App extends Component {
       response.text()
     )
     .then(data => {
-      console.log(data);
+      console.log(JSON.parse(data));
       this.setState({username: data});
     });
   }
