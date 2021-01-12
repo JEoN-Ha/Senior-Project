@@ -27,13 +27,8 @@ class BasketButton extends Component {
   }
 
     render() {
-      const basketStyle = {
-        position : 'fixed',
-        top : 500,
-        left : 20
-      }
       return (
-        <header style={basketStyle}>
+        <header>
           <div className="BasketTitle">
 
             {/* 선택 상품의 이름 */}

@@ -4,19 +4,35 @@ export default createStore(function(state, action){
     if(state === undefined){    // 최초 실행일 경우
         return {
             ID:null, PW:null, 
-            mode:'login',
-            mode_content:'welcome',
-            // orderData:[{id:null,count:null}]
+            mode:'login',mode_content:'welcome',
+            PW_state:false,
             orderName:'상품을 선택해주세요.', orderCount:0
         }
     }
 
     // 로그인
     if(action.type === 'LOGIN') {
-        return {...state, ID:action.ID, PW:action.PW, mode:'readCustomer'}    //...state는 이전 state를 복사
+        return {...state, mode_content:'LOGIN'}    //...state는 이전 state를 복사
+    }
+    if(action.type === 'LOGIN_CLICK') {
+        return {...state, ID:action.ID, PW:action.PW, mode:'readCustomer', mode_content:'welcome'}    //...state는 이전 state를 복사
     }
     if(action.type === 'LOGOUT') {
         return {...state, ID:action.ID, PW:action.PW, mode:'login'}
+    }
+
+    // 회원가입
+    if(action.type === '회원가입') {
+        return {...state, mode_content:'회원가입'}    //...state는 이전 state를 복사
+    }
+    if(action.type === 'PASSWORD_SAME') {
+        return {...state, PW_state:true}    //...state는 이전 state를 복사
+    }
+    if(action.type === 'PASSWORD_DIFF') {
+        return {...state, PW_state:false}    //...state는 이전 state를 복사
+    }
+    if(action.type === '회원가입 완료') {
+        return {...state, mode_content:'LOGIN'}    //...state는 이전 state를 복사
     }
 
     // MENU
@@ -48,6 +64,14 @@ export default createStore(function(state, action){
     }
     if(action.type === 'PAYMENT') {
         return {...state, mode_content:'payment'}  
+    }
+    if(action.type === 'PAYMENT_CLICK') {
+        return {...state, mode_content:'welcome'}  
+    }
+
+    // 마이페이지
+    if(action.type === 'MY PAGE') {
+        return {...state, mode_content:'MY PAGE'}  
     }
     return state; // 기본적으로 state를 리턴하게 됨
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

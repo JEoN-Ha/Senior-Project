@@ -1,63 +1,37 @@
 import React, { Component } from 'react';
+import './Component.css'
 
 class TopBar extends Component {
     state = {
-        TopBar : [ 'MENU', '장바구니', 'Coupon', 'Event']
+        TopBar : [ 'MENU', '장바구니', 'MY PAGE', 'EVENT']
     }
     render() {
-        {
-            const standardPositionLeft = 30;
-            
-            const TopBarStyle = {
-              position: 'fixed',
-              top: 120,
-              left: 30,
-              minWidth:10
-            }
-
-            const title2Style = {
-                position: 'fixed',
-                top: 120,
-                left: standardPositionLeft + 250
-            }
-
-            const title3Style = {
-                position: 'fixed',
-                top: 120,
-                left: standardPositionLeft + 450
-            }
-
-            const title4Style = {
-                position: 'fixed',
-                top: 120,
-                left: standardPositionLeft + 650
-            }
-
-        
+        {   
       return (
-        <div style = {TopBarStyle}>
+        <div className="TopBarRoot">
             <text
+                className="TopBarItem"
                 onClick={function (e) {
                     e.preventDefault();
                     this.props.onClickMenu(e.target.innerText);                   
                 }.bind(this)}
             >{this.state.TopBar[0]}</text>
-            <text 
-                style={title2Style}
+            <text
+                className="TopBarItem"
                 onClick={function (e) {
                     e.preventDefault();
                     this.props.onClickBasket(e.target.innerText);                    
                 }.bind(this)}
             >{this.state.TopBar[1]}</text>
-            <text 
-                style={title3Style}
+            <text
+                className="TopBarItem"
                 onClick={function (e) {
                     e.preventDefault();
-                    this.props.onChangePage(e.target.innerText);                    
+                    this.props.onClickMyPage(e.target.innerText);                    
                 }.bind(this)}
             >{this.state.TopBar[2]}</text>
-            <text 
-                style={title4Style}
+            <text
+                className="TopBarItem"
                 onClick={function (e) {
                     e.preventDefault();
                     this.props.onChangePage(e.target.innerText);                    

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import LoginContent from '../containers/LoginContent';
+import SignUpContent from '../containers/SignUpContent';
 import store from '../store';
 
-export default class LoginRoot extends Component {
+export default class SignUpRoot extends Component {
     state = {
-        mode_content:store.getState().mo_mode_content
+        mode_content:store.getState().mode_content
     }
     constructor(props){
         super(props);
@@ -13,20 +13,19 @@ export default class LoginRoot extends Component {
         }.bind(this));
     }
 
-    getLogin(){
+    getSignUp(){
         let _article = null;
-        if(this.state.mode_content === 'LOGIN'){
-          _article = <LoginContent></LoginContent>}
+        if(this.state.mode_content === '회원가입'){
+          _article = <SignUpContent></SignUpContent>}
         
         return _article;
       }
     render() {
         return (
             <div>
-                {this.getLogin()}
+                {this.getSignUp()}
             </div>
         )
     }
     
 }
-

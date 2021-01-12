@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 function mapDispatchToProps(dispatch){
     return {
         onClick:function(_ID,_PW){
-            dispatch({type:'LOGIN',ID:_ID,PW:_PW});
+            dispatch({type:'LOGIN_CLICK',ID:_ID,PW:_PW,mode_content:'welcome'});
         }
     }
 }

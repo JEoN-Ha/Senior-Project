@@ -14,13 +14,8 @@ export default class Basket extends Component {
     }
 
     render() {
-        const basketStyle = {
-            position: 'fixed',
-            top: 150,
-            left: 30
-          }
         return (
-            <div style={basketStyle}>
+            <div>
 
                 {/* DB에서 장바구니 내역 불러오기 */}
                <h2>주문 메뉴 정보</h2>
