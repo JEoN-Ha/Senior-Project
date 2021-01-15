@@ -1,4 +1,4 @@
-USE fora22jeonhafirstdb;
+USE untactdt;
 
 CREATE TABLE usertable (
 UserWebId VARCHAR(100),
