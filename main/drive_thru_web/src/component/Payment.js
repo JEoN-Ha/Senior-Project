@@ -22,6 +22,17 @@ export default class Basket extends Component {
     }
 
     render() {
+        const btnStyle = {
+            color: "white",
+            background: "#815854",
+            margin: "3px",
+            padding: "2px",
+            border: "1px solid #815854",
+            borderRadius: ".25rem",
+            fontSize: "1rem",
+            lineHeight: 1.5,
+            width: "100px"
+          }
         return (
             <div>
 
@@ -75,7 +86,7 @@ export default class Basket extends Component {
                 </article>
                 
                 {/* 결제 정보 DB로 보내기 */}
-                <button onClick={function () {
+                <button style={btnStyle} onClick={function () {
                     this.props.Payment(this.state.name,this.state.phone,this.state.carNumber)                   
                }.bind(this)}>결제하기</button>
             </div>

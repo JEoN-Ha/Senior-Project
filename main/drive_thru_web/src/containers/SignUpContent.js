@@ -18,6 +18,9 @@ function mapDispatchToProps(dispatch){
                 dispatch({type:'회원가입 완료', mode_content:'LOGIN'});
                 alert('회원가입이 완료되었습니다.');
             }
+            else if(_check === false){
+               alert('비밀번호 확인을 해주세요.')
+            }
             else{
                 alert('입력하지 않은 항목이 있습니다. 모두 입력해주세요.');
             }           
