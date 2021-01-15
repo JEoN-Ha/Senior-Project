@@ -7,22 +7,57 @@ import TopBar from './containers/TopBar';
 import BasketRoot from './component/BasketRoot';
 
 
+
+
 class App extends Component {
-  state = {username: null};
+  state = {
+    allUser: null,
+    userName: null
+  
+  };
 
   componentDidMount() {
+    // fetch('http://localhost:4000/fora22')
+    // .then(response => 
+    //   response.text()
+    // )
+    // .then(data => {
+    //   console.log(JSON.parse(data));
+    //   this.setState({userName: data});
+    // });
+    let bodyData = JSON.stringify({
+      UserWebId: "baekgo_",
+      UserName: "강백구",
+      PW: '8888',
+      PhoneNum: '0880808080'
+    })
+    
+    // fetch('http://localhost:4000/insertData', {
+    //   method: "post",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: bodyData
+    // })
+    // .then((res) => console.log(res.json()))
+    
+    
     fetch('http://localhost:4000/getData')
     .then(response => 
       response.text()
     )
     .then(data => {
       console.log(JSON.parse(data));
-      this.setState({username: data});
+      this.setState({allUser: data});
     });
+    
+    
   }
+  
 
   render() {
-    const username = this.state.username;
+    const allUser = this.state.allUser;
+    const userName = this.state.userName;
     const testStyle = {
       position: 'fixed',
       left: 20,
@@ -47,7 +82,8 @@ class App extends Component {
         <BasketRoot></BasketRoot>
       
         <div style={testStyle}>
-          <h1>{username}</h1>
+          <h1>{allUser}</h1>
+          <h2>{userName}</h2>
         </div>
       
       </div>
