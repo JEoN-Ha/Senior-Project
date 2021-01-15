@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info: 
+  version: '1.0.0'
+  title: Untact DriveThru API
+  description: this is for Senior Project of Jeonha
+servers:
+  - description: Jeonha API
+    url: http://localhost:4000/
+paths:
+  /getData:
+    get:
+      summary: GetData API
+      parameters: 
+        - in: query
+          name: USerWebId
+          description: user id 
+          required: true
+          schema:
+              type: object
+        - in: query
+          name: CarWebId
+          description: to figure out whose car is this
+          required: true
+          schema:
+              type: object
+resposes: 
+  '200':
+    description: query successful !
+    schema: 
+      type: object
+

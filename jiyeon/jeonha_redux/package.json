@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.1.10",
     "cors": "^2.8.5",
+    "experss": "0.0.1-security",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "react": "^17.0.1",

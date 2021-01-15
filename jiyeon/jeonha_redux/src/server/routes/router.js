@@ -9,7 +9,7 @@ const cors = require('cors');
 
 router.get('/getData', cors(), (req, res) => {
     
-    db.query("select * from inventory", (err, rows) => {
+    db.query("select * from usertable;", (err, rows) => {
         if(!err) {
             console.log(rows);
             res.send(rows);
