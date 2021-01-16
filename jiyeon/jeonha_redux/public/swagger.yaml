@@ -12,7 +12,7 @@ paths:
       summary: Post Member's Data API
       parameters: 
         - in: query
-          name: USerWebId
+          name: UserWebId
           description: users membership ID
           required: true
           schema:
@@ -41,28 +41,55 @@ paths:
             required: true
             schema: 
               type: string
+      resposes: 
+        '200':
+          description: query successful !
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  UserWebId:
+                    type: string
+                  UserName:
+                    type: string
+                  PW:
+                    type: string
+                  PhoneNum:
+                    type: string
+                  carId:
+                    type: string
   /signIn:
     get:
-    summary: get ID & Password from DB to compare DB's and Web's
-    parameters:
-      - in: query
-        name: USerWebId
-        description: user's id that inputed when sign up
-        required: true
-        schema:
-          type: string
-      - in: query
-        name: PW
-        description: user's password that inputed when sign up
-        required: true
-        schema:
-          type: string
-  /
-
-
+      summary: get ID & Password from DB to compare DB's and Web's
+      parameters:
+        - in: query
+          name: UserWebId
+          description: user's id that inputed when sign up
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: PW
+          description: user's password that inputed when sign up
+          required: true
+          schema:
+            type: string
+      resposes: 
+        '200':
+          description: query successful !
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  UserWebId:
+                    type: string
+                  PW:
+                    type: string
   /getMenuData:
     get: 
-      summary: Get Menu API
+      summary: Get Menu APIs
       parameters:
         - in: query
           name: MenuNo
@@ -210,11 +237,13 @@ paths:
           required: true
           schema:
             type: integer
+      resposes: 
+        '200':
+          description: query successful !
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
 
-
-resposes: 
-  '200':
-    description: query successful !
-    schema: 
-      type: object
 

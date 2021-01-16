@@ -11,7 +11,7 @@ class App extends Component {
   state = {username: null};
 
   componentDidMount() {
-    fetch('http://localhost:4000/getData')
+    fetch('http://localhost:4000/signIn')
     .then(response => 
       response.text()
     )
