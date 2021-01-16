@@ -60,7 +60,7 @@ paths:
                   carId:
                     type: string
   /signIn:
-    get:
+    post:
       summary: get ID & Password from DB to compare DB's and Web's
       parameters:
         - in: query
@@ -114,17 +114,23 @@ paths:
           description: Menu Price
           required: true
           schema:
-            type: integer       
-  /loginSuccess:        #엑셀엔 없고 추가한거
-    get:
-      summary: say hello to user
-      parameters:
-        - in: query
-          name: UserName
-          description: user name
-          required: true
-          schema:
-              type: string 
+            type: integer 
+      resposes: 
+        '200':
+          description: query successful !
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  MenuNo:
+                    type: integer
+                  FoodNameKor:
+                    type: string
+                  FoodNameEng:
+                    type: string
+                  Price:
+                    type: integer    
   /insertIntoBasket:
     post:
       summary: put something to Basket before the order
@@ -165,6 +171,26 @@ paths:
           required: true
           schema: 
             type: integer
+      resposes: 
+        '200':
+          description: query successful !
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  OrderToMenu_OrderNo:
+                    type: integer
+                  OrderToMenu_MenuNo:
+                    type: string
+                  OrderWebId:
+                    type: string
+                  WEBCarId:
+                    type: integer
+                  OrderState:
+                    type: integer
+                  OrderPayment:
+                    type: integer 
   /order:
     get: 
       summary: if user clicked `order`        
@@ -187,7 +213,21 @@ paths:
           required: true
           schema: 
             type: integer 
-  /afterPaying  #주문확인
+      resposes: 
+        '200':
+          description: query successful !
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  OrderToMenu_OrderNo:
+                    type: integer
+                  MenuCount:
+                    type: integer
+                  OrderPayment:
+                    type: integer
+  /beforePaying  #주문확인
     get: 
       summary: to check the order-list
       parameters: 
@@ -226,7 +266,27 @@ paths:
           description: payment 
           required: true
           schema: 
-            type: integer 
+            type: integer
+      resposes: 
+        '200':
+          description: query successful !
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  UserName:
+                    type: string
+                  PhoneNum:
+                    type: string
+                  carId:
+                    type: string
+                  OrderToMenu_MenuNo:
+                    type: integer
+                  MenuCount:
+                    type: integer
+                  OrderPayment:
+                    type: integer
   /paying:
     post: 
       summary: clicked `paying`
@@ -245,5 +305,9 @@ paths:
               schema: 
                 type: object
                 properties:
+                  OrderState:
+                    type: integer
+
+              
 
 
