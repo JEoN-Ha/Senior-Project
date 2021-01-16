@@ -227,7 +227,7 @@ paths:
                     type: integer
                   OrderPayment:
                     type: integer
-  /beforePaying  #주문확인
+  /beforePaying  #결제 전 확인
     get: 
       summary: to check the order-list
       parameters: 
