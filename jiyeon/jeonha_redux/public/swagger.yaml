@@ -1,11 +1,11 @@
 openapi: 3.0.0
-info: 
-  version: '1.0.0'
-  title: Untact DriveThru API
-  description: this is for Senior Project of Jeonha
+info:
+  version: 1.0.0
+  title: Jeonha-redux
+  description: Untact DriveThru를 위한 API 명세서
 servers:
-  - description: Jeonha API
-    url: http://localhost:4000/
+  - description: JeonHa Untact DriveThru API
+    url: https://localhost:4000
 paths:
   /signUP:
     post:
@@ -28,19 +28,19 @@ paths:
           description: user's password
           required: true
           schema:
+            type: string
+        - in: query
+          name: PhoneNum
+          description: user's phone number
+          required: true
+          schema:
               type: string
-          - in: query
-            name: PhoneNum
-            description: user's phone number
-            required: true
-            schema:
-                type: string
-          - in: query
-            name: carId
-            description: user's car ID
-            required: true
-            schema: 
-              type: string
+        - in: query
+          name: carId
+          description: user's car ID
+          required: true
+          schema: 
+            type: string
       responses: 
         '200':
           description: successfully posted Member's Data !
@@ -49,16 +49,21 @@ paths:
               schema: 
                 type: object
                 properties:
-                  UserWebId:
-                    type: string
-                  UserName:
-                    type: string
-                  PW:
-                    type: string
-                  PhoneNum:
-                    type: string
-                  carId:
-                    type: string
+                  SignupSuccess:
+                    type: boolean
+        '400':
+            description: failed to post Member's Data ! it must be overlaped ID or PW / or you typed too long ID or PW
+            content: 
+              application/json:
+                schema: 
+                  type: object
+                  properties:
+                    IdOverlap:
+                      type: boolean
+                    PwOverlap:
+                      type: boolean
+                    DbError:
+                      type: boolean
   /signIn:
     post:
       summary: post ID & Password from DB to compare DB's and Web's
@@ -83,38 +88,22 @@ paths:
               schema: 
                 type: object
                 properties:
-                  UserWebId:
-                    type: string
-                  PW:
-                    type: string
+                  LoginSuccess:
+                    type: boolean
+        '400':
+          description: failed to post Member's Data ! it must be Id Error or PW Error
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  IdError:
+                    type: boolean
+                  PwError:
+                    type: boolean
   /getMenuData:
     get: 
-      summary: Get Menu APIs
-      parameters:
-        - in: query
-          name: MenuNo
-          description: id number for the menu
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: FoodNameKor
-          description: menu name in Korean
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: FoodNameEng
-          description: menu name in English
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: Price
-          description: Menu Price
-          required: true
-          schema:
-            type: integer 
+      summary: Get Menu API
       responses: 
         '200':
           description: successfully got Menu Data !
@@ -136,12 +125,6 @@ paths:
       summary: put something to Basket before the order
       parameters:
         - in: query
-          name: OrderToMenu_OrderNo
-          description: order number
-          required: true
-          schema:
-            type: integer
-        - in: query
           name: OrderToMenu_MenuNo
           description: menu number
           required: true
@@ -160,16 +143,28 @@ paths:
           schema: 
             type: string
         - in: query
-          name: OrderState
-          description: to note which state is it now
-          required: true
-          schema:
-            type: integer
-        - in: query
           name: OrderPayment
           description: payment 
           required: true
           schema: 
+            type: integer
+        - in: query
+          name: MenuNo
+          description: id number of menu
+          required: true
+          schema: 
+            type: integer  
+        - in: query
+          name: MenuCount
+          description: quantity of menus users ordered 
+          required: true
+          schema: 
+            type: integer
+        - in: query
+          name: Price
+          description: menu price
+          required: true
+          schema:
             type: integer
       responses: 
         '200':
@@ -191,85 +186,18 @@ paths:
                     type: integer
                   OrderPayment:
                     type: integer 
-  /order:
-    get: 
-      summary: if user clicked `order`        
-      parameters:
-        - in: query
-          name: OrderToMenu_MenuNo
-          description: menu number
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: MenuCount
-          description: how many users ordered per menus    
-          required: true
-          schema: 
-            type: integer
-         - in: query
-          name: OrderPayment
-          description: payment 
-          required: true
-          schema: 
-            type: integer 
-      responses: 
-        '200':
-          description: successfully got the order-list !
-          content: 
-            application/json:
-              schema: 
-                type: object
-                properties:
-                  OrderToMenu_OrderNo:
+                  MenuNo:
                     type: integer
                   MenuCount:
                     type: integer
-                  OrderPayment:
+                  Price:
                     type: integer
-  /beforePaying  #결제 전 확인
+  /order:  #결제 전 확인
     get: 
       summary: to check the order-list
-      parameters: 
-       - in: query
-          name: UserName
-          description: user name
-          required: true
-          schema:
-              type: string 
-        - in: query
-            name: PhoneNum
-            description: user's phone number
-            required: true
-            schema:
-                type: string
-        - in: query
-            name: carId
-            description: user's car ID
-            required: true
-            schema: 
-              type: string
-        - in: query
-          name: OrderToMenu_MenuNo
-          description: menu number
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: MenuCount
-          description: how many users ordered per menus    
-          required: true
-          schema: 
-            type: integer
-        - in: query
-          name: OrderPayment
-          description: payment 
-          required: true
-          schema: 
-            type: integer
       responses: 
         '200':
-          description:successfully got the order-list & user's info!
+          description: successfully got the order-list & user's info!
           content: 
             application/json:
               schema: 
@@ -307,7 +235,3 @@ paths:
                 properties:
                   OrderState:
                     type: integer
-
-              
-
-
