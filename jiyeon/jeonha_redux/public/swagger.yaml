@@ -43,7 +43,7 @@ paths:
               type: string
       responses: 
         '200':
-          description: query successful !
+          description: successfully posted Member's Data !
           content: 
             application/json:
               schema: 
@@ -61,7 +61,7 @@ paths:
                     type: string
   /signIn:
     post:
-      summary: get ID & Password from DB to compare DB's and Web's
+      summary: post ID & Password from DB to compare DB's and Web's
       parameters:
         - in: query
           name: UserWebId
@@ -77,7 +77,7 @@ paths:
             type: string
       responses: 
         '200':
-          description: query successful !
+          description: successfully posted ID & Password !
           content: 
             application/json:
               schema: 
@@ -117,7 +117,7 @@ paths:
             type: integer 
       responses: 
         '200':
-          description: query successful !
+          description: successfully got Menu Data !
           content: 
             application/json:
               schema: 
@@ -173,7 +173,7 @@ paths:
             type: integer
       responses: 
         '200':
-          description: query successful !
+          description: successfully inserted(posted) menus into basket !
           content: 
             application/json:
               schema: 
@@ -215,7 +215,7 @@ paths:
             type: integer 
       responses: 
         '200':
-          description: query successful !
+          description: successfully got the order-list !
           content: 
             application/json:
               schema: 
@@ -269,7 +269,7 @@ paths:
             type: integer
       responses: 
         '200':
-          description: query successful !
+          description:successfully got the order-list & user's info!
           content: 
             application/json:
               schema: 
@@ -299,7 +299,7 @@ paths:
             type: integer
       responses: 
         '200':
-          description: query successful !
+          description: successfully posted OrderState !
           content: 
             application/json:
               schema: 
