@@ -4,6 +4,9 @@ info:
   title: Jeonha-redux
   description: Untact DriveThru를 위한 API 명세서
 servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/kiJiyeon/Jeonha-redux/1.0.0
   - description: JeonHa Untact DriveThru API
     url: https://localhost:4000
 paths:
@@ -235,3 +238,127 @@ paths:
                 properties:
                   OrderState:
                     type: integer
+  /DeleteFromBasket:
+    delete: 
+      summary: drop canceled order which was not paid out
+      parameters:
+        - in: query
+          name: UserName
+          description: user name
+          required: true
+          schema:
+              type: string
+        - in: query
+          name: PhoneNum
+          description: user's phone number
+          required: true
+          schema:
+              type: string
+        - in: query
+          name: carId
+          description: user's car ID
+          required: true
+          schema: 
+            type: string    
+        - in: query
+          name: OrderToMenu_MenuNo
+          description: menu number
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: MenuCount
+          description: quantity of menus users ordered 
+          required: true
+          schema: 
+            type: integer  
+        - in: query
+          name: OrderPayment
+          description: payment 
+          required: true
+          schema: 
+            type: integer
+      responses: 
+        '200':
+          description: successfully deleted from basket !
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  # UserName:
+                  #   type: string
+                  # PhoneNum:
+                  #   type: string
+                  # carId:
+                  #   type: string
+                  # OrderToMenu_MenuNo:
+                  #   type: integer
+                  # MenuCount:
+                  #   type: integer
+                  # OrderPayment:
+                  #   type: integer
+                  deleteSuccess:
+                    type: boolean
+  /DeleteAfterOrder:
+    delete: 
+      summary: drop canceled order which was paid out
+      parameters: 
+        - in: query
+          name: UserName
+          description: user name
+          required: true
+          schema:
+              type: string
+        - in: query
+          name: PhoneNum
+          description: user's phone number
+          required: true
+          schema:
+              type: string
+        - in: query
+          name: carId
+          description: user's car ID
+          required: true
+          schema: 
+            type: string  
+        - in: query
+          name: OrderToMenu_MenuNo
+          description: menu number
+          required: true
+          schema:
+            type: integer   
+        - in: query
+          name: MenuCount
+          description: quantity of menus users ordered 
+          required: true
+          schema: 
+            type: integer  
+        - in: query
+          name: OrderPayment
+          description: payment 
+          required: true
+          schema: 
+            type: integer       
+      responses: 
+        '200':
+          description: successfully deleted from ordertomenu!
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  # UserName:
+                  #   type: string
+                  # PhoneNum:
+                  #   type: string
+                  # carId:
+                  #   type: string
+                  # OrderToMenu_MenuNo:
+                  #   type: integer
+                  # MenuCount:
+                  #   type: integer
+                  # OrderPayment:
+                  #   type: integer
+                  deleteSuccess:
+                    type: boolean
