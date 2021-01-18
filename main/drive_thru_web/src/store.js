@@ -3,7 +3,7 @@ import {createStore} from 'redux';
 export default createStore(function(state, action){
     if(state === undefined){    // 최초 실행일 경우
         return {
-            ID:null, PW:null, 
+            customer_id:null, PW:null, 
             mode:'login',mode_content:'welcome',
             PW_state:false,
             orderName:'상품을 선택해주세요.', orderCount:0
@@ -15,10 +15,10 @@ export default createStore(function(state, action){
         return {...state, mode_content:'LOGIN'}    //...state는 이전 state를 복사
     }
     if(action.type === 'LOGIN_CLICK') {
-        return {...state, ID:action.ID, PW:action.PW, mode:'readCustomer', mode_content:'welcome'}    //...state는 이전 state를 복사
+        return {...state, customer_id:action.customer_id, PW:action.PW, mode:'readCustomer', mode_content:'welcome'}    //...state는 이전 state를 복사
     }
     if(action.type === 'LOGOUT') {
-        return {...state, ID:action.ID, PW:action.PW, mode:'login'}
+        return {...state, customer_id:action.customer_id, PW:action.PW, mode:'login'}
     }
 
     // 회원가입

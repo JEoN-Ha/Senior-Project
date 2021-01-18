@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import "./Component.css";
 
 class LoginContent extends Component {
     state = {
-        ID:null,
+        customer_id:null,
         PW:null
     }
     render() {
@@ -18,13 +18,13 @@ class LoginContent extends Component {
         width: "230px"
       }
       return (
-        <div className="Login">
+          <article className="Login">
             <text className="basicText">로그인</text>
-            <input type="text" name="ID" placeholder="ID"
+            <input type="text" name="customer_id" placeholder="ID"
               size = "30"
-              ID={this.state.ID}
+              customer_id={this.state.customer_id}
               onChange={function(e){
-                  this.setState({ID:e.target.value});
+                  this.setState({customer_id:e.target.value});
               }.bind(this)}></input>
             <input type="text" name="PW" placeholder="Password"
               size = "30"
@@ -32,12 +32,12 @@ class LoginContent extends Component {
               onChange={function(e){
                   this.setState({PW:e.target.value});
               }.bind(this)}></input>
-          <input style={btnStyle} 
-            type="button" value="LOGIN" onClick={function(){
-            this.props.onClick(this.state.ID,this.state.PW);
-            alert('로그인이 완료됐습니다.');
-        }.bind(this)}></input>
-        </div>
+            <input style={btnStyle} 
+              type="button" value="LOGIN" onClick={function(){
+              this.props.onClick(this.state.customer_id,this.state.PW);
+              alert('로그인이 완료됐습니다.');
+          }.bind(this)}></input>
+          </article>
       );
     }
   }

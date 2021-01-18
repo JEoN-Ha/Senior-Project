@@ -22,9 +22,9 @@ export default class LoginRoot extends Component {
       }
     render() {
         return (
-            <div>
+            <>
                 {this.getLogin()}
-            </div>
+            </>
         )
     }
     
