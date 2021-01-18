@@ -238,7 +238,7 @@ paths:
                 properties:
                   OrderState:
                     type: integer
-  /CancelOrderFromBasket:
+  /CancelOrderFromBasket/{UserWebId}:
     get: 
       summary: get the present status(before the cancel)
       parameters:
@@ -277,7 +277,7 @@ paths:
                 properties:
                   deleteSuccess:
                     type: boolean
-  /CancelOrder:
+  /CancelOrder/{UserWebId}:
     get: 
       summary: get the present status(before the cancel)
       parameters:
