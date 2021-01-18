@@ -238,7 +238,26 @@ paths:
                 properties:
                   OrderState:
                     type: integer
-  /DeleteFromBasket:
+  /CancelOrderFromBasket:
+    get: 
+      summary: get the present status(before the cancel)
+      parameters:
+        - in: query
+          name: UserWebId
+          description: users membership ID
+          required: true
+          schema:
+              type: string
+      responses: 
+        '200':
+          description: successfully got the state!
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  OrderState:
+                    type: integer
     post: 
       summary: update orderstate to mark `deleted` from basket
       parameters:
@@ -247,37 +266,7 @@ paths:
           description: to note which state is it now 
           required: true
           schema:
-              type: string
-        # - in: query
-        #   name: PhoneNum
-        #   description: user's phone number
-        #   required: true
-        #   schema:
-        #       type: string
-        # - in: query
-        #   name: carId
-        #   description: user's car ID
-        #   required: true
-        #   schema: 
-        #     type: string    
-        # - in: query
-        #   name: OrderToMenu_MenuNo
-        #   description: menu number
-        #   required: true
-        #   schema:
-        #     type: integer
-        # - in: query
-        #   name: MenuCount
-        #   description: quantity of menus users ordered 
-        #   required: true
-        #   schema: 
-        #     type: integer  
-        # - in: query
-        #   name: OrderPayment
-        #   description: payment 
-        #   required: true
-        #   schema: 
-        #     type: integer
+              type: integer
       responses: 
         '200':
           description: successfully deleted from basket !
@@ -286,66 +275,37 @@ paths:
               schema: 
                 type: object
                 properties:
-                  # UserName:
-                  #   type: string
-                  # PhoneNum:
-                  #   type: string
-                  # carId:
-                  #   type: string
-                  # OrderToMenu_MenuNo:
-                  #   type: integer
-                  # MenuCount:
-                  #   type: integer
-                  # OrderPayment:
-                  #   type: integer
                   deleteSuccess:
                     type: boolean
-  /DeleteAfterOrder:
-    delete: 
-      summary: drop canceled order which was paid out
+  /CancelOrder:
+    get: 
+      summary: get the present status(before the cancel)
+      parameters:
+        - in: query
+          name: UserWebId
+          description: users membership ID
+          required: true
+          schema:
+              type: string
+      responses: 
+        '200':
+          description: successfully got the state!
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  OrderState:
+                    type: integer
+    post: 
+      summary: update orderstate to mark `deleted` from OrderList
       parameters: 
         - in: query
           name: OrderState
           description: to note which state is it now 
           required: true
           schema:
-              type: string
-        # - in: query
-        #   name: UserName
-        #   description: user name
-        #   required: true
-        #   schema:
-        #       type: string
-        # - in: query
-        #   name: PhoneNum
-        #   description: user's phone number
-        #   required: true
-        #   schema:
-        #       type: string
-        # - in: query
-        #   name: carId
-        #   description: user's car ID
-        #   required: true
-        #   schema: 
-        #     type: string  
-        # - in: query
-        #   name: OrderToMenu_MenuNo
-        #   description: menu number
-        #   required: true
-        #   schema:
-        #     type: integer   
-        # - in: query
-        #   name: MenuCount
-        #   description: quantity of menus users ordered 
-        #   required: true
-        #   schema: 
-        #     type: integer  
-        # - in: query
-        #   name: OrderPayment
-        #   description: payment 
-        #   required: true
-        #   schema: 
-        #     type: integer       
+              type: integer
       responses: 
         '200':
           description: successfully deleted from ordertomenu!
@@ -354,17 +314,5 @@ paths:
               schema: 
                 type: object
                 properties:
-                  # UserName:
-                  #   type: string
-                  # PhoneNum:
-                  #   type: string
-                  # carId:
-                  #   type: string
-                  # OrderToMenu_MenuNo:
-                  #   type: integer
-                  # MenuCount:
-                  #   type: integer
-                  # OrderPayment:
-                  #   type: integer
                   deleteSuccess:
                     type: boolean
