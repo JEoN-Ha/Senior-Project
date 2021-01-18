@@ -239,45 +239,45 @@ paths:
                   OrderState:
                     type: integer
   /DeleteFromBasket:
-    delete: 
-      summary: drop canceled order which was not paid out
+    post: 
+      summary: update orderstate to mark `deleted` from basket
       parameters:
         - in: query
-          name: UserName
-          description: user name
+          name: OrderState
+          description: to note which state is it now 
           required: true
           schema:
               type: string
-        - in: query
-          name: PhoneNum
-          description: user's phone number
-          required: true
-          schema:
-              type: string
-        - in: query
-          name: carId
-          description: user's car ID
-          required: true
-          schema: 
-            type: string    
-        - in: query
-          name: OrderToMenu_MenuNo
-          description: menu number
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: MenuCount
-          description: quantity of menus users ordered 
-          required: true
-          schema: 
-            type: integer  
-        - in: query
-          name: OrderPayment
-          description: payment 
-          required: true
-          schema: 
-            type: integer
+        # - in: query
+        #   name: PhoneNum
+        #   description: user's phone number
+        #   required: true
+        #   schema:
+        #       type: string
+        # - in: query
+        #   name: carId
+        #   description: user's car ID
+        #   required: true
+        #   schema: 
+        #     type: string    
+        # - in: query
+        #   name: OrderToMenu_MenuNo
+        #   description: menu number
+        #   required: true
+        #   schema:
+        #     type: integer
+        # - in: query
+        #   name: MenuCount
+        #   description: quantity of menus users ordered 
+        #   required: true
+        #   schema: 
+        #     type: integer  
+        # - in: query
+        #   name: OrderPayment
+        #   description: payment 
+        #   required: true
+        #   schema: 
+        #     type: integer
       responses: 
         '200':
           description: successfully deleted from basket !
@@ -305,41 +305,47 @@ paths:
       summary: drop canceled order which was paid out
       parameters: 
         - in: query
-          name: UserName
-          description: user name
+          name: OrderState
+          description: to note which state is it now 
           required: true
           schema:
               type: string
-        - in: query
-          name: PhoneNum
-          description: user's phone number
-          required: true
-          schema:
-              type: string
-        - in: query
-          name: carId
-          description: user's car ID
-          required: true
-          schema: 
-            type: string  
-        - in: query
-          name: OrderToMenu_MenuNo
-          description: menu number
-          required: true
-          schema:
-            type: integer   
-        - in: query
-          name: MenuCount
-          description: quantity of menus users ordered 
-          required: true
-          schema: 
-            type: integer  
-        - in: query
-          name: OrderPayment
-          description: payment 
-          required: true
-          schema: 
-            type: integer       
+        # - in: query
+        #   name: UserName
+        #   description: user name
+        #   required: true
+        #   schema:
+        #       type: string
+        # - in: query
+        #   name: PhoneNum
+        #   description: user's phone number
+        #   required: true
+        #   schema:
+        #       type: string
+        # - in: query
+        #   name: carId
+        #   description: user's car ID
+        #   required: true
+        #   schema: 
+        #     type: string  
+        # - in: query
+        #   name: OrderToMenu_MenuNo
+        #   description: menu number
+        #   required: true
+        #   schema:
+        #     type: integer   
+        # - in: query
+        #   name: MenuCount
+        #   description: quantity of menus users ordered 
+        #   required: true
+        #   schema: 
+        #     type: integer  
+        # - in: query
+        #   name: OrderPayment
+        #   description: payment 
+        #   required: true
+        #   schema: 
+        #     type: integer       
       responses: 
         '200':
           description: successfully deleted from ordertomenu!
