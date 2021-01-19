@@ -238,35 +238,22 @@ paths:
                 properties:
                   OrderState:
                     type: integer
-  /CancelOrderFromBasket/{UserWebId}:
-    get: 
-      summary: get the present status(before the cancel)
-      parameters:
-        - in: query
-          name: UserWebId
-          description: users membership ID
-          required: true
-          schema:
-              type: string
-      responses: 
-        '200':
-          description: successfully got the state!
-          content: 
-            application/json:
-              schema: 
-                type: object
-                properties:
-                  OrderState:
-                    type: integer
+  /CancelOrderFromBasket:
     post: 
       summary: update orderstate to mark `deleted` from basket
       parameters:
         - in: query
-          name: OrderState
-          description: to note which state is it now 
+          name: UserWebId
+          description: user's id that inputed when sign up
           required: true
           schema:
-              type: integer
+            type: string
+        - in: query
+          name: MenuNo
+          description: id number of menu
+          required: true
+          schema: 
+            type: integer  
       responses: 
         '200':
           description: successfully deleted from basket !
@@ -277,35 +264,16 @@ paths:
                 properties:
                   deleteSuccess:
                     type: boolean
-  /CancelOrder/{UserWebId}:
-    get: 
-      summary: get the present status(before the cancel)
-      parameters:
-        - in: query
-          name: UserWebId
-          description: users membership ID
-          required: true
-          schema:
-              type: string
-      responses: 
-        '200':
-          description: successfully got the state!
-          content: 
-            application/json:
-              schema: 
-                type: object
-                properties:
-                  OrderState:
-                    type: integer
+  /CancelOrder:
     post: 
       summary: update orderstate to mark `deleted` from OrderList
       parameters: 
         - in: query
-          name: OrderState
-          description: to note which state is it now 
+          name: UserWebId
+          description: user's id that inputed when sign up
           required: true
           schema:
-              type: integer
+            type: string
       responses: 
         '200':
           description: successfully deleted from ordertomenu!
