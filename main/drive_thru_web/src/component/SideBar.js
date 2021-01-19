@@ -14,6 +14,10 @@ export default class SideBar extends Component {
         }.bind(this));
     }
 
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+      }
+
     getButton(){
         let _article = null;
         if(this.state.mode === 'login'){

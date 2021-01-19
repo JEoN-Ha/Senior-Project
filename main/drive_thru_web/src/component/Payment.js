@@ -14,6 +14,10 @@ export default class Basket extends Component {
         }
     }
 
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+      }
+
     handleRadio(event) {
         let obj = {} // erase other radios
         obj[event.target.value] = event.target.checked // true —- target.checked 속성을 이용해서 라디오 버튼이 선택되었는지 여부를 확인한다.

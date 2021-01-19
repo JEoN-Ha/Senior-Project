@@ -6,6 +6,11 @@ class LoginContent extends Component {
         customer_id:null,
         PW:null
     }
+
+    componentWillUnmount() {
+      console.log('componentWillUnmount');
+    }
+    
     render() {
       const btnStyle = {
         color: "white",

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 class ReadCustomer extends Component {
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+  
     render() {
 
       return (

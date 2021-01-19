@@ -11,6 +11,10 @@ class Basket extends Component {
   }.bind(this));
   };
 
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+
     render() {
       const btnStyle = {
         color: "white",

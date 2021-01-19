@@ -14,6 +14,11 @@ class SignUpContent extends Component {
             this.setState({PW_state:store.getState().PW_state});           
         }.bind(this));
     }
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+      }
+      
     render() {
     const btnStyle = {
         color: "white",
