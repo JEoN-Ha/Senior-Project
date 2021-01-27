@@ -1,9 +1,19 @@
 import React, {Component} from 'react';
 import "./Component.css";
+import store from '../store';
+import CarNumber from './CarNumber';
 
-export default class Basket extends Component {
+export default class Payment extends Component {
+    state = {
+        customerType:store.getState().customerType,
+        isCarNumberDisabled:store.getState().isCarNumberDisabled
+    }
     constructor(props) {
         super(props)
+        store.subscribe(function () {
+            this.setState({customerType:store.getState().customerType,
+                isCarNumberDisabled:store.getState().isCarNumberDisabled});           
+        }.bind(this)); 
         this.handleRadio = this.handleRadio.bind(this)
         this.state = {
             name:null, phone:null, carNumber:null,
@@ -11,7 +21,7 @@ export default class Basket extends Component {
                 creditCard: true, cellphone: false,
                 kakaoPay: false, PAYCO: false
             }
-        }
+        }  
     }
 
     componentWillUnmount() {
@@ -24,9 +34,18 @@ export default class Basket extends Component {
         this.setState({radioGroup: obj})
     }
 
-    getCarNumber(){
-        
-    }
+    // getCarNumber(){
+    //     debugger
+    //     let _article = null;
+    //     if(this.state.customerType === 'Drive-Thru'){
+    //       _article = <input type="text" name="carNumber" placeholder="차량번호를 입력하세요."
+    //       onChange={function (e) {
+    //           this.setState({carNumber:e.target.value});
+    //           // this.props.onChangeCarNumber(this.state.carNumber)                          
+    //       }.bind(this)}></input>
+    //     }
+    //     return _article;
+    // }
 
     render() {
         const btnStyle = {
@@ -58,8 +77,8 @@ export default class Basket extends Component {
                             this.setState({phone:e.target.value});
                             // this.props.onChangePhone(this.state.phone)                          
                         }.bind(this)}></input> <br></br>
-                    {this.getCarNumber()}
                     차량번호<input type="text" name="carNumber" placeholder="차량번호를 입력하세요."
+                        disabled={this.state.customerType === "Drive-Thru"? 'true':'false'}
                         onChange={function (e) {
                             this.setState({carNumber:e.target.value});
                             // this.props.onChangeCarNumber(this.state.carNumber)                          

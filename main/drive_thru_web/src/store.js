@@ -7,7 +7,7 @@ export default createStore(function(state, action){
             mode:'login',mode_content:'welcome',
             PW_state:false,
             orderName:'상품을 선택해주세요.', orderCount:0,
-            customerType:null
+            customerType:null, isCarNumberDisabled:null
         }
     }
 
@@ -67,10 +67,10 @@ export default createStore(function(state, action){
         return {...state, mode_content:'customerType'}  
     }
     if(action.type === 'Drive-Thru') {
-        return {...state, mode_content:'payment',customerType:'Drive-Thru'}  
+        return {...state, mode_content:'payment',customerType:'Drive-Thru',isCarNumberDisabled:'false'}  
     }
     if(action.type === 'On Foot') {
-        return {...state, mode_content:'payment',customerType:'OnFoot'}  
+        return {...state, mode_content:'payment',customerType:'OnFoot',isCarNumberDisabled:'true'}  
     }
     if(action.type === 'PAYMENT_CLICK') {
         return {...state, mode_content:'welcome'}  

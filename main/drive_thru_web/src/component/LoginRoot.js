@@ -4,7 +4,7 @@ import store from '../store';
 
 export default class LoginRoot extends Component {
     state = {
-        mode_content:store.getState().mo_mode_content
+        mode_content:store.getState().mode_content
     }
     constructor(props){
         super(props);

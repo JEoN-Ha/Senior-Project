@@ -1,17 +1,7 @@
 import React, {Component} from 'react';
-import store from '../store';
 import "./Component.css";
 
 export default class CustomerType extends Component {
-    // state = {
-    //     customerType:store.getState().customerType
-    // }
-    // constructor(props){
-    //     super(props);
-    //     store.subscribe(function () {
-    //         this.setState({customerType:store.getState().customerType});           
-    //     }.bind(this));
-    // }
 
     componentWillUnmount() {
         console.log('componentWillUnmount');
