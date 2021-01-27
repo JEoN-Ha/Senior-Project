@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Basket from '../containers/Basket_con';
 import Payment from '../containers/Payment_con';
+import CustomerType from '../containers/CustomerType';
 import store from '../store';
 
 export default class BasketRoot extends Component {
@@ -22,6 +23,14 @@ export default class BasketRoot extends Component {
         return _article;
     }
 
+    getCustomerType(){
+        let _article = null;
+        if(this.state.mode_content === 'customerType'){
+          _article = <CustomerType></CustomerType>
+        }
+        return _article;
+    }
+
     getBasket(){
         let _article = null;
         if(this.state.mode_content === '장바구니'){
@@ -34,6 +43,7 @@ export default class BasketRoot extends Component {
         return (
             <div>
                 {this.getBasket()}
+                {this.getCustomerType()}
                 {this.getPayment()}
             </div>
         )

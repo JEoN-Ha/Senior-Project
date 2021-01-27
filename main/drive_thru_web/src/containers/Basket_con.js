@@ -7,7 +7,7 @@ function mapDispatchToProps(dispatch){
             dispatch({type:'BASKET MORE',mode_content:_mode})           
         },
         PaymentClick:function () {
-            dispatch({type:'PAYMENT',mode_content:'payment'})        
+            dispatch({type:'PAYMENT',mode_content:'customerType'})        
         }
     }
 }
