@@ -17,20 +17,14 @@ fetch(jeonhaUrl + '/signUP', {
     },
     body: bodySignUP
 })
-.then((res) => {
-if (res.json().status === '200') {
-
-} else {
-    error
+.then(res => {
+    if (res.text() === '200') {
+        console.log('Success!');
+    } else if(res.text() === '400') {
+        console.log('Failed!');
+    }
 }
-})
 
 // ----------------------------------------------------------------------------------------------
 // signUP
 
-fetch('/fora22')
-    .then(response => response.text())
-    .then(data => {
-        console.log(JSON.parse(data));
-        this.setState({ userName: data });
-    });
