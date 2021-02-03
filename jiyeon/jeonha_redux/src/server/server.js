@@ -12,7 +12,7 @@ const cors = require('cors');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 // app.use(cors())
-app.use(cors({origin: "http://testdeploying.azurewebsites.net"}))
+app.use(cors({origin: "https://localhost:5000"}))
 
 app.use('/', router);
 app.use(express.static('public'));
