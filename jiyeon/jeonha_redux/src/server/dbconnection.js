@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const connection = mysql.createPool({
-    host: 'yellow-postit.mysql.database.azure.com',
-    user: 'theSecretChamber@yellow-postit',
+    host: 'bluepiggibank.mysql.database.azure.com',
+    user: 'manyoAloe@bluepiggibank',
     password: 'Jeonha12#',
     database: 'untact_drivethru_db',
     port: 3306,
