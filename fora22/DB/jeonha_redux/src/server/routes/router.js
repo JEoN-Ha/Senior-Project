@@ -66,35 +66,14 @@ router.post('/signIn', (req, res) => {
     db.query(sqlCodeToUserTable, (err, rows) => {
         const idCheck = rows.UserWebId === userwebid;
         const pwCheck = rows.PW === pw;
-
+        
         if(idCheck && pwCheck) {
            res.statusCode = 200;
         } else {
             res.statusCode = 400;
+            res.send([idCheck, pwCheck]);
         }
     })
-    
-    const sqlCodeToCarTable = `
-    insert into car(CarWebId, CarId)
-    values (${userwebid}, ${carid})    
-    `;
-    
-    db.query(sqlCodeToCarTable, (err, rows) => {
-        if(err) {
-           dbError = false; 
-        } 
-    })
-
-    if (idOverlap && pwOverlap && dbError) {
-        res.statusCode = 200;
-    } else {
-        res.statusCode = 400;
-        res.send([
-            idOverlap,
-            pwOverlap,
-            dbError
-        ])
-    }
 })
 
 router.get('/getData', (req, res) => {
