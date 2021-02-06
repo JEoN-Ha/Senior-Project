@@ -15,13 +15,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-
-    let bodyData = JSON.stringify({
-      UserWebId: "baekgo_",
-      UserName: "강백구",
-      PW: '8888',
-      PhoneNum: '0880808080'
-    })
     
     fetch('/getMenuData')
     .then(response => 

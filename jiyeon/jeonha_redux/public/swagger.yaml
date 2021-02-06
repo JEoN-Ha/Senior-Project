@@ -5,8 +5,11 @@ info:
   description: Untact DriveThru를 위한 API 명세서
 servers:
   # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/kiJiyeon/Jeonha-redux/1.0.0
   - description: JeonHa Untact DriveThru API
-    url: https://localhost:5000
+    url: https://pinkapeach-apim.azure-api.net
+paths:
   /signUP:
     post:
       summary: Post Member's Data API
@@ -48,9 +51,7 @@ servers:
             application/json:
               schema: 
                 type: object
-                properties:
-                  SignupSuccess:
-                    type: boolean
+
         '400':
             description: failed to post Member's Data ! it must be overlaped ID or PW / or you typed too long ID or PW
             content: 
@@ -87,9 +88,6 @@ servers:
             application/json:
               schema: 
                 type: object
-                properties:
-                  LoginSuccess:
-                    type: boolean
         '400':
           description: failed to post Member's Data ! it must be Id Error or PW Error
           content: 
@@ -119,8 +117,17 @@ servers:
                   FoodNameEng:
                     type: string
                   Price:
-                    type: integer    
-  /insertIntoBasketByCar:
+                    type: integer
+        '400':
+          description: failed to get Menu Data
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  GetError:
+                    type: string
+  /insertIntoBasket:
     post:
       summary: put something to Basket before the order
       parameters:
@@ -160,12 +167,6 @@ servers:
           required: true
           schema: 
             type: integer
-        - in: query
-          name: Price
-          description: menu price
-          required: true
-          schema:
-            type: integer
       responses: 
         '200':
           description: successfully inserted(posted) menus into basket !
@@ -192,70 +193,6 @@ servers:
                     type: integer
                   Price:
                     type: integer
-  /insertIntoBasketOnFoot:
-      post:
-        summary: put something to Basket before the order
-        parameters:
-          - in: query
-            name: OrderToMenu_MenuNo
-            description: menu number
-            required: true
-            schema:
-              type: integer
-          - in: query
-            name: OrderWebId
-            description: user Web ID
-            required: true
-            schema: 
-              type: string
-          - in: query
-            name: OrderPayment
-            description: payment 
-            required: true
-            schema: 
-              type: integer
-          - in: query
-            name: MenuNo
-            description: id number of menu
-            required: true
-            schema: 
-              type: integer  
-          - in: query
-            name: MenuCount
-            description: quantity of menus users ordered 
-            required: true
-            schema: 
-              type: integer
-          - in: query
-            name: Price
-            description: menu price
-            required: true
-            schema:
-              type: integer
-        responses: 
-          '200':
-            description: successfully inserted(posted) menus into basket !
-            content: 
-              application/json:
-                schema: 
-                  type: object
-                  properties:
-                    OrderToMenu_OrderNo:
-                      type: integer
-                    OrderToMenu_MenuNo:
-                      type: string
-                    OrderWebId:
-                      type: string
-                    OrderState:
-                      type: integer
-                    OrderPayment:
-                      type: integer 
-                    MenuNo:
-                      type: integer
-                    MenuCount:
-                      type: integer
-                    Price:
-                      type: integer
   /order:  #결제 전 확인
     get: 
       summary: to check the order-list
@@ -322,9 +259,6 @@ servers:
             application/json:
               schema: 
                 type: object
-                properties:
-                  deleteSuccess:
-                    type: boolean
   /CancelOrder:
     post: 
       summary: update orderstate to mark `deleted` from OrderList
@@ -335,13 +269,10 @@ servers:
           required: true
           schema:
             type: string
-      responses: 
+      responses:
         '200':
           description: successfully deleted from ordertomenu!
           content: 
             application/json:
               schema: 
                 type: object
-                properties:
-                  deleteSuccess:
-                    type: boolean
