@@ -80,8 +80,8 @@ Issue 또는 WIKI를 참고해주세요
 - 폴더는 각자 개인 폴더를 나눠가져서 작업한다.
   - ex) `fora22`, `Armful`, `jiyeon`, `jongfeel` [예시 링크](https://github.com/JEoN-Ha/Senior-Project)
 ### Branch의 경우
-- `[닉네임]/Develope`을 기본 branch로 만들어 각자 작업한다.
-  - `fora22/Develope`
+- `[닉네임]/Develop`을 기본 branch로 만들어 각자 작업한다.
+  - `fora22/Develop`
 - 기능을 추가하거나 만들때는 `[닉네임]/Feature/[기능명]` branch를 만들어 작업한 뒤, 완료 후 PR(Pull Request) 혹은 merge한다.
   - ex) `fora22/Feature/Index`, `fora22/Feature/payment_page` 등
 
