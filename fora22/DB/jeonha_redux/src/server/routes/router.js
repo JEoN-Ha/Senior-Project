@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../dbconnection');
 
+// ----------------------------------------------------------------------------------------------
+// signUP
 router.post('/signUp', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
     const username = `'${req.body.userName}'`;
@@ -32,14 +34,66 @@ router.post('/signUp', (req, res) => {
     
     db.query(sqlCodeToCarTable, (err, rows) => {
         if(err) {
-           errorCheck = false; 
+           dbError = false; 
         } 
     })
 
-    if (errorCheck) {
-        res.send('200');
+    if (idOverlap && pwOverlap && dbError) {
+        res.statusCode = 200;
     } else {
-        res.send('400');
+        res.statusCode = 400;
+        res.send([
+            idOverlap,
+            pwOverlap,
+            dbError
+        ])
+    }
+})
+// ----------------------------------------------------------------------------------------------
+// signIn
+router.post('/signIn', (req, res) => {
+    const userwebid = `'${req.body.userWebId}'`;
+    const pw = `'${req.body.pw}'`;
+
+    const sqlCodeToUserTable = `
+    select UserWebId, PW from usertable
+    where UserWebId = ${userwebid}
+    `;
+    let idOverlap = true;
+    let pwOverlap = true;
+    let dbError = true;
+
+    db.query(sqlCodeToUserTable, (err, rows) => {
+        const idCheck = rows.UserWebId === userwebid;
+        const pwCheck = rows.PW === pw;
+
+        if(idCheck && pwCheck) {
+           res.statusCode = 200;
+        } else {
+            res.statusCode = 400;
+        }
+    })
+    
+    const sqlCodeToCarTable = `
+    insert into car(CarWebId, CarId)
+    values (${userwebid}, ${carid})    
+    `;
+    
+    db.query(sqlCodeToCarTable, (err, rows) => {
+        if(err) {
+           dbError = false; 
+        } 
+    })
+
+    if (idOverlap && pwOverlap && dbError) {
+        res.statusCode = 200;
+    } else {
+        res.statusCode = 400;
+        res.send([
+            idOverlap,
+            pwOverlap,
+            dbError
+        ])
     }
 })
 

@@ -18,12 +18,18 @@ fetch(jeonhaUrl + '/signUP', {
     body: bodySignUP
 })
 .then(res => {
-    if (res.text() === '200') {
+    if (res.status === 200) {
+        // 정상 작동
         console.log('Success!');
-    } else if(res.text() === '400') {
+    } else if(res.status === 400) {
+        // 실패시
         console.log('Failed!');
+        res.text()
     }
-}
+})
+.then(data => {
+    console.log(JSON.parse(data));
+})
 
 // ----------------------------------------------------------------------------------------------
 // signUP
