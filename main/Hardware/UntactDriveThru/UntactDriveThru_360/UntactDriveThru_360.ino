@@ -15,10 +15,9 @@ void setup() {
   
   Serial.begin(9600);
   pinMode(green_Pin, OUTPUT); 
-  pinMode(yellow_Pin, OUTPUT);  
+  pinMode(yellow_Pin, OUTPUT);   
 
   servo.attach(servoPin); //서보모터를 몇번 핀으로 제어할지
-  servo.write(0); //서보모터 각도 설정
   delay(1000);
   
   digitalWrite(yellow_Pin, HIGH);
@@ -31,20 +30,26 @@ void loop() {
   Serial.println(distance);
   delay(1000);
   if(distance<20){
+    Serial.println("차량 접근 후 번호 인식 완료, 차단기 열기");
+    servo.write(80);
+    delay(500);
     servo.write(90);
-    Serial.println("차단기 열기");
+    delay(500);
+    digitalWrite(yellow_Pin, LOW);
+    digitalWrite(green_Pin, HIGH);
     while(true){
-      digitalWrite(yellow_Pin, LOW);
-      digitalWrite(green_Pin, HIGH);
       distance=sonar.ping_cm();
       Serial.println(distance);
       delay(1000);
-      if(distance>100){
+      if(distance>30){
         Serial.println("차단기 닫기");
-        servo.write(0);
+        servo.write(100);
+        delay(500);
+        servo.write(90);
+        delay(500);
         digitalWrite(yellow_Pin, HIGH);
         digitalWrite(green_Pin, LOW);
-        delay(2000);
+        delay(1000);
         break;
       }
     }
