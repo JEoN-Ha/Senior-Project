@@ -59,9 +59,6 @@ router.post('/signIn', (req, res) => {
     select UserWebId, PW from usertable
     where UserWebId = ${userwebid}
     `;
-    let idOverlap = true;
-    let pwOverlap = true;
-    let dbError = true;
 
     db.query(sqlCodeToUserTable, (err, rows) => {
         const idCheck = rows.UserWebId === userwebid;
@@ -75,21 +72,68 @@ router.post('/signIn', (req, res) => {
         }
     })
 })
-
-router.get('/getData', (req, res) => {
-    
-    const sqlCode = `select * from usertable`;
+// ----------------------------------------------------------------------------------------------
+// getMenuData
+router.get('/getMenuData', (req, res) => {
+    const sqlCode = `select * from menuboard`;
     db.query(sqlCode, (err, rows) => {
         if(!err) {
-            
+            res.statusCode = 200;
             res.send(rows);
         } else {
             console.log(`query error: ${err}}`);
-
+            res.statusCode = 400;
             res.send(err);
         }
     })
 })
+
+// ----------------------------------------------------------------------------------------------
+// insertIntoBasketByCar
+router.post('/insertIntoBasketByCar', (req, res) => {
+    const userwebid = `'${req.body.userWebId}'`;
+    const carid = `'${req.body.carId}'`;
+    const orderpayment = `'${req.body.orderPayment}'`;
+    const menuno = `'${req.body.menuNo}'`;
+    const menucount = `'${req.body.menuCount}'`;
+    const price = `'${req.body.price}'`;
+
+    const sqlCodeToOrderTable = `
+    insert into ordertable(OrderWebId, WebCarId, OrderPayment)
+    values (${userwebid}, ${carid}, ${orderpayment})
+    `;
+    const sqlCodeToOrderToMenu = `
+    insert into ordertable(OrderToMenu_MenuNo, MenuCount)
+    values (${menuno}, ${menucount})
+    `;
+
+    let orderError = true;
+    let orderToMenuError = true;
+
+    db.query(sqlCodeToOrderTable, (err, rows) => {
+        if(err) {
+           orderError = false;
+        } 
+    })
+    
+    db.query(sqlCodeToOrderToMenu, (err, rows) => {
+        if(err) {
+           orderToMenuError = false; 
+        } 
+    })
+
+    if (orderError && orderToMenuError) {
+        res.statusCode = 200;
+    } else {
+        res.statusCode = 400;
+        res.send([
+            orderError,
+            orderToMenuError,
+        ])
+    }
+})
+// ----------------------------------------------------------------------------------------------
+// insertIntoBasketByCar
 
 const data = "'fora22'";
 
