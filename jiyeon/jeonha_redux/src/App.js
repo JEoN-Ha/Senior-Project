@@ -16,7 +16,7 @@ class App extends Component {
 
   componentDidMount() {
     
-    fetch('/getMenuData')
+    fetch('https://pinkapeach-apim.azure-api.net/getMenuData')
     .then(response => 
       response.text()
     )

@@ -11,7 +11,7 @@ const cors = require('cors');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-// app.use(cors())
+
 app.use(cors({origin: "https://pinkapeach-apim.azure-api.net"}))
 
 app.use('/', router);
