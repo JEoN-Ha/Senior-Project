@@ -15,6 +15,10 @@ export default class Content extends Component {
         }.bind(this));
     }
 
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+      }
+
     getBasketButton(){
         let _article = null;
         if(this.state.mode_content === 'MENU'){

@@ -58,6 +58,14 @@
   align-items: center;
 }
 
+.CustomerType {
+  font-weight: bold;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .SignUp {
   text-align: center;
   padding:20px;

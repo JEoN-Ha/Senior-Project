@@ -11,6 +11,11 @@ class MenuInfo extends Component {
     }.bind(this));
   };
 
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+
+
     render() {
       return (
           <div>
