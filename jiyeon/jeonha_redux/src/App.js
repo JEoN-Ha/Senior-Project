@@ -15,8 +15,25 @@ class App extends Component {
   };
 
   componentDidMount() {
+    const defaultURL = 'https://pinkapeach-apim.azure-api.net'
+    let bodyData = JSON.stringify({
+      UserWebId: "baekgo_",
+      UserName: "강백구",
+      PW: '8888',
+      PhoneNum: '0880808080'
+    })
     
-    fetch('https://pinkapeach-apim.azure-api.net/getMenuData')
+    fetch(defaultURL+'/signUp', {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: bodyData
+    })
+    .then((res) => console.log(res.json()))
+    
+
+    fetch(defaultURL+'/getMenuData')
     .then(response => 
       response.text()
     )
