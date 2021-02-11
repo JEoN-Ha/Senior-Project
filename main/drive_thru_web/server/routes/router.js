@@ -96,22 +96,20 @@ router.post('/insertIntoBasketByCar', (req, res) => {
     const carid = `'${req.body.carId}'`;
     const menuno = `'${req.body.menuNo}'`;
     const menucount = `'${req.body.menuCount}'`;
-    const price = `'${req.body.price}'`;
 
     const sqlCodeToOrderTable = `
     insert into ordertable(OrderWebId, WebCarId)
     values (${userwebid}, ${carid})
     `;
 
-    `select OrderNo from ordertable where OrderWebId == ${userwebid}
-    order by OrderNo desc limit 1`
-
-
+    // OrderNo 가 필요함. 그래야 ordertomenu table 에 추가할 수 있음
+    // `select OrderNo from ordertable where OrderWebId == ${userwebid}
+    // order by OrderNo desc limit 1`
 
     const sqlCodeToOrderToMenu = `
     insert into ordertomenu(OrderToMenu_MenuNo, MenuCount)
     values (${menuno}, ${menucount})
-    `;
+    `; // orderNo 가 추가되도록 해야함
 
     let orderError = true;
     let orderToMenuError = true;
@@ -150,9 +148,9 @@ router.post('/order', (req, res) => {
     `;
 
     const sqlCodeToOrderToMenu = `
-    select OrderWebId, WebCarId, OrderPayment
-    from ordertable
-    where OrderNo = ${orderno}
+    select OrderToMenu_MenuNo
+    from ordertomenu
+    where OrderToMenu_OrderNo = ${orderno}
     `;
 
     let orderError = true;
@@ -167,7 +165,9 @@ router.post('/order', (req, res) => {
     db.query(sqlCodeToOrderToMenu, (err, rows) => {
         if(err) {
            orderToMenuError = false; 
-        } 
+        } else {
+            // rows로 데이터가 어떤 형식이 들어오는 확인 필요
+        }
     })
 
     if (orderError && orderToMenuError) {
@@ -181,45 +181,93 @@ router.post('/order', (req, res) => {
     }
 })
 
+// ----------------------------------------------------------------------------------------------
+// paying
 
-const data = "'fora22'";
+router.post('/paying', (req, res) => {
+    const orderno = `'${req.body.orderNo}'`;
 
-router.get('/fora22', (req, res) => {
-    const sqlCode = `select * from usertable Where UserWebId = ${data}`;
-    db.query(sqlCode, (err, rows) => {
-        if(!err) {
-            
-            res.send(rows);
-        } else {
-            console.log(`query error: ${err}}`);
-
-            res.send(err);
-        }
+    const sqlCodeToOrderToMenu = `
+    update ordertomenu
+    set OrderState = 2
+    where OrderToMenu_OrderNo = ${orderno}
+    `;
+    let orderToMenuError = true;
+    
+    db.query(sqlCodeToOrderToMenu, (err, rows) => {
+        if(err) {
+           orderToMenuError = false; 
+        } 
     })
+
+    if (orderToMenuError) {
+        res.statusCode = 200;
+    } else {
+        res.statusCode = 400;
+        res.send([
+            orderToMenuError,
+        ])
+    }
 })
 
-router.post('/insertData', (req, res) => {
-    const userwebid = `'${req.body.UserWebId}'`;
-    const username = `'${req.body.UserName}'`;
-    const pw = `'${req.body.PW}'`;
-    const phonenum = `'${req.body.PhoneNum}'`;
 
-    // const sqlCode = `insert into usertable(UserWebId, UserName, PW, PhoneNum) 
-    // values (${userwebid}, ${username}, ${pw}, ${phonenum});`;
-    const sqlCode = `update usertable set UserName = '강백백구'
-    where UserWebId = ${userwebid};`;
-    db.query(sqlCode, (err, rows) => {
+// ----------------------------------------------------------------------------------------------
+// CancelOrderFromBasket
+
+router.post('/CancelOrderFromBasket', (req, res) => {
+    const orderno = `'${req.body.orderNo}'`;
+    const menuno = `'${req.body.menuNo}'`;
+
+    const sqlCodeToOrderToMenu = `
+    update ordertomenu
+    set OrderState = 4
+    where OrderToMenu_OrderNo = ${orderno} AND OrderToMenu_MenuNo = ${menuno} AND OrderState = 1
+    `;
+    let orderToMenuError = true;
+    
+    db.query(sqlCodeToOrderToMenu, (err, rows) => {
         if(err) {
-            console.log(`query error: ${err}}`);
-        }
-    })
-    const sqlCode2 = `select * from usertable`;
-    db.query(sqlCode2, (err, rows) => {
-        if(err) {
-            console.log(`query error: ${err}}`);
-        }
+           orderToMenuError = false; 
+        } 
     })
 
+    if (orderToMenuError) {
+        res.statusCode = 200;
+    } else {
+        res.statusCode = 400;
+        res.send([
+            orderToMenuError,
+        ])
+    }
+})
+
+// ----------------------------------------------------------------------------------------------
+// CancelOrder
+
+router.post('/CancelOrder', (req, res) => {
+    const orderno = `'${req.body.orderNo}'`;
+
+    const sqlCodeToOrderToMenu = `
+    update ordertomenu
+    set OrderState = 5
+    where OrderToMenu_OrderNo = ${orderno} AND OrderState = 2
+    `;
+    let orderToMenuError = true;
+    
+    db.query(sqlCodeToOrderToMenu, (err, rows) => {
+        if(err) {
+           orderToMenuError = false; 
+        } 
+    })
+
+    if (orderToMenuError) {
+        res.statusCode = 200;
+    } else {
+        res.statusCode = 400;
+        res.send([
+            orderToMenuError,
+        ])
+    }
 })
 
 module.exports = router;
