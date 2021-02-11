@@ -81,7 +81,6 @@ fetch(jeonhaUrl + '/getData')
 const bodyInsertIntoBasket ={
     userWebId: 'fora22',
     carId: '11가 1111',
-    orderPayment: 1,
     menuNo: 1,
     menuCount: 3,
     price: 3500
@@ -93,6 +92,35 @@ fetch(jeonhaUrl + '/signUP', {
         "Content-Type": "application/json"
     },
     body: bodyInsertIntoBasket
+})
+.then(res => {
+    if (res.status === 200) {
+        // 정상 작동
+        console.log('Success!');
+    } else if(res.status === 400) {
+        // 실패시
+        console.log('Failed!');
+        res.text()
+    }
+})
+.then(data => {
+    // 아이디 중복, 패스워드 중복, 그 외 에러
+    const overlapId = JSON.parse(data)[0];
+    const overlapPw = JSON.parse(data)[1];
+    const errorDB = JSON.parse(data)[2];
+})
+// ----------------------------------------------------------------------------------------------
+// order
+const bodyOrder ={
+    orderNo: 10
+}
+
+fetch(jeonhaUrl + '/order', {
+    method: "post",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: bodyOrder
 })
 .then(res => {
     if (res.status === 200) {

@@ -88,22 +88,28 @@ router.get('/getMenuData', (req, res) => {
     })
 })
 
+// 여기 밑으로부턴 논의가 필요함
 // ----------------------------------------------------------------------------------------------
 // insertIntoBasketByCar
 router.post('/insertIntoBasketByCar', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
     const carid = `'${req.body.carId}'`;
-    const orderpayment = `'${req.body.orderPayment}'`;
     const menuno = `'${req.body.menuNo}'`;
     const menucount = `'${req.body.menuCount}'`;
     const price = `'${req.body.price}'`;
 
     const sqlCodeToOrderTable = `
-    insert into ordertable(OrderWebId, WebCarId, OrderPayment)
-    values (${userwebid}, ${carid}, ${orderpayment})
+    insert into ordertable(OrderWebId, WebCarId)
+    values (${userwebid}, ${carid})
     `;
+
+    `select OrderNo from ordertable where OrderWebId == ${userwebid}
+    order by OrderNo desc limit 1`
+
+
+
     const sqlCodeToOrderToMenu = `
-    insert into ordertable(OrderToMenu_MenuNo, MenuCount)
+    insert into ordertomenu(OrderToMenu_MenuNo, MenuCount)
     values (${menuno}, ${menucount})
     `;
 
@@ -133,7 +139,48 @@ router.post('/insertIntoBasketByCar', (req, res) => {
     }
 })
 // ----------------------------------------------------------------------------------------------
-// insertIntoBasketByCar
+// order
+router.post('/order', (req, res) => {
+    const orderno = `'${req.body.orderNo}'`;
+
+    const sqlCodeToOrderTable = `
+    select OrderWebId, WebCarId, OrderPayment
+    from ordertable
+    where OrderNo = ${orderno}
+    `;
+
+    const sqlCodeToOrderToMenu = `
+    select OrderWebId, WebCarId, OrderPayment
+    from ordertable
+    where OrderNo = ${orderno}
+    `;
+
+    let orderError = true;
+    let orderToMenuError = true;
+
+    db.query(sqlCodeToOrderTable, (err, rows) => {
+        if(err) {
+           orderError = false;
+        } 
+    })
+    
+    db.query(sqlCodeToOrderToMenu, (err, rows) => {
+        if(err) {
+           orderToMenuError = false; 
+        } 
+    })
+
+    if (orderError && orderToMenuError) {
+        res.statusCode = 200;
+    } else {
+        res.statusCode = 400;
+        res.send([
+            orderError,
+            orderToMenuError,
+        ])
+    }
+})
+
 
 const data = "'fora22'";
 
