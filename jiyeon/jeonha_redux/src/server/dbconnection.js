@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+
 const connection = mysql.createPool({
     host: 'bluepiggibank.mysql.database.azure.com',
     user: 'manyoAloe@bluepiggibank',

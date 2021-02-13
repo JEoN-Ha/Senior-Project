@@ -11,7 +11,7 @@ router.post('/signUp', (req, res) => {
 
     const sqlCodeToUserTable = `
     insert into usertable(UserWebId, UserName, PW, PhoneNum)
-    values (${userwebid}, ${username}, ${pw}, ${carid})    
+    values (${userwebid}, ${username}, ${pw}, ${phonenum})    
     `;
     let idOverlap = true;
     let pwOverlap = true;
@@ -23,23 +23,6 @@ router.post('/signUp', (req, res) => {
            pwOverlap = false;
         } 
     })
-    
-    const sqlCodeToCarTable = `
-    insert into car(CarWebId, CarId)
-    values (${userwebid}, ${carid})    
-    `;
-    
-    db.query(sqlCodeToCarTable, (err, rows) => {
-        if(err) {
-           errorCheck = false; 
-        } 
-    })
-
-    if (errorCheck) {
-        res.send('200');
-    } else {
-        res.send('400');
-    }
 })
 
 
