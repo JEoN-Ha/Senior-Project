@@ -14,7 +14,7 @@ router.post('/signUp', (req, res) => {
 
     const sqlCodeToUserTable = `
     insert into usertable(UserWebId, UserName, PW, PhoneNum)
-    values (${userwebid}, ${username}, ${pw}, ${carid})    
+    values (${userwebid}, ${username}, ${pw}, ${phonenum})    
     `;
     let idOverlap = true;
     let pwOverlap = true;
