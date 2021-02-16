@@ -2,26 +2,26 @@ const jeonhaUrl = 'http://localhost:4000'
 
 // ----------------------------------------------------------------------------------------------
 // signUP
-const bodySignUP ={
+const bodySignUp = JSON.stringify({
     userWebId: 'fora22',
     userName: '팽대원',
     pw: '1234',
     phoneNum: '01011112222',
     carId: '11가 1111'
-}
+});
 
-fetch(jeonhaUrl + '/signUP', {
+fetch(jeonhaUrl + '/signUp', {
     method: "post",
     headers: {
         "Content-Type": "application/json"
     },
-    body: bodySignUP
+    body: bodySignUp
 })
 .then(res => {
-    if (res.status === 200) {
+    if (res.status == 200) {
         // 정상 작동
         console.log('Success!');
-    } else if(res.status === 400) {
+    } else if(res.status == 400) {
         // 실패시
         console.log('Failed!');
         res.text()
@@ -37,10 +37,10 @@ fetch(jeonhaUrl + '/signUP', {
 // ----------------------------------------------------------------------------------------------
 // signIn
 
-const bodySignIn ={
+const bodySignIn = JSON.stringify({
     userWebId: 'fora22',
     pw: '1234',
-}
+});
 
 fetch(jeonhaUrl + '/signIn', {
     method: "post",
@@ -50,10 +50,10 @@ fetch(jeonhaUrl + '/signIn', {
     body: bodySignIn
 })
 .then(res => {
-    if (res.status === 200) {
+    if (res.status == 200) {
         // 정상 작동
         console.log('Success!');
-    } else if(res.status === 400) {
+    } else if(res.status == 400) {
         // 실패시
         console.log('Failed!');
         res.text()
@@ -68,8 +68,8 @@ fetch(jeonhaUrl + '/signIn', {
 // ----------------------------------------------------------------------------------------------
 // getMenuData
 fetch(jeonhaUrl + '/getData')
-    .then(response =>
-        response.text()
+    .then(res =>
+        res.text()
     )
     .then(data => {
         // 모든 음식 메뉴 정보: 객체 형태
@@ -78,15 +78,15 @@ fetch(jeonhaUrl + '/getData')
 
 // ----------------------------------------------------------------------------------------------
 // insertIntoBasketByCar
-const bodyInsertIntoBasket ={
+const bodyInsertIntoBasket = JSON.stringify({
     userWebId: 'fora22',
     carId: '11가 1111',
     menuNo: 1,
     menuCount: 3,
     price: 3500
-}
+});
 
-fetch(jeonhaUrl + '/signUP', {
+fetch(jeonhaUrl + '/insertIntoBasketByCar', {
     method: "post",
     headers: {
         "Content-Type": "application/json"
@@ -111,9 +111,9 @@ fetch(jeonhaUrl + '/signUP', {
 })
 // ----------------------------------------------------------------------------------------------
 // order
-const bodyOrder ={
+const bodyOrder = JSON.stringify({
     orderNo: 10
-}
+});
 
 fetch(jeonhaUrl + '/order', {
     method: "post",
@@ -140,11 +140,11 @@ fetch(jeonhaUrl + '/order', {
 
 // ----------------------------------------------------------------------------------------------
 // paying
-const bodyPaying ={
+const bodyPaying = JSON.stringify({
     orderNo: 10
-}
+});
 
-fetch(jeonhaUrl + '/order', {
+fetch(jeonhaUrl + '/paying', {
     method: "post",
     headers: {
         "Content-Type": "application/json"
@@ -168,10 +168,10 @@ fetch(jeonhaUrl + '/order', {
 
 // ----------------------------------------------------------------------------------------------
 // CancelOrderFromBasket
-const bodyCancelOrderFromBasket ={
+const bodyCancelOrderFromBasket = JSON.stringify({
     menuNo: 1,
     orderNo: 10
-}
+});
 
 fetch(jeonhaUrl + '/CancelOrderFromBasket', {
     method: "post",
