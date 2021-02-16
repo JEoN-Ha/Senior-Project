@@ -33,7 +33,7 @@ class App extends Component {
       // 실패시
       console.log('Failed!');
     }
-    res.text();
+    console.log(res.text());
   })
   .then(data => {
     // console.log(JSON.parse(JSON.stringify(data)));
