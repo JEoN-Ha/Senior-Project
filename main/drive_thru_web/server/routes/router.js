@@ -14,8 +14,7 @@ router.post('/signUp', (req, res) => {
 
     const sqlCodeToUserTable = `
     insert into usertable(UserWebId, UserName, PW, PhoneNum)
-    values (${userwebid}, ${username}, ${pw}, ${phonenum})    
-    `;
+    values (${userwebid}, ${username}, ${pw}, ${phonenum});`;
     let idOverlap = true;
     let pwOverlap = true;
     let dbError = true;
@@ -29,8 +28,7 @@ router.post('/signUp', (req, res) => {
     
     const sqlCodeToCarTable = `
     insert into car(CarWebId, CarId)
-    values (${userwebid}, ${carid})    
-    `;
+    values (${userwebid}, ${carid});`;
     
     db.query(sqlCodeToCarTable, (err, rows) => {
         if(err) {
@@ -57,8 +55,7 @@ router.post('/signIn', (req, res) => {
 
     const sqlCodeToUserTable = `
     select UserWebId, PW from usertable
-    where UserWebId = ${userwebid}
-    `;
+    where UserWebId = ${userwebid};`;
 
     db.query(sqlCodeToUserTable, (err, rows) => {
         const idCheck = rows.UserWebId === userwebid;
@@ -75,7 +72,7 @@ router.post('/signIn', (req, res) => {
 // ----------------------------------------------------------------------------------------------
 // getMenuData
 router.get('/getMenuData', (req, res) => {
-    const sqlCode = `select * from menuboard`;
+    const sqlCode = `select * from menuboard;`;
     db.query(sqlCode, (err, rows) => {
         if(!err) {
             res.statusCode = 200;
@@ -99,8 +96,7 @@ router.post('/insertIntoBasketByCar', (req, res) => {
 
     const sqlCodeToOrderTable = `
     insert into ordertable(OrderWebId, WebCarId)
-    values (${userwebid}, ${carid})
-    `;
+    values (${userwebid}, ${carid});`;
 
     // OrderNo 가 필요함. 그래야 ordertomenu table 에 추가할 수 있음
     // `select OrderNo from ordertable where OrderWebId == ${userwebid}
@@ -108,8 +104,7 @@ router.post('/insertIntoBasketByCar', (req, res) => {
 
     const sqlCodeToOrderToMenu = `
     insert into ordertomenu(OrderToMenu_MenuNo, MenuCount)
-    values (${menuno}, ${menucount})
-    `; // orderNo 가 추가되도록 해야함
+    values (${menuno}, ${menucount});`; // orderNo 가 추가되도록 해야함
 
     let orderError = true;
     let orderToMenuError = true;
@@ -144,14 +139,12 @@ router.post('/order', (req, res) => {
     const sqlCodeToOrderTable = `
     select OrderWebId, WebCarId, OrderPayment
     from ordertable
-    where OrderNo = ${orderno}
-    `;
+    where OrderNo = ${orderno};`;
 
     const sqlCodeToOrderToMenu = `
     select OrderToMenu_MenuNo
     from ordertomenu
-    where OrderToMenu_OrderNo = ${orderno}
-    `;
+    where OrderToMenu_OrderNo = ${orderno};`;
 
     let orderError = true;
     let orderToMenuError = true;
@@ -190,8 +183,7 @@ router.post('/paying', (req, res) => {
     const sqlCodeToOrderToMenu = `
     update ordertomenu
     set OrderState = 2
-    where OrderToMenu_OrderNo = ${orderno}
-    `;
+    where OrderToMenu_OrderNo = ${orderno};`;
     let orderToMenuError = true;
     
     db.query(sqlCodeToOrderToMenu, (err, rows) => {
@@ -221,8 +213,7 @@ router.post('/CancelOrderFromBasket', (req, res) => {
     const sqlCodeToOrderToMenu = `
     update ordertomenu
     set OrderState = 4
-    where OrderToMenu_OrderNo = ${orderno} AND OrderToMenu_MenuNo = ${menuno} AND OrderState = 1
-    `;
+    where OrderToMenu_OrderNo = ${orderno} AND OrderToMenu_MenuNo = ${menuno} AND OrderState = 1;`;
     let orderToMenuError = true;
     
     db.query(sqlCodeToOrderToMenu, (err, rows) => {
@@ -250,8 +241,7 @@ router.post('/CancelOrder', (req, res) => {
     const sqlCodeToOrderToMenu = `
     update ordertomenu
     set OrderState = 5
-    where OrderToMenu_OrderNo = ${orderno} AND OrderState = 2
-    `;
+    where OrderToMenu_OrderNo = ${orderno} AND OrderState = 2;`;
     let orderToMenuError = true;
     
     db.query(sqlCodeToOrderToMenu, (err, rows) => {
