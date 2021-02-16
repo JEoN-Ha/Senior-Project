@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../dbconnection');
 
 // ----------------------------------------------------------------------------------------------
-// signUP
+// signUp
 router.post('/signUp', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
     const username = `'${req.body.userName}'`;
@@ -50,24 +50,41 @@ router.post('/signUp', (req, res) => {
 // ----------------------------------------------------------------------------------------------
 // signIn
 router.post('/signIn', (req, res) => {
-    const userwebid = `'${req.body.userWebId}'`;
-    const pw = `'${req.body.pw}'`;
+    const userwebidSql = `'${req.body.userWebId}'`;
+    const pwSql = `'${req.body.pw}'`;
+
+    const userwebid = `${req.body.userWebId}`;
+    const pw = `${req.body.pw}`;
 
     const sqlCodeToUserTable = `
     select UserWebId, PW from usertable
-    where UserWebId = ${userwebid};`;
+    where UserWebId = ${userwebidSql};`;
 
     db.query(sqlCodeToUserTable, (err, rows) => {
-        const idCheck = rows.UserWebId === userwebid;
-        const pwCheck = rows.PW === pw;
+        const dbData = JSON.parse(JSON.stringify(rows));
+        
+        const idCheck = String(dbData[0].UserWebId) == userwebid;
+        const pwCheck = String(dbData[0].PW) == pw;
         
         if(idCheck && pwCheck) {
-           res.statusCode = 200;
+            res.send(JSON.stringify({
+                id: idCheck, 
+                pw: pwCheck
+            }));
+            res.status(200).end();
         } else {
-            res.statusCode = 400;
-            res.send([idCheck, pwCheck]);
+            res.status(400).end();
+            // res.json({
+            //     id: idCheck, 
+            //     pw: pwCheck
+            // })
+            // res.send(JSON.stringify({
+            //     id: idCheck, 
+            //     pw: pwCheck
+            // }));
         }
     })
+    
 })
 // ----------------------------------------------------------------------------------------------
 // getMenuData

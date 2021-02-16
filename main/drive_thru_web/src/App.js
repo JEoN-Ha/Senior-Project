@@ -13,38 +13,34 @@ class App extends Component {
   componentDidMount() {
     const jeonhaUrl = 'http://localhost:4000';
 
-    const bodySignUP = {
-      userWebId: 'fora23',
-      userName: '팽대원',
-      pw: '1234',
-      phoneNum: '01011112222',
-      carId: '11가 1111'
-  };
+    const bodySignIn = JSON.stringify({
+      userWebId: 'fora22',
+      pw: '1111',
+  });
   
-  fetch(jeonhaUrl + '/signUp', {
+  fetch(jeonhaUrl + '/signIn', {
       method: "post",
-      headers:  {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Access-Control-Allow-Origin": "*"
-    },
-      body: bodySignUP
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: bodySignIn
   })
   .then(res => {
-      if (res.status === 200) {
-          // 정상 작동
-          console.log('Success!');
-      } else if(res.status === 400) {
-          // 실패시
-          console.log('Failed!');
-          res.text()
-      }
+    if (res.status === 200) {
+      // 정상 작동
+      console.log('Success!');
+    } else if(res.status === 400) {
+      // 실패시
+      console.log('Failed!');
+    }
+    res.text();
   })
   .then(data => {
-      // 아이디 중복, 패스워드 중복, 그 외 에러
-      const overlapId = JSON.parse(data)[0];
-      const overlapPw = JSON.parse(data)[1];
-      const errorDB = JSON.parse(data)[2];
+    // console.log(JSON.parse(JSON.stringify(data)));
+    console.log(JSON.parse(data));
+      // const idSuccess = JSON.parse(data)[0];
+      // const pwSuccess = JSON.parse(data)[1];
+      // id, pw 성공여부 변수
   })
   }
 
