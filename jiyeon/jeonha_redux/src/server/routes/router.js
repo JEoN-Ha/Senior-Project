@@ -31,11 +31,11 @@ router.get('/getMenuData', (req, res) => {
     const sqlCode = `select * from menuboard`;
     db.query(sqlCode, (err, rows) => {
         if(!err) {
-            
+            res.statusCode = 200;
             res.send(rows);
         } else {
             console.log(`query error: ${err}}`);
-
+            res.statusCode = 400;
             res.send(err);
         }
     })

@@ -5,10 +5,9 @@ info:
   description: Untact DriveThru를 위한 API 명세서
 servers:
   # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/kiJiyeon/Jeonha-redux/1.0.0
   - description: JeonHa Untact DriveThru API
-    url: https://pinkapeach-apim.azure-api.net
+    url: https://pinkapeach-apim.azure-api.net 
+
 paths:
   /signUP:
     post:
