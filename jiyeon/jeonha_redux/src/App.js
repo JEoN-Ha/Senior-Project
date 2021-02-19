@@ -24,13 +24,35 @@ class App extends Component {
       PW: '8888',
       PhoneNum: '0880808080'
     }
+    
+    // async function signUp(url=''){
+    //   const res = await fetch(url, {
+    //     method: "post",
+    //     mode: 'no-cors',
+    //     headers: {
+    //       "Content-Type": "application/json", 
+    //       "Access-Control-Allow-Credentials" : true 
+    //     },
+    //     credentials: 'same-origin',
+    //     body: JSON.stringify(bodyData)
+    //   });
 
+    //   return res.json();
+    // }
+
+    // signUp(defaultURL+'/signUp')
+    //   .then(bodyData=>
+    //     {
+    //       console.log(bodyData);
+    //     });
     fetch(defaultURL+'/signUp', {
       method: "post",
+      mode: 'cors',
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json", 
+        "Access-Control-Allow-Credentials" : true 
       },
-      credentials: "include",
+      credentials: 'same-origin',
       body: JSON.stringify(bodyData)
     })
     .then((res) => console.log(res.json()))
@@ -38,10 +60,13 @@ class App extends Component {
 
     fetch(defaultURL+'/getMenuData',{
       method: "get",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "include"
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json", 
+          "Access-Control-Allow-Credentials" : true 
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify(bodyData)
     })
     .then(response => 
       response.text()
