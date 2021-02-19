@@ -3,9 +3,9 @@ const jeonhaUrl = 'http://localhost:4000'
 // ----------------------------------------------------------------------------------------------
 // signUP
 const bodySignUp = JSON.stringify({
-    userWebId: 'fora22',
+    userWebId: 'bb',
     userName: '팽대원',
-    pw: '1234',
+    pw: '3222',
     phoneNum: '01011112222',
     carId: '11가 1111'
 });
@@ -17,29 +17,30 @@ fetch(jeonhaUrl + '/signUp', {
     },
     body: bodySignUp
 })
-.then(res => {
-    if (res.status == 200) {
-        // 정상 작동
-        console.log('Success!');
-    } else if(res.status == 400) {
-        // 실패시
-        console.log('Failed!');
-        res.text()
-    }
-})
-.then(data => {
-    // 아이디 중복, 패스워드 중복, 그 외 에러
-    const overlapId = JSON.parse(data)[0];
-    const overlapPw = JSON.parse(data)[1];
-    const errorDB = JSON.parse(data)[2];
-})
+    .then(res => {
+        if (res.status == 200) {
+            // 정상 작동
+            console.log('Success!');
+        } else if (res.status == 400) {
+            // 실패시
+            console.log('Failed!');
+        }
+        return res.json();
+    })
+    .then(data => {
+        // 아이디 중복, 패스워드 중복, 그 외 에러
+        const overlapId = data.id;
+        const overlapPw = data.pw;
+        const errorDB = data.db;
+        console.log(overlapId, overlapPw, errorDB);
+    })
 
 // ----------------------------------------------------------------------------------------------
 // signIn
 
 const bodySignIn = JSON.stringify({
     userWebId: 'fora22',
-    pw: '1234',
+    pw: '1111',
 });
 
 fetch(jeonhaUrl + '/signIn', {
@@ -50,31 +51,41 @@ fetch(jeonhaUrl + '/signIn', {
     body: bodySignIn
 })
 .then(res => {
-    if (res.status == 200) {
+    if (res.status === 200) {
         // 정상 작동
         console.log('Success!');
-    } else if(res.status == 400) {
+    } else if (res.status === 400) {
         // 실패시
         console.log('Failed!');
-        res.text()
     }
+    return res.json();
 })
 .then(data => {
-    const idSuccess = JSON.parse(data)[0];
-    const pwSuccess = JSON.parse(data)[1];
     // id, pw 성공여부 변수
+    const idSuccess = data.id;
+    const pwSuccess = data.pw;
+    console.log(idSuccess, pwSuccess);
 })
 
 // ----------------------------------------------------------------------------------------------
 // getMenuData
-fetch(jeonhaUrl + '/getData')
-    .then(res =>
-        res.text()
-    )
-    .then(data => {
-        // 모든 음식 메뉴 정보: 객체 형태
-        const allMenuData = JSON.parse(data);
-    });
+fetch(jeonhaUrl + '/getMenuData')
+      .then(res => {
+        if (res.status === 200) {
+          // 정상 작동
+          console.log('Success!');
+        } else if (res.status === 400) {
+          // 실패시
+          console.log('Failed!');
+        }
+        return res.json();
+      })
+      .then(data => {
+        const allMenuData = data.menu; // 모든 음식 메뉴 정보: 리스트 안에 객체 형태 [{}, {}, {}, ...]
+        const getMenuIsError = data.isError;
+        const whatIsError = data.err;
+        // console.log(allMenuData, getMenuIsError, whatIsError);
+      });
 
 // ----------------------------------------------------------------------------------------------
 // insertIntoBasketByCar
@@ -93,22 +104,22 @@ fetch(jeonhaUrl + '/insertIntoBasketByCar', {
     },
     body: bodyInsertIntoBasket
 })
-.then(res => {
-    if (res.status === 200) {
-        // 정상 작동
-        console.log('Success!');
-    } else if(res.status === 400) {
-        // 실패시
-        console.log('Failed!');
-        res.text()
-    }
-})
-.then(data => {
-    // 아이디 중복, 패스워드 중복, 그 외 에러
-    const overlapId = JSON.parse(data)[0];
-    const overlapPw = JSON.parse(data)[1];
-    const errorDB = JSON.parse(data)[2];
-})
+    .then(res => {
+        if (res.status === 200) {
+            // 정상 작동
+            console.log('Success!');
+        } else if (res.status === 400) {
+            // 실패시
+            console.log('Failed!');
+            res.text()
+        }
+    })
+    .then(data => {
+        // 아이디 중복, 패스워드 중복, 그 외 에러
+        const overlapId = JSON.parse(data)[0];
+        const overlapPw = JSON.parse(data)[1];
+        const errorDB = JSON.parse(data)[2];
+    })
 // ----------------------------------------------------------------------------------------------
 // order
 const bodyOrder = JSON.stringify({
@@ -122,21 +133,21 @@ fetch(jeonhaUrl + '/order', {
     },
     body: bodyOrder
 })
-.then(res => {
-    if (res.status === 200) {
-        // 정상 작동
-        console.log('Success!');
-    } else if(res.status === 400) {
-        // 실패시
-        console.log('Failed!');
-        res.text()
-    }
-})
-.then(data => {
-    // 아이디 중복, 패스워드 중복, 그 외 에러
-    const errorOrder = JSON.parse(data)[0];
-    const errorOrderToMenu = JSON.parse(data)[1];
-})
+    .then(res => {
+        if (res.status === 200) {
+            // 정상 작동
+            console.log('Success!');
+        } else if (res.status === 400) {
+            // 실패시
+            console.log('Failed!');
+            res.text()
+        }
+    })
+    .then(data => {
+        // 아이디 중복, 패스워드 중복, 그 외 에러
+        const errorOrder = JSON.parse(data)[0];
+        const errorOrderToMenu = JSON.parse(data)[1];
+    })
 
 // ----------------------------------------------------------------------------------------------
 // paying
@@ -151,20 +162,20 @@ fetch(jeonhaUrl + '/paying', {
     },
     body: bodyPaying
 })
-.then(res => {
-    if (res.status === 200) {
-        // 정상 작동
-        console.log('Success!');
-    } else if(res.status === 400) {
-        // 실패시
-        console.log('Failed!');
-        res.text()
-    }
-})
-.then(data => {
-    // 아이디 중복, 패스워드 중복, 그 외 에러
-    const errorDB = JSON.parse(data)[0];
-})
+    .then(res => {
+        if (res.status === 200) {
+            // 정상 작동
+            console.log('Success!');
+        } else if (res.status === 400) {
+            // 실패시
+            console.log('Failed!');
+            res.text()
+        }
+    })
+    .then(data => {
+        // 아이디 중복, 패스워드 중복, 그 외 에러
+        const errorDB = JSON.parse(data)[0];
+    })
 
 // ----------------------------------------------------------------------------------------------
 // CancelOrderFromBasket
@@ -180,17 +191,17 @@ fetch(jeonhaUrl + '/CancelOrderFromBasket', {
     },
     body: bodyCancelOrderFromBasket
 })
-.then(res => {
-    if (res.status === 200) {
-        // 정상 작동
-        console.log('Success!');
-    } else if(res.status === 400) {
-        // 실패시
-        console.log('Failed!');
-        res.text()
-    }
-})
-.then(data => {
-    // 아이디 중복, 패스워드 중복, 그 외 에러
-    const errorDB = JSON.parse(data)[0];
-})
+    .then(res => {
+        if (res.status === 200) {
+            // 정상 작동
+            console.log('Success!');
+        } else if (res.status === 400) {
+            // 실패시
+            console.log('Failed!');
+            res.text()
+        }
+    })
+    .then(data => {
+        // 아이디 중복, 패스워드 중복, 그 외 에러
+        const errorDB = JSON.parse(data)[0];
+    })

@@ -37,21 +37,23 @@ router.post('/signUp', (req, res) => {
     })
 
     if (idOverlap && pwOverlap && dbError) {
-        res.statusCode = 200;
+        res.status(200).json({
+            id: idOverlap,
+            pw: pwOverlap,
+            db: dbError
+        })
     } else {
-        res.statusCode = 400;
-        res.send([
-            idOverlap,
-            pwOverlap,
-            dbError
-        ])
+        res.status(400).json({
+            id: idOverlap,
+            pw: pwOverlap,
+            db: dbError
+        })
     }
 })
 // ----------------------------------------------------------------------------------------------
 // signIn
 router.post('/signIn', (req, res) => {
     const userwebidSql = `'${req.body.userWebId}'`;
-    const pwSql = `'${req.body.pw}'`;
 
     const userwebid = `${req.body.userWebId}`;
     const pw = `${req.body.pw}`;
@@ -67,21 +69,15 @@ router.post('/signIn', (req, res) => {
         const pwCheck = String(dbData[0].PW) == pw;
         
         if(idCheck && pwCheck) {
-            res.send(JSON.stringify({
+            res.status(200).json({
+                id: idCheck, 
+                pw: pwCheck,
+            })
+        } else {
+            res.status(400).json({
                 id: idCheck, 
                 pw: pwCheck
-            }));
-            res.status(200).end();
-        } else {
-            res.status(400).end();
-            // res.json({
-            //     id: idCheck, 
-            //     pw: pwCheck
-            // })
-            // res.send(JSON.stringify({
-            //     id: idCheck, 
-            //     pw: pwCheck
-            // }));
+            })
         }
     })
     
@@ -91,13 +87,19 @@ router.post('/signIn', (req, res) => {
 router.get('/getMenuData', (req, res) => {
     const sqlCode = `select * from menuboard;`;
     db.query(sqlCode, (err, rows) => {
+        const dbData = JSON.parse(JSON.stringify(rows));
         if(!err) {
-            res.statusCode = 200;
-            res.send(rows);
+            res.status(200).json({
+                menu: dbData,
+                isError: false,
+                explainError: null
+            })
         } else {
-            console.log(`query error: ${err}}`);
-            res.statusCode = 400;
-            res.send(err);
+            res.status(400).json({
+                menu: null,
+                isError: true,
+                explainError: err
+            })
         }
     })
 })
