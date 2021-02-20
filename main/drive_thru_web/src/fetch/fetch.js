@@ -32,7 +32,9 @@ fetch(jeonhaUrl + '/signUp', {
         const overlapId = data.id;
         const overlapPw = data.pw;
         const errorDB = data.db;
-        console.log(overlapId, overlapPw, errorDB);
+
+        // 확인을 위한 console.log
+        // console.log(overlapId, overlapPw, errorDB);
     })
 
 // ----------------------------------------------------------------------------------------------
@@ -64,7 +66,9 @@ fetch(jeonhaUrl + '/signIn', {
     // id, pw 성공여부 변수
     const idSuccess = data.id;
     const pwSuccess = data.pw;
-    console.log(idSuccess, pwSuccess);
+
+    // 확인을 위한 console.log
+    // console.log(idSuccess, pwSuccess);
 })
 
 // ----------------------------------------------------------------------------------------------
@@ -83,43 +87,155 @@ fetch(jeonhaUrl + '/getMenuData')
       .then(data => {
         const allMenuData = data.menu; // 모든 음식 메뉴 정보: 리스트 안에 객체 형태 [{}, {}, {}, ...]
         const getMenuIsError = data.isError;
-        const whatIsError = data.err;
+        const whatIsError = data.explainError;
+
+        // 확인을 위한 console.log
         // console.log(allMenuData, getMenuIsError, whatIsError);
       });
 
 // ----------------------------------------------------------------------------------------------
-// insertIntoBasketByCar
+// insertIntoBasket
 const bodyInsertIntoBasket = JSON.stringify({
-    userWebId: 'fora22',
-    carId: '11가 1111',
+    userWebId: 'fora',
     menuNo: 1,
-    menuCount: 3,
-    price: 3500
-});
+    menuCount: 3
+})
 
-fetch(jeonhaUrl + '/insertIntoBasketByCar', {
+fetch(jeonhaUrl + '/insertIntoBasket', {
     method: "post",
     headers: {
         "Content-Type": "application/json"
     },
     body: bodyInsertIntoBasket
+}).then(res => {
+    if (res.status === 200) {
+        // 정상 작동
+        console.log('Success!');
+    } else if (res.status === 400) {
+        // 실패시
+        console.log('Failed!');
+    }
+    return res.json();
 })
-    .then(res => {
-        if (res.status === 200) {
-            // 정상 작동
-            console.log('Success!');
-        } else if (res.status === 400) {
-            // 실패시
-            console.log('Failed!');
-            res.text()
-        }
-    })
-    .then(data => {
-        // 아이디 중복, 패스워드 중복, 그 외 에러
-        const overlapId = JSON.parse(data)[0];
-        const overlapPw = JSON.parse(data)[1];
-        const errorDB = JSON.parse(data)[2];
-    })
+.then(data => {
+    const getMenuIsError = data.isError;
+    const whatIsError = data.explainError;
+
+    // 확인을 위한 console.log
+    // if (getMenuIsError) {
+    //     console.log(whatIsError);
+    // }
+})
+// ----------------------------------------------------------------------------------------------
+// updateFromBasket
+
+const bodyUpdateFromBasket = JSON.stringify({
+    userWebId: 'fora',
+    menuNo: 1,
+    menuCount: 3,
+    newMenuCount: 4
+})
+
+fetch(jeonhaUrl + '/updateFromBasket', {
+    method: "post",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: bodyUpdateFromBasket
+}).then(res => {
+    if (res.status === 200) {
+        // 정상 작동
+        console.log('Success!');
+    } else if (res.status === 400) {
+        // 실패시
+        console.log('Failed!');
+    }
+    return res.json();
+})
+.then(data => {
+    const getMenuIsError = data.isError;
+    const whatIsError = data.explainError;
+
+    // 확인을 위한 console.log
+    // if (getMenuIsError) {
+    //     console.log(whatIsError);
+    // }
+})
+
+// ----------------------------------------------------------------------------------------------
+// deleteFromBasket
+
+const bodyDeleteFromBasket = JSON.stringify({
+    userWebId: 'fora',
+    menuNo: 1,
+    menuCount: 3
+})
+
+fetch(jeonhaUrl + '/updateFromBasket', {
+    method: "post",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: bodyDeleteFromBasket
+}).then(res => {
+    if (res.status === 200) {
+        // 정상 작동
+        console.log('Success!');
+    } else if (res.status === 400) {
+        // 실패시
+        console.log('Failed!');
+    }
+    return res.json();
+})
+.then(data => {
+    const getMenuIsError = data.isError;
+    const whatIsError = data.explainError;
+
+    // 확인을 위한 console.log
+    // if (getMenuIsError) {
+    //     console.log(whatIsError);
+    // }
+})
+
+// ----------------------------------------------------------------------------------------------
+// order
+const bodyOrder = JSON.stringify({
+    userWebId: 'fora22',
+    carId: '11가 1111',
+    payment: 1
+});
+
+fetch(jeonhaUrl + '/order', {
+    method: "post",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: bodyOrder
+})
+.then(res => {
+    if (res.status === 200) {
+        // 정상 작동
+        console.log('Success!');
+    } else if (res.status === 400) {
+        // 실패시
+        console.log('Failed!');
+    }
+    return res.json();
+})
+.then(data => {
+    const getMenuIsError = data.isError;
+    const whatIsError = data.explainError;
+    const orderData = data.data;
+    console.log(orderData);
+
+    // 확인을 위한 console.log
+    if (getMenuIsError) {
+        console.log(whatIsError);
+    } else {
+        console.log(orderData);
+    }
+})
+
 // ----------------------------------------------------------------------------------------------
 // order
 const bodyOrder = JSON.stringify({
