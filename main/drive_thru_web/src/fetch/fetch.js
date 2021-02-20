@@ -223,47 +223,11 @@ fetch(jeonhaUrl + '/order', {
     return res.json();
 })
 .then(data => {
-    const getMenuIsError = data.isError;
-    const whatIsError = data.explainError;
-    const orderData = data.data;
-    console.log(orderData);
-
+    const orderIsError = data.isError;
+    const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
     // 확인을 위한 console.log
-    if (getMenuIsError) {
-        console.log(whatIsError);
-    } else {
-        console.log(orderData);
-    }
+    console.log(orderIsError, userOrderNo);
 })
-
-// ----------------------------------------------------------------------------------------------
-// order
-const bodyOrder = JSON.stringify({
-    orderNo: 10
-});
-
-fetch(jeonhaUrl + '/order', {
-    method: "post",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: bodyOrder
-})
-    .then(res => {
-        if (res.status === 200) {
-            // 정상 작동
-            console.log('Success!');
-        } else if (res.status === 400) {
-            // 실패시
-            console.log('Failed!');
-            res.text()
-        }
-    })
-    .then(data => {
-        // 아이디 중복, 패스워드 중복, 그 외 에러
-        const errorOrder = JSON.parse(data)[0];
-        const errorOrderToMenu = JSON.parse(data)[1];
-    })
 
 // ----------------------------------------------------------------------------------------------
 // paying
@@ -285,27 +249,26 @@ fetch(jeonhaUrl + '/paying', {
         } else if (res.status === 400) {
             // 실패시
             console.log('Failed!');
-            res.text()
-        }
-    })
-    .then(data => {
-        // 아이디 중복, 패스워드 중복, 그 외 에러
-        const errorDB = JSON.parse(data)[0];
-    })
+            return res.json();
+    }})
+        .then(data => {
+            const payIsError = data.isError;
+            // 확인을 위한 console.log
+            console.log(payIsError);
+        })
 
 // ----------------------------------------------------------------------------------------------
-// CancelOrderFromBasket
-const bodyCancelOrderFromBasket = JSON.stringify({
-    menuNo: 1,
+// CancelOrder
+const bodyCancelOrder = JSON.stringify({
     orderNo: 10
 });
 
-fetch(jeonhaUrl + '/CancelOrderFromBasket', {
+fetch(jeonhaUrl + '/CancelOrder', {
     method: "post",
     headers: {
         "Content-Type": "application/json"
     },
-    body: bodyCancelOrderFromBasket
+    body: bodyCancelOrder
 })
     .then(res => {
         if (res.status === 200) {
@@ -314,10 +277,11 @@ fetch(jeonhaUrl + '/CancelOrderFromBasket', {
         } else if (res.status === 400) {
             // 실패시
             console.log('Failed!');
-            res.text()
         }
+        return res.json();
     })
     .then(data => {
-        // 아이디 중복, 패스워드 중복, 그 외 에러
-        const errorDB = JSON.parse(data)[0];
+        const cancelIsError = data.isError;
+        // 확인을 위한 console.log
+        console.log(cancelIsError);
     })
