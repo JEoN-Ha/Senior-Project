@@ -3,10 +3,11 @@ import {createStore} from 'redux';
 export default createStore(function(state, action){
     if(state === undefined){    // 최초 실행일 경우
         return {
-            ID:null, PW:null, 
+            customer_id:null, PW:null, 
             mode:'login',mode_content:'welcome',
             PW_state:false,
-            orderName:'상품을 선택해주세요.', orderCount:0
+            orderName:'상품을 선택해주세요.', orderCount:0,
+            customerType:null, isCarNumberDisabled:null
         }
     }
 
@@ -15,10 +16,10 @@ export default createStore(function(state, action){
         return {...state, mode_content:'LOGIN'}    //...state는 이전 state를 복사
     }
     if(action.type === 'LOGIN_CLICK') {
-        return {...state, ID:action.ID, PW:action.PW, mode:'readCustomer', mode_content:'welcome'}    //...state는 이전 state를 복사
+        return {...state, customer_id:action.customer_id, PW:action.PW, mode:'readCustomer', mode_content:'welcome'}    //...state는 이전 state를 복사
     }
     if(action.type === 'LOGOUT') {
-        return {...state, ID:action.ID, PW:action.PW, mode:'login'}
+        return {...state, customer_id:action.customer_id, PW:action.PW, mode:'login'}
     }
 
     // 회원가입
@@ -63,7 +64,13 @@ export default createStore(function(state, action){
         return {...state, mode_content:'MENU'}  
     }
     if(action.type === 'PAYMENT') {
-        return {...state, mode_content:'payment'}  
+        return {...state, mode_content:'customerType'}  
+    }
+    if(action.type === 'Drive-Thru') {
+        return {...state, mode_content:'payment',customerType:'Drive-Thru',isCarNumberDisabled:'false'}  
+    }
+    if(action.type === 'On Foot') {
+        return {...state, mode_content:'payment',customerType:'OnFoot',isCarNumberDisabled:'true'}  
     }
     if(action.type === 'PAYMENT_CLICK') {
         return {...state, mode_content:'welcome'}  

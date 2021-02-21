@@ -13,6 +13,10 @@ export default class LoginSignUpButton extends Component {
         }.bind(this));
     }
 
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+      }
+
     render() {
         return (
             <div>

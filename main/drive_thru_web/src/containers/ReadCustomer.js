@@ -4,14 +4,14 @@ import {connect} from 'react-redux';
 function mapDispatchToProps(dispatch){
     return {
         onClick:function(){
-            dispatch({type:'LOGOUT',ID:null,PW:null});
+            dispatch({type:'LOGOUT',customer_id:null,PW:null});
         }
     }
 }
 
 function mapReduxStateToReactProps(state) {
     return{
-        ID:state.ID
+        customer_id:state.customer_id
     }    
 }
 

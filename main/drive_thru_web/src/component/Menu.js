@@ -23,6 +23,11 @@ class Menu extends Component {
         ]
     };
   }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+  
     render() {
         const mapToComponent = data => {
           return data.map((menu, i) => {

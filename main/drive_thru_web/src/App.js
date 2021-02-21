@@ -18,8 +18,6 @@ class App extends Component {
 
         {/* 로그인 & 회원가입 버튼 */}
         <SideBar></SideBar>
-        {/* 로그인 폼
-        <LoginRoot></LoginRoot> */}
 
         {/* 상단 메뉴 */}
         <TopBar></TopBar>

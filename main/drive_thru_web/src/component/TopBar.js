@@ -5,6 +5,7 @@ class TopBar extends Component {
     state = {
         TopBar : [ 'MENU', '장바구니', 'MY PAGE', 'EVENT']
     }
+
     render() {
         {   
       return (
