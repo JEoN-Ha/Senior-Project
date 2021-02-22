@@ -229,7 +229,7 @@ router.post('/order', (req, res) => {
     where (BasketId = ${userwebid} and 
         BasketState = 0);`;
     
-    const basketData;
+    const basketData = [];
     let basketError = false;
 
     db.query(sqlCodeToBasketTable, (err, rows) => {
