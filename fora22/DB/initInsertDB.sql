@@ -60,6 +60,15 @@ values('fora22', '22나 2222', 1);
 insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
 values(1, 3, 2);
 
-update ordertable set ImageWebCarId = '69구 4381' where OrderNo = 1;
-update ordertable set ImageWebCarId = '22나 2222' where OrderNo = 2;
-update ordertable set ImageWebCarId = '22가 2222' where OrderNo = 3;
+-- update ordertable set ImageWebCarId = '69구 4381' where OrderNo = 1;
+-- update ordertable set ImageWebCarId = '22나 2222' where OrderNo = 2;
+-- update ordertable set ImageWebCarId = '22가 2222' where OrderNo = 3;
+
+insert into baskettable(BasketId, BasketMenuNo, BasketMenuCount)
+values ('fora22', 1, 3);
+
+insert into baskettable(BasketId, BasketMenuNo, BasketMenuCount)
+values ('fora22', 2, 1);
+
+insert into baskettable(BasketId, BasketMenuNo, BasketMenuCount)
+values ('armful', 1, 2);

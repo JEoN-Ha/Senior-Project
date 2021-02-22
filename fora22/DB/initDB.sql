@@ -78,7 +78,7 @@ create table baskettable(
     BasketId VARCHAR(100),
     BasketMenuNo INT,
     BasketMenuCount INT,
-    BasketState TINYINT(1) default 0
+    BasketState TINYINT(1) default 0,
 
     foreign key(BasketId) references usertable(UserWebId),
     foreign key(BasketMenuNo) references menuboard(MenuNo)
