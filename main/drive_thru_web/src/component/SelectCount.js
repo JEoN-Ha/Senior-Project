@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import "./Component.css";
 import store from '../store';
 
+const jeonhaUrl = 'http://localhost:4000';
+
 class Basket extends Component {
-  state = {orderCount:store.getState().orderCount}
+  state = {
+    orderCount:store.getState().orderCount,
+    orderName:store.getState().orderName,
+    customer_id:store.getState().customer_id}
   constructor(props){
   super(props);
   store.subscribe(function () {
@@ -38,6 +43,11 @@ class Basket extends Component {
         lineHeight: 1.5,
         width: "150px"
       }
+      const bodyInsertIntoBasket = JSON.stringify({
+        userWebId: this.state.customer_id,
+        menuNo: 1,
+        menuCount: this.state.orderCount
+      })
       return (
         <div>
             {/* 선택 상품 개수 정하기 */}
@@ -48,8 +58,33 @@ class Basket extends Component {
               }.bind(this)}>-1</button>
 
             {/* 장바구니에 담기 */}
-            <button style={btnStyle2} onClick={function () {this.props.BasketClick(this.state.orderCount)              
-              }.bind(this)}>장바구니 담기</button>
+            <button style={btnStyle2} onClick={
+              function () {this.props.BasketClick(this.state.orderCount)
+              fetch(jeonhaUrl + '/insertIntoBasket', {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: bodyInsertIntoBasket
+              }).then(res => {
+                if (res.status === 200) {
+                    // 정상 작동
+                    console.log('Success!');
+                } else if (res.status === 400) {
+                    // 실패시
+                    console.log('Failed!');
+                }
+                return res.json();
+              })
+              .then(data => {
+                const getMenuIsError = data.isError;
+                const whatIsError = data.explainError;
+            
+                // 확인을 위한 console.log
+                // if (getMenuIsError) {
+                //     console.log(whatIsError);
+                // }
+              })}.bind(this)}>장바구니 담기</button>
         </div>
       );      
     }

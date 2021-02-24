@@ -20,6 +20,7 @@ class MenuInfo extends Component {
       return (
           <div>
             <hr/>
+            <span>{this.props.menu.id}</span>
             <span onClick={function(e) {
               this.props.onClickName(e.target.innerText, this.state.orderName)
             }.bind(this)}>{this.props.menu.nameKorea}</span><br/>

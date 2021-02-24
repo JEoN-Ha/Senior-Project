@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MenuInfo from '../containers/MenuInfo';
 
+const jeonhaUrl = 'http://localhost:4000';
+
 class Menu extends Component {
   constructor(props){
     super(props);
@@ -27,35 +29,58 @@ class Menu extends Component {
   componentWillUnmount() {
     console.log('componentWillUnmount');
   }
+
+  getMenuData(){
+    fetch(jeonhaUrl + '/getMenuData')
+      .then(res => {
+        if (res.status === 200) {
+          // 정상 작동
+          console.log('Success!');
+        } else if (res.status === 400) {
+          // 실패시
+          console.log('Failed!');
+        }
+        return res.json();
+      })
+      .then(data => {
+        const allMenuData = data.menu; // 모든 음식 메뉴 정보: 리스트 안에 객체 형태 [{}, {}, {}, ...]
+        const getMenuIsError = data.isError;
+        const whatIsError = data.explainError;
   
-    render() {
-        const mapToComponent = data => {
-          return data.map((menu, i) => {
-              return (<MenuInfo menu={menu} key={i}
-                
-                getCount = {function(_count,_id){
-                    let i = 0;
-                    let data = Array.from(this.state.menuData);
-                    while(i < data.length){
-                        if(data[i].id === _id){
-                            data[i].count = _count;
-                            break;
-                        }
-                        i = i + 1;
-                    }
-                    this.setState({
-                        menuData:data
-                    });
-                }.bind(this)}
-                ></MenuInfo>);
-          });
-      };  
-      return (
-        <div>
-            {/* menu 여러개 그리기 */}
-            {mapToComponent(this.state.menuData)} 
-        </div>
-      )
+        // 확인을 위한 console.log
+        // console.log(allMenuData, getMenuIsError, whatIsError);
+      });
+  }
+  
+  render() {
+    const mapToComponent = data => {
+      return data.map((menu, i) => {
+          return (<MenuInfo menu={menu} key={i}
+            getCount = {function(_count,_id){
+              let i = 0;
+              let data = Array.from(this.state.menuData);
+              while(i < data.length){
+                  if(data[i].id === _id){
+                      data[i].count = _count;
+                      break;
+                  }
+                  i = i + 1;
+              }
+              this.setState({
+                  menuData:data
+              });
+            }.bind(this)}
+            ></MenuInfo>);
+      });
+    };  
+    return (
+      <div>
+          {/* DB로부터 메뉴 가져오기 */}
+          {this.getMenuData()}
+          {/* menu 여러개 그리기 */}
+          {mapToComponent(this.state.menuData)} 
+      </div>
+    )
   }
 }
 export default Menu;
