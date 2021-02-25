@@ -43,7 +43,6 @@ export default class Basket extends Component {
           }
         return (
             <div>
-
                 {/* DB에서 장바구니 내역 불러오기 */}
                <h2>주문 메뉴 정보</h2>
                <article className="OrderInfoTitle">아메리카노 1개</article>

@@ -1,3 +1,4 @@
+import { act } from 'react-dom/test-utils';
 import {createStore} from 'redux';
 
 export default createStore(function(state, action){
@@ -6,7 +7,7 @@ export default createStore(function(state, action){
             customer_id:null, PW:null, 
             mode:'login',mode_content:'welcome',
             PW_state:false,
-            orderName:'상품을 선택해주세요.', orderCount:0,
+            orderName:'상품을 선택해주세요.', orderCount:0,orderID:null,
             customerType:null, isCarNumberDisabled:null
         }
     }
@@ -41,10 +42,10 @@ export default createStore(function(state, action){
         return {...state, mode_content:'MENU'}  
     }
     if(action.type === 'SELECT') {
-        return {...state, orderName:action.orderName, orderCount:0}
+        return {...state, orderName:action.orderName, orderCount:0, orderID:action.orderID}
     }
     if(action.type === 'SELECT_CANSEL') {
-        return {...state, orderName:action.orderName, orderCount:0}
+        return {...state, orderName:action.orderName, orderCount:0, orderID:null}
     }
     if(action.type === 'INCREMENT') {
         return {...state, orderCount: state.orderCount + 1}
@@ -79,6 +80,12 @@ export default createStore(function(state, action){
     // 마이페이지
     if(action.type === 'MY PAGE') {
         return {...state, mode_content:'MY PAGE'}  
+    }
+    if(action.type === 'MyInfo') {
+        return {...state, mode_content:'MyInfo'}  
+    }
+    if(action.type === 'Payment History') {
+        return {...state, mode_content:'Payment_History'}  
     }
     return state; // 기본적으로 state를 리턴하게 됨
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

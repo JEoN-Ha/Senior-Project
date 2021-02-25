@@ -8,7 +8,8 @@ class Basket extends Component {
   state = {
     orderCount:store.getState().orderCount,
     orderName:store.getState().orderName,
-    customer_id:store.getState().customer_id}
+    customer_id:store.getState().customer_id,
+    orderID:store.getState().orderID}
   constructor(props){
   super(props);
   store.subscribe(function () {
@@ -45,7 +46,7 @@ class Basket extends Component {
       }
       const bodyInsertIntoBasket = JSON.stringify({
         userWebId: this.state.customer_id,
-        menuNo: 1,
+        menuNo: this.state.orderID,
         menuCount: this.state.orderCount
       })
       return (

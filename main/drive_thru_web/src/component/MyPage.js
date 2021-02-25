@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import "./Component.css";
 
-export default class CustomerType extends Component {
+export default class MyPage extends Component {
 
     componentWillUnmount() {
         console.log('componentWillUnmount');
       }
-
 
     render() {
         const btnStyle = {
@@ -24,11 +23,11 @@ export default class CustomerType extends Component {
         return (
             <div className="SelectType">
                 <button style={btnStyle} onClick={function () {
-                    this.props.DriveClick()                   
-               }.bind(this)}>Drvie-Thru 이용</button>
+                    this.props.MyInfoClick()                   
+               }.bind(this)}>내 정보</button>
                <button style={btnStyle} onClick={function () {
-                    this.props.OnFootClick()                   
-               }.bind(this)}>도보 이용</button>
+                    this.props.PaymentClick()                   
+               }.bind(this)}>결제 내역</button>
             </div>
         )
     }
