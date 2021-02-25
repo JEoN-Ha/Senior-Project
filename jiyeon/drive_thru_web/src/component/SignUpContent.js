@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import store from '../store';
 import "./Component.css";
 
-const jeonhaUrl = 'https://reusablecup-apim.azure-api.net'
+const jeonhaUrl = 'http://pinkwallet-apim.azure-api.net/api'
 
 class SignUpContent extends Component {
     state = {

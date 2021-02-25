@@ -6,7 +6,7 @@ info:
 servers:
   # Added by API Auto Mocking Plugin
   - description: JeonHa Untact DriveThru API
-    url: https://reusablecup-apim.azure-api.net
+    url: http://pinkwallet-apim.azure-api.net/api
 
 paths:
   /signUP:

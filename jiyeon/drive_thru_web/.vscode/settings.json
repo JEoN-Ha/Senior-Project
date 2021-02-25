@@ -3,6 +3,6 @@
         "node_modules{,/**}",
         ".vscode{,/**}"
     ],
-    "appService.defaultWebAppToDeploy": "/subscriptions/962ad6be-5bf6-40f6-8778-f15ca986a98a/resourceGroups/testgroup/providers/Microsoft.Web/sites/reusablecup",
-    "appService.deploySubpath": "."
+    "appService.deploySubpath": ".",
+    "appService.defaultWebAppToDeploy": "/subscriptions/962ad6be-5bf6-40f6-8778-f15ca986a98a/resourceGroups/testgroup/providers/Microsoft.Web/sites/pinkwallet"
 }
