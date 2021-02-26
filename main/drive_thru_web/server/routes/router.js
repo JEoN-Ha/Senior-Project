@@ -20,20 +20,20 @@ router.post('/signUp', (req, res) => {
     let dbError = true;
 
     db.query(sqlCodeToUserTable, (err, rows) => {
-        if(err) {
-           idOverlap = false; 
-           pwOverlap = false;
-        } 
+        if (err) {
+            idOverlap = false;
+            pwOverlap = false;
+        }
     })
-    
+
     const sqlCodeToCarTable = `
     insert into car(CarWebId, CarId)
     values (${userwebid}, ${carid});`;
-    
+
     db.query(sqlCodeToCarTable, (err, rows) => {
-        if(err) {
-           dbError = false; 
-        } 
+        if (err) {
+            dbError = false;
+        }
     })
 
     if (idOverlap && pwOverlap && dbError) {
@@ -64,23 +64,23 @@ router.post('/signIn', (req, res) => {
 
     db.query(sqlCodeToUserTable, (err, rows) => {
         const dbData = JSON.parse(JSON.stringify(rows));
-        
+
         const idCheck = String(dbData[0].UserWebId) == userwebid;
         const pwCheck = String(dbData[0].PW) == pw;
-        
-        if(idCheck && pwCheck) {
+
+        if (idCheck && pwCheck) {
             res.status(200).json({
-                id: idCheck, 
+                id: idCheck,
                 pw: pwCheck,
             })
         } else {
             res.status(400).json({
-                id: idCheck, 
+                id: idCheck,
                 pw: pwCheck
             })
         }
     })
-    
+
 })
 // ----------------------------------------------------------------------------------------------
 // getMenuData
@@ -88,7 +88,7 @@ router.get('/getMenuData', (req, res) => {
     const sqlCode = `select * from menuboard;`;
     db.query(sqlCode, (err, rows) => {
         const dbData = JSON.parse(JSON.stringify(rows));
-        if(!err) {
+        if (!err) {
             res.status(200).json({
                 menu: dbData,
                 isError: false,
@@ -117,7 +117,7 @@ router.post('/insertIntoBasket', (req, res) => {
     values (${userwebid}, ${menuno}, ${menucount});`;
 
     db.query(sqlCodeToBasketTable, (err, rows) => {
-        if(!err) {
+        if (!err) {
             res.status(200).json({
                 isError: false,
                 explainError: null
@@ -128,7 +128,7 @@ router.post('/insertIntoBasket', (req, res) => {
                 explainError: err
             })
         }
-    })    
+    })
 })
 
 // ----------------------------------------------------------------------------------------------
@@ -146,9 +146,9 @@ router.post('/updateFromBasket', (req, res) => {
     where (BasketId = ${userwebid} and 
         BasketMenuNo = ${menuno} and 
         BasketMenuCount = ${menucount});`;
-    
+
     db.query(sqlCodeToBasketTable, (err, rows) => {
-        if(!err) {
+        if (!err) {
             res.status(200).json({
                 isError: false,
                 explainError: null
@@ -159,7 +159,7 @@ router.post('/updateFromBasket', (req, res) => {
                 explainError: err
             })
         }
-    })    
+    })
 })
 
 // ----------------------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ router.post('/deleteFromBasket', (req, res) => {
         BasketMenuCount = ${menucount});`;
 
     db.query(sqlCodeToBasketTable, (err, rows) => {
-        if(!err) {
+        if (!err) {
             res.status(200).json({
                 isError: false,
                 explainError: null
@@ -187,7 +187,34 @@ router.post('/deleteFromBasket', (req, res) => {
                 explainError: err
             })
         }
-    })    
+    })
+})
+
+// ----------------------------------------------------------------------------------------------
+// getBasket
+router.post('/getBasket', (req, res) => {
+    const userwebid = `'${req.body.userWebId}'`;
+
+
+    const sqlCodeToBasketTable = `
+    select * from baskettable
+    where (BasketId = ${userwebid} and
+        BasketState = 0);`;
+
+
+    db.query(sqlCodeToBasketTable, (err, rows) => {
+        if (!err) {
+            res.status(200).json({
+                isError: false,
+                explainError: null
+            })
+        } else {
+            res.status(400).json({
+                isError: true,
+                explainError: err
+            })
+        }
+    })
 })
 
 // ----------------------------------------------------------------------------------------------
@@ -196,58 +223,74 @@ router.post('/order', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
     const carid = `'${req.body.carId}'`;
     const payment = `${req.body.payment}`;
-    
-    let orderTableError = false;
-    let getInsertIdError = false;
+
+    let orderTableError = true;
+    let getInsertIdError = true;
     const currentOrderNo = 0;
 
-    // const sqlCodeToOrderTable = `
-    // insert into ordertable(OrderWebId, WebCarId, OrderPayment)
-    // values (${userwebid}, ${carid}, ${payment});`;
-    
+    const sqlCodeToOrderTable = `
+    insert into ordertable(OrderWebId, WebCarId, OrderPayment)
+    values (${userwebid}, ${carid}, ${payment});`;
+
     const sqlCodeGetInsertId = `
     select * from ordertable
     order by OrderNo DESC limit 1;`;
-    // select OrderNo from ordertable last_insert_id();
-    
-    // db.query(sqlCodeToOrderTable, (err, results) => {
-    //     if (err) {
-    //         orderTableError = true;
-    //     }
-    // })
+
+
+    db.query(sqlCodeToOrderTable, (err, results) => {
+        if (err) {
+            orderTableError = false;
+        }
+    })
 
     db.query(sqlCodeGetInsertId, (err, getId) => {
         const dbData = JSON.parse(JSON.stringify(getId));
         if (err) {
-            getInsertIdError = true;
+            getInsertIdError = false;
         }
         currentOrderNo = dbData[0].OrderNo;
     })
-    
+
     const sqlCodeToBasketTable = `
     select BasketMenuNo, BasketMenuCount from baskettable
     where (BasketId = ${userwebid} and 
         BasketState = 0);`;
-    
-    const basketData = [];
-    let basketError = false;
+
+    let basketData = [];
+    let basketError = true;
 
     db.query(sqlCodeToBasketTable, (err, rows) => {
         basketData = JSON.parse(JSON.stringify(rows));
         // console.log(dbData);
-        for(let i = 0; i < basketData.length(); i++) {
-            const sqlCodeToOrderToMenu = `
+        for (let i = 0; i < basketData.length(); i++) {
+            let sqlCodeToOrderToMenu = `
             insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
             values(${currentOrderNo}, ${basketData[i].BasketMenuNo}, ${BasketMenuCount});`;
             db.query(sqlCodeToOrderToMenu, (err, rowResults) => {
                 if (err) {
-                    basketError = basketError && true;
+                    basketError = basketError && false;
                 }
             })
         }
-        
+
     })
-    if (orderTableError && getInsertIdError && basketError) {
+
+
+    const sqlCodeToUpdateOrderToMenu = `
+    update ordertomenu
+    set OrderState = 2
+    where OrderToMenu_OrderNo = ${currentOrderNo};`;
+
+    let orderToMenuError = true;
+
+    db.query(sqlCodeToUpdateOrderToMenu, (err, rows) => {
+        if (err) {
+            orderToMenuError = false;
+        }
+    })
+
+
+    if (orderTableError && getInsertIdError && basketError && orderToMenuError) {
         res.status(200).json({
             isError: false,
             orderNo: currentOrderNo
@@ -258,42 +301,12 @@ router.post('/order', (req, res) => {
             orderNo: null
         })
     }
-}) 
-
-
-
-// ----------------------------------------------------------------------------------------------
-// paying
-
-router.post('/paying', (req, res) => {
-    const orderno = `'${req.body.orderNo}'`;
-
-    const sqlCodeToOrderToMenu = `
-    update ordertomenu
-    set OrderState = 2
-    where OrderToMenu_OrderNo = ${orderno};`;
-    let orderToMenuError = false;
-    
-    db.query(sqlCodeToOrderToMenu, (err, rows) => {
-        if(err) {
-           orderToMenuError = true; 
-        } 
-    })
-
-    if (orderToMenuError) {
-        res.status(200).json({
-            isError: false
-        })
-    } else {
-        res.status(400).json({
-            isError: true
-        })
-    }
 })
 
 
+
 // ----------------------------------------------------------------------------------------------
-// CancelOrder
+// cancelOrder
 
 router.post('/cancelOrder', (req, res) => {
     const orderno = `'${req.body.orderNo}'`;
@@ -303,11 +316,11 @@ router.post('/cancelOrder', (req, res) => {
     set OrderState = 5
     where OrderToMenu_OrderNo = ${orderno} AND OrderState = 2;`;
     let orderToMenuError = true;
-    
+
     db.query(sqlCodeToOrderToMenu, (err, rows) => {
-        if(err) {
-           orderToMenuError = false; 
-        } 
+        if (err) {
+            orderToMenuError = false;
+        }
     })
 
     if (orderToMenuError) {
@@ -320,5 +333,64 @@ router.post('/cancelOrder', (req, res) => {
         })
     }
 })
+
+// ----------------------------------------------------------------------------------------------
+// getOrder
+
+router.post('/getOrder', (req, res) => {
+    const userwebid = `'${req.body.userWebId}'`;
+
+    const sqlCodeGetOrderNoToOrderToMenu = `
+    select OrderNo from ordertable
+    where (OrderWebId = ${userwebid});`;
+    let getOrderNoToOrderToMenu = true;
+
+    let orderNoData = [];
+    let orderData = [];
+    db.query(sqlCodeGetOrderNoToOrderToMenu, (err, rows) => {
+        if (err) {
+            getOrderNoToOrderToMenu = false;
+        } else {
+            orderNoData = JSON.parse(JSON.stringify(rows));
+            let getOrderMenuError = true;
+
+            for (let i = 0; i < orderNoData.length(); i++) {
+                let sqlCodeGetOrderToMenu = `
+            select * from ordertomenu
+            where (OrderToMenu_OrderNo = ${orderNoData[i].OrderNo});`;
+
+                db.query(sqlCodeGetOrderToMenu, (err, rowResults) => {
+                    if (err) {
+                        getOrderMenuError = getOrderMenuError && false;
+                    } else {
+                        orderData.push(rowResults); // for 문 돌 때마다 OrderNo에 따른 주문 정보가 나오는데 그것을 OrderData 리스트에 푸쉬함
+                        // 즉 orderData 변수안에는 구조가 다음과 같음
+                        /* 
+                        [
+                            [{}, {}, {},...],       -> OrderNo가 1인 것에 대한 주문 정보
+                            [{}, {}, {},...],       -> OrderNo가 3인 것에 대한 주문 정보
+                            [{}, {}, {},...],       -> OrderNo가 7인 것에 대한 주문 정보
+                            [{}, {}, {},...]        -> OrderNo가 10인 것에 대한 주문 정보
+                        ]
+                        */
+                    }
+                })
+            }
+        }
+    })
+
+    if (getOrderNoToOrderToMenu && getOrderMenuError) {
+        res.status(200).json({
+            isError: false,
+            orderAllData: orderDataq
+        })
+    } else {
+        res.status(400).json({
+            isError: true,
+            orderAllData: null
+        })
+    }
+})
+
 
 module.exports = router;

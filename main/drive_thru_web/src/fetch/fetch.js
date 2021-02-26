@@ -52,46 +52,46 @@ fetch(jeonhaUrl + '/signIn', {
     },
     body: bodySignIn
 })
-.then(res => {
-    if (res.status === 200) {
-        // 정상 작동
-        console.log('Success!');
-    } else if (res.status === 400) {
-        // 실패시
-        console.log('Failed!');
-    }
-    return res.json();
-})
-.then(data => {
-    // id, pw 성공여부 변수
-    const idSuccess = data.id;
-    const pwSuccess = data.pw;
+    .then(res => {
+        if (res.status === 200) {
+            // 정상 작동
+            console.log('Success!');
+        } else if (res.status === 400) {
+            // 실패시
+            console.log('Failed!');
+        }
+        return res.json();
+    })
+    .then(data => {
+        // id, pw 성공여부 변수
+        const idSuccess = data.id;
+        const pwSuccess = data.pw;
 
-    // 확인을 위한 console.log
-    // console.log(idSuccess, pwSuccess);
-})
+        // 확인을 위한 console.log
+        // console.log(idSuccess, pwSuccess);
+    })
 
 // ----------------------------------------------------------------------------------------------
 // getMenuData
 fetch(jeonhaUrl + '/getMenuData')
-      .then(res => {
+    .then(res => {
         if (res.status === 200) {
-          // 정상 작동
-          console.log('Success!');
+            // 정상 작동
+            console.log('Success!');
         } else if (res.status === 400) {
-          // 실패시
-          console.log('Failed!');
+            // 실패시
+            console.log('Failed!');
         }
         return res.json();
-      })
-      .then(data => {
+    })
+    .then(data => {
         const allMenuData = data.menu; // 모든 음식 메뉴 정보: 리스트 안에 객체 형태 [{}, {}, {}, ...]
         const getMenuIsError = data.isError;
         const whatIsError = data.explainError;
 
         // 확인을 위한 console.log
         // console.log(allMenuData, getMenuIsError, whatIsError);
-      });
+    });
 
 // ----------------------------------------------------------------------------------------------
 // insertIntoBasket
@@ -117,15 +117,15 @@ fetch(jeonhaUrl + '/insertIntoBasket', {
     }
     return res.json();
 })
-.then(data => {
-    const getMenuIsError = data.isError;
-    const whatIsError = data.explainError;
+    .then(data => {
+        const getMenuIsError = data.isError;
+        const whatIsError = data.explainError;
 
-    // 확인을 위한 console.log
-    // if (getMenuIsError) {
-    //     console.log(whatIsError);
-    // }
-})
+        // 확인을 위한 console.log
+        // if (getMenuIsError) {
+        //     console.log(whatIsError);
+        // }
+    })
 // ----------------------------------------------------------------------------------------------
 // updateFromBasket
 
@@ -152,15 +152,15 @@ fetch(jeonhaUrl + '/updateFromBasket', {
     }
     return res.json();
 })
-.then(data => {
-    const getMenuIsError = data.isError;
-    const whatIsError = data.explainError;
+    .then(data => {
+        const getMenuIsError = data.isError;
+        const whatIsError = data.explainError;
 
-    // 확인을 위한 console.log
-    // if (getMenuIsError) {
-    //     console.log(whatIsError);
-    // }
-})
+        // 확인을 위한 console.log
+        // if (getMenuIsError) {
+        //     console.log(whatIsError);
+        // }
+    })
 
 // ----------------------------------------------------------------------------------------------
 // deleteFromBasket
@@ -187,15 +187,48 @@ fetch(jeonhaUrl + '/updateFromBasket', {
     }
     return res.json();
 })
-.then(data => {
-    const getMenuIsError = data.isError;
-    const whatIsError = data.explainError;
+    .then(data => {
+        const getMenuIsError = data.isError;
+        const whatIsError = data.explainError;
 
-    // 확인을 위한 console.log
-    // if (getMenuIsError) {
-    //     console.log(whatIsError);
-    // }
+        // 확인을 위한 console.log
+        // if (getMenuIsError) {
+        //     console.log(whatIsError);
+        // }
+    })
+
+// ----------------------------------------------------------------------------------------------
+// getBasket
+
+const bodygetBasket = JSON.stringify({
+    userWebId: 'fora',
 })
+
+fetch(jeonhaUrl + '/getBasket', {
+    method: "post",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: bodygetBasket
+}).then(res => {
+    if (res.status === 200) {
+        // 정상 작동
+        console.log('Success!');
+    } else if (res.status === 400) {
+        // 실패시
+        console.log('Failed!');
+    }
+    return res.json();
+})
+    .then(data => {
+        const getMenuIsError = data.isError;
+        const whatIsError = data.explainError;
+
+        // 확인을 위한 console.log
+        // if (getMenuIsError) {
+        //     console.log(whatIsError);
+        // }
+    })
 
 // ----------------------------------------------------------------------------------------------
 // order
@@ -212,36 +245,6 @@ fetch(jeonhaUrl + '/order', {
     },
     body: bodyOrder
 })
-.then(res => {
-    if (res.status === 200) {
-        // 정상 작동
-        console.log('Success!');
-    } else if (res.status === 400) {
-        // 실패시
-        console.log('Failed!');
-    }
-    return res.json();
-})
-.then(data => {
-    const orderIsError = data.isError;
-    const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
-    // 확인을 위한 console.log
-    console.log(orderIsError, userOrderNo);
-})
-
-// ----------------------------------------------------------------------------------------------
-// paying
-const bodyPaying = JSON.stringify({
-    orderNo: 10
-});
-
-fetch(jeonhaUrl + '/paying', {
-    method: "post",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: bodyPaying
-})
     .then(res => {
         if (res.status === 200) {
             // 정상 작동
@@ -249,21 +252,24 @@ fetch(jeonhaUrl + '/paying', {
         } else if (res.status === 400) {
             // 실패시
             console.log('Failed!');
-            return res.json();
-    }})
-        .then(data => {
-            const payIsError = data.isError;
-            // 확인을 위한 console.log
-            console.log(payIsError);
-        })
+        }
+        return res.json();
+    })
+    .then(data => {
+        const orderIsError = data.isError;
+        const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
+        // 확인을 위한 console.log
+        console.log(orderIsError, userOrderNo);
+    })
+
 
 // ----------------------------------------------------------------------------------------------
-// CancelOrder
+// cancelOrder
 const bodyCancelOrder = JSON.stringify({
     orderNo: 10
 });
 
-fetch(jeonhaUrl + '/CancelOrder', {
+fetch(jeonhaUrl + '/cancelOrder', {
     method: "post",
     headers: {
         "Content-Type": "application/json"
@@ -284,4 +290,35 @@ fetch(jeonhaUrl + '/CancelOrder', {
         const cancelIsError = data.isError;
         // 확인을 위한 console.log
         console.log(cancelIsError);
+    })
+
+// ----------------------------------------------------------------------------------------------
+// getOrder
+const bodyGetOrder = JSON.stringify({
+    userWebId: 'fora22'
+});
+
+fetch(jeonhaUrl + '/getOrder', {
+    method: "post",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: bodyGetOrder
+})
+    .then(res => {
+        if (res.status === 200) {
+            // 정상 작동
+            console.log('Success!');
+        } else if (res.status === 400) {
+            // 실패시
+            console.log('Failed!');
+        }
+        return res.json();
+    })
+    .then(data => {
+        const isError = data.isError;
+        const orderHistory = data.orderAllData;
+        // 확인을 위한 console.log
+        console.log(isError);
+        console.log(orderHistory);
     })
