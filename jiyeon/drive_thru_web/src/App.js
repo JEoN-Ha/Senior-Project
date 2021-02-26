@@ -11,7 +11,9 @@ import SideBar from './component/SideBar';
 
 class App extends Component {
   componentDidMount() {
-    const jeonhaUrl = 'https://pinkwallet-apim.azure-api.net/api';
+    const jeonhaUrl = 'http://localhost:4000';
+    // const jeonhaUrl = 'https://pinkwallet-apim.azure-api.net/api';
+
 
 
   fetch(jeonhaUrl + '/getMenuData')
