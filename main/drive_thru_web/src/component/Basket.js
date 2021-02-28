@@ -53,8 +53,10 @@ export default class Basket extends Component {
             }
             return res.json();
         }).then(data => {
+            const allBasket = data.basket;
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
+            this.state.basketData = allBasket;
             //this.state.basketData = 
             // 확인을 위한 console.log
             // if (getMenuIsError) {
