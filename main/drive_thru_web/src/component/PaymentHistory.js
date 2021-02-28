@@ -51,9 +51,10 @@ export default class PaymentHistory extends Component {
         }).then(data => {
             const isError = data.isError;
             const orderHistory = data.orderAllData;
+            this.state.paymentData = orderHistory;
             // 확인을 위한 console.log
-            console.log(isError);
-            console.log(orderHistory);
+            // console.log(isError);
+            // console.log(orderHistory);
         }) 
     }
 
