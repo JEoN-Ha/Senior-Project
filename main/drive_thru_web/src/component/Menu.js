@@ -46,7 +46,7 @@ class Menu extends Component {
         const allMenuData = data.menu; // 모든 음식 메뉴 정보: 리스트 안에 객체 형태 [{}, {}, {}, ...]
         const getMenuIsError = data.isError;
         const whatIsError = data.explainError;
-  
+        this.state.menuData = allMenuData;  // 모든 음식 메뉴 데이터를 state에 저장
         // 확인을 위한 console.log
         // console.log(allMenuData, getMenuIsError, whatIsError);
       });

@@ -20,6 +20,35 @@ class SignUpContent extends Component {
     componentWillUnmount() {
         console.log('componentWillUnmount');
       }
+    
+    getFetch(_body){
+        fetch(jeonhaUrl + '/signUp', {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: _body
+        })
+        .then(res => {
+            if (res.status == 200) {
+                // 정상 작동
+                console.log('Success!');
+            } else if (res.status == 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        })
+        .then(data => {
+            // 아이디 중복, 패스워드 중복, 그 외 에러
+            const overlapId = data.id;
+            const overlapPw = data.pw;
+            const errorDB = data.db;
+    
+            // 확인을 위한 console.log
+            // console.log(overlapId, overlapPw, errorDB);
+        })
+    }
       
     render() {
     const btnStyle = {
@@ -91,32 +120,7 @@ class SignUpContent extends Component {
                 type="button" value="Sign up" onClick={function(){
                 this.props.onClickSignUp(this.state.name,this.state.ID,
                 this.state.PW_state,this.state.carNum1)
-                fetch(jeonhaUrl + '/signUp', {
-                    method: "post",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: bodySignUp
-                })
-                    .then(res => {
-                        if (res.status == 200) {
-                            // 정상 작동
-                            console.log('Success!');
-                        } else if (res.status == 400) {
-                            // 실패시
-                            console.log('Failed!');
-                        }
-                        return res.json();
-                    })
-                    .then(data => {
-                        // 아이디 중복, 패스워드 중복, 그 외 에러
-                        const overlapId = data.id;
-                        const overlapPw = data.pw;
-                        const errorDB = data.db;
-                
-                        // 확인을 위한 console.log
-                        // console.log(overlapId, overlapPw, errorDB);
-                    })
+                this.getFetch(bodySignUp)
                 }.bind(this)}></input>
         </div>
       );
