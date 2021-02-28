@@ -11,8 +11,8 @@ import SideBar from './component/SideBar';
 
 class App extends Component {
   componentDidMount() {
-    const jeonhaUrl = 'http://localhost:4000';
-    // const jeonhaUrl = 'https://pinkwallet-apim.azure-api.net/api';
+    // const jeonhaUrl = 'http://localhost:4000';
+    const jeonhaUrl = 'https://niveacream-apim.azure-api.net/api';
 
 
 
@@ -20,7 +20,7 @@ class App extends Component {
     .then(res => {
       if (res.status === 200) {
         // 정상 작동
-        console.log('Success!');
+        console.log('get Success!');
       } else if (res.status === 400) {
         // 실패시
         console.log('Failed!');
