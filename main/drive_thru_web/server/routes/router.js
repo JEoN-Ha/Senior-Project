@@ -203,13 +203,16 @@ router.post('/getBasket', (req, res) => {
 
 
     db.query(sqlCodeToBasketTable, (err, rows) => {
+        const allBasketData = JSON.parse(JSON.stringify(rows));
         if (!err) {
             res.status(200).json({
+                basket: allBasketData,
                 isError: false,
                 explainError: null
             })
         } else {
             res.status(400).json({
+                basket: null,
                 isError: true,
                 explainError: err
             })

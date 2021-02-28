@@ -221,6 +221,7 @@ fetch(jeonhaUrl + '/getBasket', {
     return res.json();
 })
     .then(data => {
+        const allBasket = data.basket;
         const getMenuIsError = data.isError;
         const whatIsError = data.explainError;
 
