@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import store from '../store';
 
 class MenuInfo extends Component {
-    state = {orderName:store.getState().orderName}
+  state = {orderName:store.getState().orderName}
   constructor(props){
     super(props);
     store.subscribe(function () {
