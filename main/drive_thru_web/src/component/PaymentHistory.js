@@ -1,8 +1,27 @@
 import React, {Component} from 'react';
+import PaymentInfo from '../containers/PaymentInfo';
 import "./Component.css";
+import store from '../store';
+const jeonhaUrl = 'http://localhost:4000';
 
 export default class PaymentHistory extends Component {
-
+    state = {
+        customer_id:store.getState().customer_id,
+        paymentData : [  // DB 연결 후 null로 바꾸기
+            {
+                id : 1,
+                nameKorea : '아메리카노',
+                count : 1,
+                price : '4,400'
+            },
+            {
+                id : 2,
+                nameKorea : '돌체 블랙 밀크티',
+                count : 2,
+                price : '10,600'
+            }
+        ]
+    }
     componentWillUnmount() {
         console.log('componentWillUnmount');
       }
@@ -13,24 +32,62 @@ export default class PaymentHistory extends Component {
         this.setState({radioGroup: obj})
     }
 
+    getFetch(_body){
+        fetch(jeonhaUrl + '/getOrder', {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: _body
+        }).then(res => {
+            if (res.status === 200) {
+                // 정상 작동
+                console.log('Success!');
+            } else if (res.status === 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        }).then(data => {
+            const isError = data.isError;
+            const orderHistory = data.orderAllData;
+            // 확인을 위한 console.log
+            console.log(isError);
+            console.log(orderHistory);
+        }) 
+    }
+
     render() {
-        const btnStyle = {
-            color: "white",
-            background: "#815854",
-            margin: "3px",
-            padding: "2px",
-            border: "1px solid #815854",
-            borderRadius: ".25rem",
-            fontSize: "1rem",
-            lineHeight: 1.5,
-            width: "100px"
-          }
+        const bodyGetOrder = JSON.stringify({
+            userWebId: this.state.customer_id
+        });
+        const mapToComponent = data => {
+            return data.map((payment, i) => {
+                return (<PaymentInfo payment={payment} key={i}
+                  getCount = {function(_count,_id){
+                    let i = 0;
+                    let data = Array.from(this.state.paymentData);
+                    while(i < data.length){
+                        if(data[i].id === _id){
+                            data[i].count = _count;
+                            break;
+                        }
+                        i = i + 1;
+                    }
+                    this.setState({
+                        paymentData:data
+                    });
+                  }.bind(this)}
+                  ></PaymentInfo>);
+            });
+        };
         return (
             <div>
-
-                {/* DB에서 결제 내역 불러오기 */}
                <h2>결제 내역</h2>
-
+                {/* DB로부터 장바구니 내역 가져오기 */}
+                {this.getFetch(bodyGetOrder)}
+                {/* 장바구니 내역 그리기 */}
+                {mapToComponent(this.state.paymentData)}
             </div>
         )
     }
