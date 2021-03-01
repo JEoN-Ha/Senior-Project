@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import store from '../store';
 import "./Component.css";
 
-const jeonhaUrl = 'https://niveacream-apim.azure-api.net/api'
+const jeonhaUrl = 'http://niveacream-apim.azure-api.net'
 
 class SignUpContent extends Component {
     state = {

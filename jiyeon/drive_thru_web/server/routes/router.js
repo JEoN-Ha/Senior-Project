@@ -95,6 +95,7 @@ router.get('/getMenuData', (req, res) => {
                 explainError: null
             })
         } else {
+        
             res.status(400).json({
                 menu: null,
                 isError: true,

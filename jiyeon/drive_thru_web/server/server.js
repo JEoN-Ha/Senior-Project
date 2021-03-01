@@ -14,6 +14,6 @@ app.use(cors());
  
 app.use('/', router);
 
-app.listen(PORT, () => {
+app.listen(PORT,() => {
     console.log(`check :${PORT}`);
 })

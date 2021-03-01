@@ -12,7 +12,7 @@ import SideBar from './component/SideBar';
 class App extends Component {
   componentDidMount() {
     // const jeonhaUrl = 'http://localhost:4000';
-    const jeonhaUrl = 'https://niveacream-apim.azure-api.net/api';
+    const jeonhaUrl = 'http://niveacream-apim.azure-api.net';
 
 
 
