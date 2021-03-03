@@ -11,44 +11,6 @@ import './component/Component.css';
 import SideBar from './component/SideBar';
 
 class App extends Component {
-  componentDidMount() {
-    const jeonhaUrl = 'http://localhost:4000';
-
-    const bodyOrder = JSON.stringify({
-      userWebId: 'fora22',
-      carId: '55가 5555',
-      payment: 1
-  });
-  
-  fetch(jeonhaUrl + '/order', {
-      method: "post",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: bodyOrder
-  })
-  .then(res => {
-    if (res.status === 200) {
-        // 정상 작동
-        console.log('Success!');
-    } else if (res.status === 400) {
-        // 실패시
-        console.log('Failed!');
-    }
-    return res.json();
-})
-.then(data => {
-    const getMenuIsError = data.isError;
-    const whatIsError = data.explainError;
-
-    // 확인을 위한 console.log
-    if (getMenuIsError) {
-        console.log(whatIsError);
-    }
-})
-
-  }
-
   render() {
     return (
       <div className="Root">
