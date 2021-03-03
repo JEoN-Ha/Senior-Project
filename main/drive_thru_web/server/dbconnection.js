@@ -9,10 +9,10 @@ const mysql = require('mysql');
 // })
 
 const connection = mysql.createPool({
-    host: 'fora22-mysql-kangjin.mysql.database.azure.com',
-    user: 'fora22jeonhadb@fora22-mysql-kangjin',
+    host: 'bluepiggibank.mysql.database.azure.com',
+    user: 'manyoAloe@bluepiggibank',
     password: 'Jeonha12#',
-    database: 'untactdt',
+    database: 'untact_drivethru_db',
     port: 3306,
     ssl: false
 })
