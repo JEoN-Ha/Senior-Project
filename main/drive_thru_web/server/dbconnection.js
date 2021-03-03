@@ -12,7 +12,7 @@ const connection = mysql.createPool({
     host: 'bluepiggibank.mysql.database.azure.com',
     user: 'manyoAloe@bluepiggibank',
     password: 'Jeonha12#',
-    database: 'untact_drivethru_db',
+    database: 'untactdt',
     port: 3306,
     ssl: false
 })
