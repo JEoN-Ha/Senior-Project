@@ -8,7 +8,8 @@ export default createStore(function(state, action){
             mode:'login',mode_content:'welcome',
             PW_state:false,
             orderName:'상품을 선택해주세요.', orderCount:0,orderID:null,
-            customerType:null, isCarNumberDisabled:null
+            customerType:null, isCarNumberDisabled:null,
+            jeonhaUrl: 'http://localhost:4000'
         }
     }
 

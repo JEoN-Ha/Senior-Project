@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import MenuInfo from '../containers/MenuInfo';
-
-const jeonhaUrl = 'http://localhost:4000';
+import store from '../store';
 
 class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
       menuData: [],
-      isLoading: false
+      isLoading: false,
+      jeonhaUrl:store.getState().jeonhaUrl
     };
   }
 
@@ -22,7 +22,7 @@ class Menu extends Component {
 
 
   getMenuData = () => {
-    fetch(jeonhaUrl + '/getMenuData')
+    fetch(this.state.jeonhaUrl + '/getMenuData')
       .then(res => {
         if (res.status === 200) {
           // 정상 작동

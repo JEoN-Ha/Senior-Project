@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import store from '../store';
 
-const jeonhaUrl = 'http://localhost:4000';
-
 class BasketInfo extends Component {
     state = {orderName:store.getState().orderName,
-    customer_id:store.getState().customer_id}
+    customer_id:store.getState().customer_id,
+    jeonhaUrl:store.getState().jeonhaUrl}
     constructor(props){
     super(props);
     store.subscribe(function () {
@@ -19,7 +18,7 @@ class BasketInfo extends Component {
     }
 
     onClickDelete(_body){
-        fetch(jeonhaUrl + '/updateFromBasket', {
+        fetch(this.state.jeonhaUrl + '/updateFromBasket', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"

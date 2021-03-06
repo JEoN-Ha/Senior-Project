@@ -3,12 +3,11 @@ import BasketInfo from '../containers/BasketInfo';
 import store from '../store';
 import "./Component.css";
 
-const jeonhaUrl = 'http://localhost:4000';
-
 export default class Basket extends Component {
     state = {
         mode_content:store.getState().mode_content,
         customer_id:store.getState().customer_id,
+        jeonhaUrl:store.getState().jeonhaUrl,
         basketData : [  // DB 연결 후 null로 바꾸기
             {
                 id : 1,
@@ -36,7 +35,7 @@ export default class Basket extends Component {
     }
     
     getFetch(_body){
-        fetch(jeonhaUrl + '/getBasket', {
+        fetch(this.state.jeonhaUrl + '/getBasket', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"

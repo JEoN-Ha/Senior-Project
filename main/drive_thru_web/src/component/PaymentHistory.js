@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import PaymentInfo from '../containers/PaymentInfo';
 import "./Component.css";
 import store from '../store';
-const jeonhaUrl = 'http://localhost:4000';
 
 export default class PaymentHistory extends Component {
     state = {
         customer_id:store.getState().customer_id,
+        jeonhaUrl:store.getState().jeonhaUrl,
         paymentData : [  // DB 연결 후 null로 바꾸기
             {
                 id : 1,
@@ -33,7 +33,7 @@ export default class PaymentHistory extends Component {
     }
 
     getFetch(_body){
-        fetch(jeonhaUrl + '/getOrder', {
+        fetch(this.state.jeonhaUrl + '/getOrder', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"

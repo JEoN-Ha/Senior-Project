@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import "./Component.css";
 import store from '../store';
-const jeonhaUrl = 'http://localhost:4000';
 
 export default class Payment_onFoot extends Component {
     constructor(props) {
@@ -10,6 +9,7 @@ export default class Payment_onFoot extends Component {
         this.state = {
             customer_id:store.getState().customer_id,
             name:null, phone:null, carNumber:null,
+            jeonhaUrl:store.getState().jeonhaUrl,
             radioGroup: {
                 creditCard: true, cellphone: false,
                 kakaoPay: false, PAYCO: false
@@ -28,7 +28,7 @@ export default class Payment_onFoot extends Component {
     }
 
     getFetch(_body){
-        fetch(jeonhaUrl + '/order', {
+        fetch(this.state.jeonhaUrl + '/order', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"

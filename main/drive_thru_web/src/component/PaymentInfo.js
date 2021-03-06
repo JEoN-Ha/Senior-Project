@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import store from '../store';
 
-const jeonhaUrl = 'http://localhost:4000';
-
 class BasketInfo extends Component {
-    state = { customer_id:store.getState().customer_id}
+    state = {
+        customer_id:store.getState().customer_id,
+        jeonhaUrl:store.getState().jeonhaUrl}
 
     componentWillUnmount() {
     console.log('componentWillUnmount');
     }
 
     onClickCancle(_body){
-        fetch(jeonhaUrl + '/cancelOrder', {
+        fetch(this.state.jeonhaUrl + '/cancelOrder', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"

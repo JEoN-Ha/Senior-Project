@@ -1,12 +1,12 @@
 import React, { Component} from 'react';
 import "./Component.css";
-
-const jeonhaUrl = 'http://localhost:4000';
+import store from '../store';
 
 class LoginContent extends Component {
     state = {
         customer_id:null,
-        PW:null
+        PW:null,
+        jeonhaUrl:store.getState().jeonhaUrl
     }
 
     componentWillUnmount() {
@@ -14,7 +14,7 @@ class LoginContent extends Component {
     }
 
     getFetch(_body){
-      fetch(jeonhaUrl + '/signIn', {
+      fetch(this.state.jeonhaUrl + '/signIn', {
         method: "post",
         headers: {
             "Content-Type": "application/json"

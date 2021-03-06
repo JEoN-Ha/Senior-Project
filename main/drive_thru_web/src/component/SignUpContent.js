@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import store from '../store';
 import "./Component.css";
 
-const jeonhaUrl = 'http://localhost:4000'
-
 class SignUpContent extends Component {
     state = {
         ID:null,PW:null,PW_check:null,
         name:null,phoneNum:null,carNum1:null,carNum2:null,
-        PW_state:store.getState().PW_state
+        PW_state:store.getState().PW_state,
+        jeonhaUrl:store.getState().jeonhaUrl
     }
     constructor(props){
         super(props);
@@ -22,7 +21,7 @@ class SignUpContent extends Component {
       }
     
     getFetch(_body){
-        fetch(jeonhaUrl + '/signUp', {
+        fetch(this.state.jeonhaUrl + '/signUp', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"

@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import "./Component.css";
 import store from '../store';
 
-const jeonhaUrl = 'http://localhost:4000';
-
 class Basket extends Component {
   state = {
     orderCount:store.getState().orderCount,
     orderName:store.getState().orderName,
     customer_id:store.getState().customer_id,
-    orderID:store.getState().orderID}
+    orderID:store.getState().orderID,
+    jeonhaUrl:store.getState().jeonhaUrl}
   constructor(props){
   super(props);
   store.subscribe(function () {
@@ -22,7 +21,7 @@ class Basket extends Component {
   }
 
   getFetch(_body){
-    fetch(jeonhaUrl + '/insertIntoBasket', {
+    fetch(this.state.jeonhaUrl + '/insertIntoBasket', {
       method: "post",
       headers: {
           "Content-Type": "application/json"
