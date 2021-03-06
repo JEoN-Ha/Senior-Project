@@ -8,23 +8,30 @@ export default class PaymentHistory extends Component {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
         paymentData : [  // DB 연결 후 null로 바꾸기
-            {
-                id : 1,
-                nameKorea : '아메리카노',
-                count : 1,
-                price : '4,400'
-            },
-            {
-                id : 2,
-                nameKorea : '돌체 블랙 밀크티',
-                count : 2,
-                price : '10,600'
-            }
+            // {
+            //     id : 1,
+            //     nameKorea : '아메리카노',
+            //     count : 1,
+            //     price : '4,400'
+            // },
+            // {
+            //     id : 2,
+            //     nameKorea : '돌체 블랙 밀크티',
+            //     count : 2,
+            //     price : '10,600'
+            // }
         ]
     }
     componentWillUnmount() {
         console.log('componentWillUnmount');
-      }
+    }
+
+    componentDidMount() {
+        const bodyGetOrder = JSON.stringify({
+            userWebId: this.state.customer_id
+        });
+        this.getOrderHistory(bodyGetOrder);
+    };
 
     handleRadio(event) {
         let obj = {} // erase other radios
@@ -32,7 +39,7 @@ export default class PaymentHistory extends Component {
         this.setState({radioGroup: obj})
     }
 
-    getFetch(_body){
+    getOrderHistory = (_body) => {
         fetch(this.state.jeonhaUrl + '/getOrder', {
             method: "post",
             headers: {
@@ -52,6 +59,19 @@ export default class PaymentHistory extends Component {
             const isError = data.isError;
             const orderHistory = data.orderAllData;
             this.state.paymentData = orderHistory;
+            let _orderHistory = []
+            for (let i = 0; i < orderHistory.length; i++) {
+            _orderHistory.push({
+                id: orderHistory[i].MenuNo,     //DB보고 수정하기
+                nameKorea: orderHistory[i].FoodNameKor,
+                nameEnglish: orderHistory[i].FoodNameEng,
+                price: orderHistory[i].Price,
+            })
+            }
+            this.setState({
+            paymentData: _orderHistory,
+            isLoading: true
+            })
             // 확인을 위한 console.log
             // console.log(isError);
             // console.log(orderHistory);
@@ -59,9 +79,6 @@ export default class PaymentHistory extends Component {
     }
 
     render() {
-        const bodyGetOrder = JSON.stringify({
-            userWebId: this.state.customer_id
-        });
         const mapToComponent = data => {
             return data.map((payment, i) => {
                 return (<PaymentInfo payment={payment} key={i}
@@ -86,7 +103,7 @@ export default class PaymentHistory extends Component {
             <div>
                <h2>결제 내역</h2>
                 {/* DB로부터 장바구니 내역 가져오기 */}
-                {this.getFetch(bodyGetOrder)}
+                {/* {this.getFetch(bodyGetOrder)} */}
                 {/* 장바구니 내역 그리기 */}
                 {mapToComponent(this.state.paymentData)}
             </div>
