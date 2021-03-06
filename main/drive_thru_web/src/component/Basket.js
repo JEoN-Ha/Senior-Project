@@ -9,18 +9,18 @@ export default class Basket extends Component {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
         basketData : [  // DB 연결 후 null로 바꾸기
-            {
-                id : 1,
-                nameKorea : '아메리카노',
-                count : 1,
-                price : '4,400'
-            },
-            {
-                id : 2,
-                nameKorea : '돌체 블랙 밀크티',
-                count : 2,
-                price : '10,600'
-            }
+            // {
+            //     id : 1,
+            //     nameKorea : '아메리카노',
+            //     count : 1,
+            //     price : '4,400'
+            // },
+            // {
+            //     id : 2,
+            //     nameKorea : '돌체 블랙 밀크티',
+            //     count : 2,
+            //     price : '10,600'
+            // }
         ]
     }
     constructor(props){
@@ -33,14 +33,21 @@ export default class Basket extends Component {
     componentWillUnmount() {
         console.log('componentWillUnmount');
     }
+
+    componentDidMount() {
+        const bodygetBasket = JSON.stringify({
+            userWebId: this.state.customer_id,
+        })
+        this.getBasketData(bodygetBasket);
+    };
     
-    getFetch(_body){
+    getBasketData = (_body) => {
         fetch(this.state.jeonhaUrl + '/getBasket', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: _body,
+            body:_body,
             
         }).then(res => {
             if (res.status === 200) {
@@ -56,6 +63,17 @@ export default class Basket extends Component {
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             this.state.basketData = allBasket;
+            let _basketData = []
+            for (let i = 0; i < allBasket.length; i++) {
+            _basketData.push({
+                nameKorea: allBasket[i].FoodNameKor,
+                price: allBasket[i].Price,  // DB랑 비교해서 보기
+            })
+            }
+            this.setState({
+            basketData: _basketData,
+            isLoading: true
+            })
             //this.state.basketData = 
             // 확인을 위한 console.log
             // if (getMenuIsError) {
@@ -107,14 +125,14 @@ export default class Basket extends Component {
                   ></BasketInfo>);
             });
         }; 
-        const bodygetBasket = JSON.stringify({
-            userWebId: this.state.customer_id,
-        })
+        // const bodygetBasket = JSON.stringify({
+        //     userWebId: this.state.customer_id,
+        // })
         return (
             <div>
                 <h2>주문 메뉴 정보</h2>
                 {/* DB로부터 장바구니 내역 가져오기 */}
-                {this.getFetch(bodygetBasket)}
+                {/* {this.getFetch(bodygetBasket)} */}
                 {/* 장바구니 내역 그리기 */}
                 {mapToComponent(this.state.basketData)}
                <button style={btnStyle} onClick={function () {
