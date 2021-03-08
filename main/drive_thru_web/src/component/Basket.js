@@ -8,6 +8,7 @@ export default class Basket extends Component {
         mode_content:store.getState().mode_content,
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
+        isLoading: false,
         basketData : [  // DB 연결 후 null로 바꾸기
             // {
             //     id : 1,
@@ -60,9 +61,10 @@ export default class Basket extends Component {
             return res.json();
         }).then(data => {
             const allBasket = data.basket;
+            console.log(allBasket);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
-            this.state.basketData = allBasket;
+            //this.state.basketData = allBasket;
             let _basketData = []
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
