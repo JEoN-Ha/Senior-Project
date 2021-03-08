@@ -1,4 +1,4 @@
-const jeonhaUrl = 'http://localhost:4000'
+const jeonhaUrl = 'https://doctorg.azurewebsites.net'
 
 // ----------------------------------------------------------------------------------------------
 // signUP
