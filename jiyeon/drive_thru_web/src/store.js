@@ -9,7 +9,7 @@ export default createStore(function(state, action){
             PW_state:false,
             orderName:'상품을 선택해주세요.', orderCount:0,orderID:null,
             customerType:null, isCarNumberDisabled:null,
-            jeonhaUrl: 'https://doctorg.azurewebsites.net'
+            jeonhaUrl: 'https://doctorg-apim.azure-api.net'
         }
     }
 

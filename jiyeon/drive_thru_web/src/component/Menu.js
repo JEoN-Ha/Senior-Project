@@ -32,7 +32,7 @@ class Menu extends Component {
           console.log('Failed!');
         }
         return res.json();
-      })
+        })
       .then(data => {
         const allMenuData = data.menu; // 모든 음식 메뉴 정보: 리스트 안에 객체 형태 [{}, {}, {}, ...]
         const getMenuIsError = data.isError;
