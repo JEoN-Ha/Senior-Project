@@ -6,7 +6,8 @@ class SignUpContent extends Component {
     state = {
         ID:null,PW:null,PW_check:null,
         name:null,phoneNum:null,carNum1:null,carNum2:null,
-        PW_state:store.getState().PW_state
+        PW_state:store.getState().PW_state,
+        jeonhaUrl:store.getState().jeonhaUrl
     }
     constructor(props){
         super(props);
@@ -14,6 +15,40 @@ class SignUpContent extends Component {
             this.setState({PW_state:store.getState().PW_state});           
         }.bind(this));
     }
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+      }
+    
+    getFetch(_body){
+        fetch(this.state.jeonhaUrl + '/signUp', {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: _body
+        })
+        .then(res => {
+            if (res.status == 200) {
+                // 정상 작동
+                console.log('Success!');
+            } else if (res.status == 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        })
+        .then(data => {
+            // 아이디 중복, 패스워드 중복, 그 외 에러
+            const overlapId = data.id;
+            const overlapPw = data.pw;
+            const errorDB = data.db;
+    
+            // 확인을 위한 console.log
+            // console.log(overlapId, overlapPw, errorDB);
+        })
+    }
+      
     render() {
     const btnStyle = {
         color: "white",
@@ -24,7 +59,14 @@ class SignUpContent extends Component {
         fontSize: "1rem",
         lineHeight: 1.5,
         width: "230px"
-        }
+    }
+    const bodySignUp = JSON.stringify({
+        userWebId: this.state.ID,
+        userName: this.state.name,
+        pw: this.state.PW,
+        phoneNum: this.state.phoneNum,
+        carId: this.state.carNum1
+    });
       return (
         <div className="SignUp">
             <h2>JEoN-Ha 회원가입</h2>
@@ -76,7 +118,8 @@ class SignUpContent extends Component {
             <input style={btnStyle}
                 type="button" value="Sign up" onClick={function(){
                 this.props.onClickSignUp(this.state.name,this.state.ID,
-                    this.state.PW_state,this.state.carNum1)
+                this.state.PW_state,this.state.carNum1)
+                this.getFetch(bodySignUp)
                 }.bind(this)}></input>
         </div>
       );

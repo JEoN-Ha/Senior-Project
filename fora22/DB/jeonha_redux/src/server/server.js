@@ -1,11 +1,16 @@
 const express = require('express');
-const path = require('path');
-const os = require('os');
 const router = require('./routes/router');
-
 const app = express();
 const PORT = process.env.PORT||4000;
 
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+// app.use(cors())
+app.use(cors({origin: "http://localhost:3000"}))
+ 
 app.use('/', router);
 
 app.listen(PORT, () => {

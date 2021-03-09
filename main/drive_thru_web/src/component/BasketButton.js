@@ -26,6 +26,11 @@ class BasketButton extends Component {
     return _article
   }
 
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+
+
     render() {
       return (
         <header>

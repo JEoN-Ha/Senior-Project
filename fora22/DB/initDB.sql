@@ -1,4 +1,4 @@
-USE fora22jeonhafirstdb;
+USE untactdt;
 
 CREATE TABLE usertable (
 UserWebId VARCHAR(100),
@@ -55,20 +55,31 @@ OrderWebId VARCHAR(100),
 WebCarId VARCHAR(100),
 ImageWebCarId VARCHAR(100),
 IsEqualCarAndImage TINYINT(1) default 0,
-OrderState INT default 0,
+
 OrderPayment INT,
 
 PRIMARY KEY(OrderNo),
 foreign key(OrderWebId) references usertable(UserWebId),
-foreign key(OrderState) references statetable(StateNo),
 foreign key(OrderPayment) references paymentstate(PaymentNo)
 )Default charset = UTF8;
 
 create table ordertomenu(
 OrderToMenu_OrderNo INT,
 OrderToMenu_MenuNo INT,
+OrderState INT default 1,
 MenuCount INT,
 
 foreign key(OrderToMenu_OrderNo) references ordertable(OrderNo),
-foreign key(OrderToMenu_MenuNo) references menuboard(MenuNo)
+foreign key(OrderToMenu_MenuNo) references menuboard(MenuNo),
+foreign key(OrderState) references statetable(StateNo)
+)Default charset = UTF8;
+
+create table baskettable(
+    BasketId VARCHAR(100),
+    BasketMenuNo INT,
+    BasketMenuCount INT,
+    BasketState TINYINT(1) default 0,
+
+    foreign key(BasketId) references usertable(UserWebId),
+    foreign key(BasketMenuNo) references menuboard(MenuNo)
 )Default charset = UTF8;

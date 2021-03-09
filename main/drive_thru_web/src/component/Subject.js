@@ -3,6 +3,7 @@ import "./Component.css";
 
 class Subject extends Component {   //Subject라는 태그를 생성
     state = {title:'JEoN-Ha'}
+
     render() {
       return (
         <header>

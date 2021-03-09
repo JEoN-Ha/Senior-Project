@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import store from '../store';
 import Welcome from './Welcome';
 import Menu from './Menu';
+import MyPage from '../containers/MyPage';
 import BasketButton_con from '../containers/BasketButton_con';
 
 export default class Content extends Component {
@@ -14,6 +15,10 @@ export default class Content extends Component {
             this.setState({mode_content:store.getState().mode_content});           
         }.bind(this));
     }
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+      }
 
     getBasketButton(){
         let _article = null;
@@ -31,6 +36,9 @@ export default class Content extends Component {
         }
         else if(this.state.mode_content === 'MENU'){
             _article = <Menu></Menu>
+        }
+        else if(this.state.mode_content === 'MY PAGE'){
+            _article = <MyPage></MyPage>
         }
         return _article;
     }
