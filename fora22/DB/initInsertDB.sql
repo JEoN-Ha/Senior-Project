@@ -44,22 +44,31 @@ values('콜라', 'Coke', 1500);
 
 
 
-insert into ordertable(OrderWebId, WebCarId, OrderState, OrderPayment)
-values('fora22', '69구 4381', 1, 1);
+insert into ordertable(OrderWebId, WebCarId, OrderPayment)
+values('fora22', '69구 4381', 1);
 insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
 values(1, 1, 2);
 
 
-insert into ordertable(OrderWebId, WebCarId, OrderState, OrderPayment)
-values('jiyeon', '22나 2222', 1, 2);
+insert into ordertable(OrderWebId, WebCarId, OrderPayment)
+values('jiyeon', '22나 2222', 2);
 insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
 values(2, 2, 1);
 
-insert into ordertable(OrderWebId, WebCarId, OrderState, OrderPayment)
-values('fora22', '22나 2222', 1, 1);
+insert into ordertable(OrderWebId, WebCarId,  OrderPayment)
+values('fora22', '22나 2222', 1);
 insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
 values(1, 3, 2);
 
-update ordertable set ImageWebCarId = '69구 4381' where OrderNo = 1;
-update ordertable set ImageWebCarId = '22나 2222' where OrderNo = 2;
-update ordertable set ImageWebCarId = '22가 2222' where OrderNo = 3;
+-- update ordertable set ImageWebCarId = '69구 4381' where OrderNo = 1;
+-- update ordertable set ImageWebCarId = '22나 2222' where OrderNo = 2;
+-- update ordertable set ImageWebCarId = '22가 2222' where OrderNo = 3;
+
+insert into baskettable(BasketId, BasketMenuNo, BasketMenuCount)
+values ('fora22', 1, 3);
+
+insert into baskettable(BasketId, BasketMenuNo, BasketMenuCount)
+values ('fora22', 2, 1);
+
+insert into baskettable(BasketId, BasketMenuNo, BasketMenuCount)
+values ('armful', 1, 2);

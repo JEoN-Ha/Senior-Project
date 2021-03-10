@@ -8,8 +8,9 @@ const cors = require('cors');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-// app.use(cors())
-app.use(cors({origin: "http://localhost:3000"}))
+// app.options('*', cors()) // include before other routes
+app.use(cors());
+// app.use(cors({origin: "http://localhost:4000"}))
  
 app.use('/', router);
 

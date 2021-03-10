@@ -73,3 +73,13 @@ foreign key(OrderToMenu_OrderNo) references ordertable(OrderNo),
 foreign key(OrderToMenu_MenuNo) references menuboard(MenuNo),
 foreign key(OrderState) references statetable(StateNo)
 )Default charset = UTF8;
+
+create table baskettable(
+    BasketId VARCHAR(100),
+    BasketMenuNo INT,
+    BasketMenuCount INT,
+    BasketState TINYINT(1) default 0,
+
+    foreign key(BasketId) references usertable(UserWebId),
+    foreign key(BasketMenuNo) references menuboard(MenuNo)
+)Default charset = UTF8;
