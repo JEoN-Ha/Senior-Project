@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import store from '../store';
 
 class MenuInfo extends Component {
-    state = {orderName:store.getState().orderName}
+  state = {orderName:store.getState().orderName}
   constructor(props){
     super(props);
     store.subscribe(function () {
@@ -20,8 +20,10 @@ class MenuInfo extends Component {
       return (
           <div>
             <hr/>
+            <span>{this.props.menu.id}. </span>
             <span onClick={function(e) {
-              this.props.onClickName(e.target.innerText, this.state.orderName)
+              this.props.onClickName(e.target.innerText, this.state.orderName,
+                this.props.menu.id)
             }.bind(this)}>{this.props.menu.nameKorea}</span><br/>
             <span>{this.props.menu.nameEnglish}</span><br/>
             <span>{this.props.menu.price}</span><br/>

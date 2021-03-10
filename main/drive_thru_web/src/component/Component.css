@@ -58,9 +58,10 @@
   align-items: center;
 }
 
-.CustomerType {
+.SelectType {
   font-weight: bold;
   margin-top: 50px;
+  margin-left: 8%;
   display: flex;
   justify-content: center;
   align-items: center;
