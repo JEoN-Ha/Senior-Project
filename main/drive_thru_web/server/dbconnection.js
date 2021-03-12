@@ -9,8 +9,8 @@ const mysql = require('mysql');
 // })
 
 const connection = mysql.createPool({
-    host: 'fora22-mysql-kangjin.mysql.database.azure.com',
-    user: 'fora22jeonhadb@fora22-mysql-kangjin',
+    host: 'armful-server.mysql.database.azure.com',
+    user: 'armful@armful-server',
     password: 'Jeonha12#',
     database: 'untactdt',
     port: 3306,
