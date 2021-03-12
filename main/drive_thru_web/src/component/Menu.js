@@ -22,7 +22,9 @@ class Menu extends Component {
 
 
   getMenuData = () => {
-    fetch(this.state.jeonhaUrl + '/getMenuData')
+    fetch(this.state.jeonhaUrl + '/getMenuData',{
+      credentials: 'include'
+    })
       .then(res => {
         if (res.status === 200) {
           // 정상 작동
