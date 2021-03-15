@@ -195,29 +195,36 @@ router.post('/deleteFromBasket', (req, res) => {
 router.post('/getBasket', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
 
-
     const sqlCodeToBasketTable = `
     select * from baskettable
     where (BasketId = ${userwebid} and
         BasketState = 0);`;
 
-
     db.query(sqlCodeToBasketTable, (err, rows) => {
         const allBasketData = JSON.parse(JSON.stringify(rows));
-        if (!err) {
-            res.status(200).json({
-                basket: allBasketData,
-                isError: false,
-                explainError: null
-            })
-        } else {
-            res.status(400).json({
-                basket: null,
-                isError: true,
-                explainError: err
-            })
-        }
+        const sqlCodeToMenuboard = `
+        select * from menuboard where (MenuNo = ${allBasketData.BasketMenuNo});`;
+        
+        db.query(sqlCodeToMenuboard, (err, results) => {
+            const allBasketMenuData = JSON.parse(JSON.stringify(results));
+            if (!err) {
+                res.status(200).json({
+                    basket: allBasketData,
+                    menu: allBasketMenuData,
+                    isError: false,
+                    explainError: null
+                })
+            } else {
+                res.status(400).json({
+                    basket: null,
+                    menu: null,
+                    isError: true,
+                    explainError: err
+                })
+            }
+        })
     })
+    
 })
 
 // ----------------------------------------------------------------------------------------------
