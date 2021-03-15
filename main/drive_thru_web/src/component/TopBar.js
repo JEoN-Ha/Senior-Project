@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import store from '../store';
 import './Component.css'
 
 class TopBar extends Component {
     state = {
-        TopBar : [ 'MENU', '장바구니', 'MY PAGE', 'EVENT']
+        TopBar : [ 'MENU', '장바구니', 'MY PAGE', 'EVENT'],
+        mode:store.getState().mode
+    }
+    constructor(props){
+        super(props);
+        store.subscribe(function () {
+            this.setState({mode:store.getState().mode});           
+        }.bind(this));
     }
 
     render() {
@@ -21,14 +29,14 @@ class TopBar extends Component {
                 className="TopBarItem"
                 onClick={function (e) {
                     e.preventDefault();
-                    this.props.onClickBasket(e.target.innerText);                    
+                    this.props.onClickBasket(e.target.innerText, this.state.mode);                    
                 }.bind(this)}
             >{this.state.TopBar[1]}</text>
             <text
                 className="TopBarItem"
                 onClick={function (e) {
                     e.preventDefault();
-                    this.props.onClickMyPage(e.target.innerText);                    
+                    this.props.onClickMyPage(e.target.innerText, this.state.mode);                    
                 }.bind(this)}
             >{this.state.TopBar[2]}</text>
             <text
