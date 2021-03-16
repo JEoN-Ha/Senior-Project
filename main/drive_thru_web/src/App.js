@@ -9,8 +9,21 @@ import BasketRoot from './component/BasketRoot';
 import MyPageRoot from './component/MyPageRoot';
 import './component/Component.css';
 import SideBar from './component/SideBar';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+const client = new W3CWebSocket('wss://spacegrayapplewatch.azurewebsites.net/sockjs-node');
 
 class App extends Component {
+
+  componentWillMount() {
+    client.onopen = () => {
+      console.log('WebSocket Client Connected');
+    };
+    client.onmessage = (message) => {
+      console.log(message);
+    };
+  }
+
   render() {
     return (
       <div className="Root">
