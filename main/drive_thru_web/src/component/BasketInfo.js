@@ -50,12 +50,13 @@ class BasketInfo extends Component {
             menuNo: this.props.basket.id,
             menuCount: this.props.basket.count
         })
+        const menuTotalPrice = this.props.basket.count*this.props.basket.price;
         return (
             <div>
                 <hr/>
                 <span>{this.props.basket.nameKorea}</span><br/>
-                <span>{this.props.basket.count}개</span><br/>
-                <span>{this.props.basket.price}원</span><br/>
+                <span>{this.props.basket.count}개 </span>
+                <span>{menuTotalPrice}원 </span>
                 <input type="button" value="X" onClick={function(e) {
                  this.onClickDelete(bodyDeleteFromBasket)
                 }.bind(this)}></input>

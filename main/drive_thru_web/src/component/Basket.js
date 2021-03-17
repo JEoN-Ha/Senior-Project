@@ -9,20 +9,7 @@ export default class Basket extends Component {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
         isLoading: false,
-        basketData : [  // DB 연결 후 null로 바꾸기
-            // {
-            //     id : 1,
-            //     nameKorea : '아메리카노',
-            //     count : 1,
-            //     price : '4,400'
-            // },
-            // {
-            //     id : 2,
-            //     nameKorea : '돌체 블랙 밀크티',
-            //     count : 2,
-            //     price : '10,600'
-            // }
-        ]
+        basketData : []
     }
     constructor(props){
         super(props);
@@ -88,6 +75,14 @@ export default class Basket extends Component {
         })
     }
 
+    getTotalPrice(_basketdata){
+        let totalPrice = 0;
+        for (let i=0; i<_basketdata.length; i++){
+            totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
+        }
+        return totalPrice
+    }
+
     render() {
         const btnStyle = {
             color: "white",
@@ -134,20 +129,17 @@ export default class Basket extends Component {
         // const bodygetBasket = JSON.stringify({
         //     userWebId: this.state.customer_id,
         // })
+        console.log(this.state.basketData);
         return (
             <div>
                 <h2>주문 메뉴 정보</h2>
-                {/* DB로부터 장바구니 내역 가져오기 */}
-                {/* {this.getFetch(bodygetBasket)} */}
-                {/* 장바구니 내역 그리기 */}
                 {mapToComponent(this.state.basketData)}
                <button style={btnStyle} onClick={function () {
                     this.props.BasketMoreClick(this.state.mode_content)                   
                }.bind(this)}>메뉴 더 담으러 가기</button>
 
-               {/* DB에서 총 결제 금액 불러오기 */}
                <h2>결제 금액</h2>
-               <article className="OrderInfoTitle">4400원</article>
+               <article className="OrderInfoTitle">{this.getTotalPrice(this.state.basketData)}원</article>
                <button style={btnStyle2} onClick={function () {
                     this.props.PaymentClick()                   
                }.bind(this)}>결제하기</button>
