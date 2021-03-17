@@ -9,17 +9,18 @@ import BasketRoot from './component/BasketRoot';
 import MyPageRoot from './component/MyPageRoot';
 import './component/Component.css';
 import SideBar from './component/SideBar';
-import { w3cwebsocket as W3CWebSocket } from "websocket";
+import io from 'socket.io-client';
 
-const client = new W3CWebSocket('wss://spacegrayapplewatch.azurewebsites.net/sockjs-node');
+const socket = io.connect("wss://spacegrayapplewatch.azurewebsites.net/sockjs-node");
+// const client = new WebSocket('wss://spacegrayapplewatch.azurewebsites.net/sockjs-node');
 
 class App extends Component {
 
   componentWillMount() {
-    client.onopen = () => {
+    socket.onopen = () => {
       console.log('WebSocket Client Connected');
     };
-    client.onmessage = (message) => {
+    socket.onmessage = (message) => {
       console.log(message);
     };
   }

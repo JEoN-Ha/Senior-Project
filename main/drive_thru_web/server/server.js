@@ -1,17 +1,21 @@
 const express = require('express');
 const router = require('./routes/router');
 const app = express();
-const webSocketServer = require('websocket').server;
-const https = require('https');
+ const webSocketServer = require('websocket').server;
+// const https = require('https');
+
 
 const PORT = process.env.PORT||4000;
-const webSocketsServerPort = 8000;
+
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
   
 const server = http.createServer();
-server.listen(webSocketsServerPort);
+server.listen(PORT,function(){
+  let addr = "https://dtserver.azurewebsites.net"
+  console.log("listening Success")
+});
 const wsServer = new webSocketServer({
   httpServer: server
 });
