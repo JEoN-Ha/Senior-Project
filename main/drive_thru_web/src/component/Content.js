@@ -7,7 +7,8 @@ import BasketButton_con from '../containers/BasketButton_con';
 
 export default class Content extends Component {
     state = {
-        mode_content:store.getState().mode_content
+        mode_content:store.getState().mode_content,
+        mode:store.getState().mode
     }
     constructor(props){
         super(props);
