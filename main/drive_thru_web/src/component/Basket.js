@@ -63,6 +63,7 @@ export default class Basket extends Component {
             const allBasket = data.basket;
             const allBasketMenu = data.menu;
             console.log(allBasketMenu);
+            console.log(allBasket);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             //this.state.basketData = allBasket;
@@ -70,8 +71,8 @@ export default class Basket extends Component {
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
                 id: allBasket[i].BasketId,
-                // nameKorea: allBasketMenu[i].FoodNameKor,
-                // price: allBasketMenu[i].Price,
+                nameKorea: allBasketMenu[i].FoodNameKor,
+                price: allBasketMenu[i].Price,
                 count: allBasket[i].BasketMenuCount
             })
             }
