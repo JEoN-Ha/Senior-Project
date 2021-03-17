@@ -61,6 +61,8 @@ export default class Basket extends Component {
             return res.json();
         }).then(data => {
             const allBasket = data.basket;
+            const allBasketMenu = data.menu;
+            console.log(allBasketMenu);
             console.log(allBasket);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
@@ -69,8 +71,8 @@ export default class Basket extends Component {
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
                 id: allBasket[i].BasketId,
-                nameKorea: allBasket[i].FoodNameKor,
-                price: allBasket[i].Price,
+                nameKorea: allBasketMenu[i].FoodNameKor,
+                price: allBasketMenu[i].Price,
                 count: allBasket[i].BasketMenuCount
             })
             }
