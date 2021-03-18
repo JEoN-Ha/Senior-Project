@@ -15,7 +15,8 @@ export default class Payment_onFoot extends Component {
                 creditCard: true, cellphone: false,
                 kakaoPay: false, PAYCO: false
             },
-            basketData : []
+            basketData : [],
+            userInfo : []
         }  
     }
 
@@ -28,12 +29,53 @@ export default class Payment_onFoot extends Component {
             userWebId: this.state.customer_id,
         })
         this.getBasketData(bodygetBasket);
+        this.getUserInfo(bodygetBasket);
     };
 
     handleRadio(event) {
         let obj = {} // erase other radios
         obj[event.target.value] = event.target.checked // true —- target.checked 속성을 이용해서 라디오 버튼이 선택되었는지 여부를 확인한다.
         this.setState({radioGroup: obj})
+    }
+
+    getUserInfo = (_body) => {
+        fetch(this.state.jeonhaUrl + '/getUserInfo', {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: _body
+        }).then(res => {
+            if (res.status === 200) {
+                // 정상 작동
+                console.log('Success!');
+            } else if (res.status === 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        })
+            .then(data => {
+                const userInfo = data.user;
+                const getUserIsError = data.isError;
+                const whatIsError = data.explainError;
+                // let _userInfo = [];
+                // _userInfo.push({
+                //     UserWebId : userInfo[0].UserWebId,
+                //     PhoneNum : userInfo[0].PhoneNum
+                // })
+                // console.log(_userInfo);
+                this.setState({
+                    // userInfo : _userInfo
+                    userInfo : userInfo
+                })
+                console.log(this.state.userInfo[0].UserWebId);
+
+                // 확인을 위한 console.log
+                // if (getMenuIsError) {
+                //     console.log(whatIsError);
+                // }
+            })
     }
 
     getFetch(_body){
@@ -156,9 +198,9 @@ export default class Payment_onFoot extends Component {
 
                 {/* DB에서 사용자 정보 불러오기 */}
                <h2>1. 주문 정보</h2>
-                <article className="OrderInfoTitle">
+                {/* <article className="OrderInfoTitle">
                     이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="name" placeholder="이름을 입력하세요."
+                    <input type="text" name="name" placeholder={this.state.userInfo[0].UserWebId}
                         onChange={function (e) {
                             this.setState({name:e.target.value});
                             // this.props.onChangeName(this.state.name)                         
@@ -169,7 +211,7 @@ export default class Payment_onFoot extends Component {
                             this.setState({phone:e.target.value});
                             // this.props.onChangePhone(this.state.phone)                          
                         }.bind(this)}></input> <br></br>
-                </article>
+                </article> */}
 
                 {/* DB에서 주문 정보 불러오기 */}
                <h2>2. 주문 메뉴 정보</h2>

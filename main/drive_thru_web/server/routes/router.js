@@ -191,6 +191,29 @@ router.post('/deleteFromBasket', (req, res) => {
 })
 
 // ----------------------------------------------------------------------------------------------
+// getUserInfo
+router.post('/getUserInfo', (req, res) => {
+    const userwebid = `'${req.body.userWebId}'`;
+    let userData = [];
+
+    const sqlCodeToUserTable = `
+    select * from usertable
+    where (UserWebId = ${userwebid});`;
+
+    db.query(sqlCodeToUserTable, (err, rows) => {
+        userData = JSON.parse(JSON.stringify(rows));
+
+        if (!err) {
+            console.log(userData);
+            res.status(200).json({
+                user: userData,
+                isError: false,
+                explainError: null
+            })
+        }  
+    })
+})
+// ----------------------------------------------------------------------------------------------
 // getBasket
 router.post('/getBasket', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
