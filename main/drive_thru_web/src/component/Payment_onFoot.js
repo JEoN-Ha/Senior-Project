@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import BasketInfo from '../containers/BasketInfo';
 import "./Component.css";
 import store from '../store';
 
@@ -13,13 +14,21 @@ export default class Payment_onFoot extends Component {
             radioGroup: {
                 creditCard: true, cellphone: false,
                 kakaoPay: false, PAYCO: false
-            }
+            },
+            basketData : []
         }  
     }
 
     componentWillUnmount() {
         console.log('componentWillUnmount');
-      }
+    }
+
+    componentDidMount() {
+        const bodygetBasket = JSON.stringify({
+            userWebId: this.state.customer_id,
+        })
+        this.getBasketData(bodygetBasket);
+    };
 
     handleRadio(event) {
         let obj = {} // erase other radios
@@ -51,6 +60,60 @@ export default class Payment_onFoot extends Component {
         }) 
     }
 
+    getBasketData = (_body) => {
+        fetch(this.state.jeonhaUrl + '/getBasket', {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body:_body,
+            
+        }).then(res => {
+            if (res.status === 200) {
+                // 정상 작동
+                console.log('Success!');
+            } else if (res.status === 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        }).then(data => {
+            const allBasket = data.basket;
+            const allBasketMenu = data.menu;
+            console.log(allBasketMenu);
+            console.log(allBasket);
+            const getMenuIsError = data.isError;
+            const whatIsError = data.explainError;
+            //this.state.basketData = allBasket;
+            let _basketData = []
+            for (let i = 0; i < allBasket.length; i++) {
+            _basketData.push({
+                id: allBasket[i].BasketId,
+                nameKorea: allBasketMenu[i].FoodNameKor,
+                price: allBasketMenu[i].Price,
+                count: allBasket[i].BasketMenuCount
+            })
+            }
+            this.setState({
+            basketData: _basketData,
+            isLoading: true
+            })
+            //this.state.basketData = 
+            // 확인을 위한 console.log
+            // if (getMenuIsError) {
+            //     console.log(whatIsError);
+            // }
+        })
+    }
+
+    getTotalPrice(_basketdata){
+        let totalPrice = 0;
+        for (let i=0; i<_basketdata.length; i++){
+            totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
+        }
+        return totalPrice
+    }
+
     render() {
         const btnStyle = {
             color: "white",
@@ -68,6 +131,26 @@ export default class Payment_onFoot extends Component {
             carId: this.state.carNumber,
             payment: 1
         });
+        const mapToComponent = data => {
+            return data.map((basket, i) => {
+                return (<BasketInfo basket={basket} key={i}
+                  getCount = {function(_count,_id){
+                    let i = 0;
+                    let data = Array.from(this.state.basketData);
+                    while(i < data.length){
+                        if(data[i].id === _id){
+                            data[i].count = _count;
+                            break;
+                        }
+                        i = i + 1;
+                    }
+                    this.setState({
+                        basketData:data
+                    });
+                  }.bind(this)}
+                  ></BasketInfo>);
+            });
+        };
         return (
             <div>
 
@@ -90,11 +173,10 @@ export default class Payment_onFoot extends Component {
 
                 {/* DB에서 주문 정보 불러오기 */}
                <h2>2. 주문 메뉴 정보</h2>
-                <article className="OrderInfoTitle">
-                    <article>아메리카노 1개</article>
-                </article>
+               {mapToComponent(this.state.basketData)}
 
                <h2>3. 결제 수단</h2>
+                <div className="OrderInfoTitle">{this.getTotalPrice(this.state.basketData)}원</div>
                 <article className="OrderInfoTitle">
                     <h3>온라인 결제</h3>
                     <input type="radio" name="radioGroup" value="creditCard"
