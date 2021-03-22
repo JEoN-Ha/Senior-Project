@@ -56,20 +56,20 @@ export default class Payment_onFoot extends Component {
             return res.json();
         })
             .then(data => {
-                const userInfo = data.user;
+                const userInfoData = data.user;
                 const getUserIsError = data.isError;
                 const whatIsError = data.explainError;
-                // let _userInfo = [];
-                // _userInfo.push({
-                //     UserWebId : userInfo[0].UserWebId,
-                //     PhoneNum : userInfo[0].PhoneNum
-                // })
-                // console.log(_userInfo);
+                let _userInfo = [];
+                _userInfo.push({
+                    UserName : userInfoData[0].UserName,
+                    PhoneNum : userInfoData[0].PhoneNum
+                })
+                console.log(_userInfo);
                 this.setState({
                     // userInfo : _userInfo
-                    userInfo : userInfo
+                    userInfo : _userInfo
                 })
-                console.log(this.state.userInfo[0].UserWebId);
+                console.log(this.state.userInfo[0].UserName);
 
                 // 확인을 위한 console.log
                 // if (getMenuIsError) {
@@ -98,7 +98,7 @@ export default class Payment_onFoot extends Component {
             const orderIsError = data.isError;
             const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
             // 확인을 위한 console.log
-            console.log(orderIsError, userOrderNo);
+            //console.log(orderIsError, userOrderNo);
         }) 
     }
 
@@ -122,8 +122,8 @@ export default class Payment_onFoot extends Component {
         }).then(data => {
             const allBasket = data.basket;
             const allBasketMenu = data.menu;
-            console.log(allBasketMenu);
-            console.log(allBasket);
+            //console.log(allBasketMenu);
+            //console.log(allBasket);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             //this.state.basketData = allBasket;
@@ -193,14 +193,14 @@ export default class Payment_onFoot extends Component {
                   ></BasketInfo>);
             });
         };
+        console.log(this.state.userInfo);
+
         return (
             <div>
-
-                {/* DB에서 사용자 정보 불러오기 */}
                <h2>1. 주문 정보</h2>
-                {/* <article className="OrderInfoTitle">
+                <article className="OrderInfoTitle">
                     이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="name" placeholder={this.state.userInfo[0].UserWebId}
+                    <input type="text" name="name" placeholder={this.state.userInfo.UserName}
                         onChange={function (e) {
                             this.setState({name:e.target.value});
                             // this.props.onChangeName(this.state.name)                         
@@ -211,7 +211,7 @@ export default class Payment_onFoot extends Component {
                             this.setState({phone:e.target.value});
                             // this.props.onChangePhone(this.state.phone)                          
                         }.bind(this)}></input> <br></br>
-                </article> */}
+                </article>
 
                 {/* DB에서 주문 정보 불러오기 */}
                <h2>2. 주문 메뉴 정보</h2>
