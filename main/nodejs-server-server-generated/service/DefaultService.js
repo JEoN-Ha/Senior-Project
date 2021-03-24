@@ -1,6 +1,6 @@
 'use strict';
-
-
+// import router from '../server/routes/router';
+const db = require('./dbConnection');
 /**
  * update orderstate to mark `deleted` from basket
  *
@@ -46,18 +46,51 @@ exports.cancelOrderPOST = function(userWebId) {
  * returns inline_response_200
  **/
 exports.getMenuDataGET = function() {
+
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = {
-  "Price" : 6,
-  "MenuNo" : 0,
-  "FoodNameKor" : "FoodNameKor",
-  "FoodNameEng" : "FoodNameEng"
-};
+    const sqlCode = `select * from menuboard;`;
+    db.query(sqlCode, (err, rows) => {
+        const dbData = JSON.parse(JSON.stringify(rows));
+        // if (!err) {
+        //     res.status(200).json({
+        //         menu: dbData,
+        //         isError: false,
+        //         explainError: null
+        //     })
+        // } else {
+        //     res.status(400).json({
+        //         menu: null,
+        //         isError: true,
+        //         explainError: err
+        //     })
+        // }
+    })
+    examples['application/json'] = dbData;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
-      resolve();
+      resolve(
+        // router.get('/getMenuData', (req, res) => {
+    //     const sqlCode = `select * from menuboard;`;
+    //     db.query(sqlCode, (err, rows) => {
+    //         const dbData = JSON.parse(JSON.stringify(rows));
+    //         if (!err) {
+    //             res.status(200).json({
+    //                 menu: dbData,
+    //                 isError: false,
+    //                 explainError: null
+    //             })
+    //         } else {
+    //             res.status(400).json({
+    //                 menu: null,
+    //                 isError: true,
+    //                 explainError: err
+    //             })
+    //         }
+    //     })
+    // })
+    );
     }
   });
 }
