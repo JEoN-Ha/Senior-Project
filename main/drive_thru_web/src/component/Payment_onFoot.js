@@ -16,7 +16,9 @@ export default class Payment_onFoot extends Component {
                 kakaoPay: false, PAYCO: false
             },
             basketData : [],
-            userInfo : []
+            userInfo : [{
+                UserName:null, PhoneNum:null
+            }]
         }  
     }
 
@@ -48,34 +50,32 @@ export default class Payment_onFoot extends Component {
         }).then(res => {
             if (res.status === 200) {
                 // 정상 작동
-                console.log('Success!');
+                console.log('UserInfo Success!');
             } else if (res.status === 400) {
                 // 실패시
                 console.log('Failed!');
             }
             return res.json();
-        })
-            .then(data => {
-                const userInfoData = data.user;
-                const getUserIsError = data.isError;
-                const whatIsError = data.explainError;
-                let _userInfo = [];
-                _userInfo.push({
-                    UserName : userInfoData[0].UserName,
-                    PhoneNum : userInfoData[0].PhoneNum
-                })
-                console.log(_userInfo);
-                this.setState({
-                    // userInfo : _userInfo
-                    userInfo : _userInfo
-                })
-                console.log(this.state.userInfo[0].UserName);
-
-                // 확인을 위한 console.log
-                // if (getMenuIsError) {
-                //     console.log(whatIsError);
-                // }
+        }).then(data => {
+            const userInfoData = data.user;
+            const getUserIsError = data.isError;
+            const whatIsError = data.explainError;
+            let _userInfo = [];
+            _userInfo.push({
+                UserName : userInfoData[0].UserName,
+                PhoneNum : userInfoData[0].PhoneNum
             })
+            console.log(_userInfo);
+            this.setState({
+                userInfo : _userInfo
+            })
+            console.log(this.state.userInfo[0]);
+
+            // 확인을 위한 console.log
+            // if (getMenuIsError) {
+            //     console.log(whatIsError);
+            // }
+        })
     }
 
     getFetch(_body){
@@ -193,27 +193,24 @@ export default class Payment_onFoot extends Component {
                   ></BasketInfo>);
             });
         };
-        console.log(this.state.userInfo);
-
         return (
             <div>
                <h2>1. 주문 정보</h2>
                 <article className="OrderInfoTitle">
                     이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="name" placeholder={this.state.userInfo.UserName}
+                    <input type="text" name="name" placeholder={this.state.userInfo[0].UserName}
                         onChange={function (e) {
                             this.setState({name:e.target.value});
                             // this.props.onChangeName(this.state.name)                         
                         }.bind(this)}></input> <br></br>
                     연락처&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="phone" placeholder="전화번호를 입력하세요."
+                    <input type="text" name="phone" placeholder={this.state.userInfo[0].PhoneNum}
                         onChange={function (e) {
                             this.setState({phone:e.target.value});
                             // this.props.onChangePhone(this.state.phone)                          
                         }.bind(this)}></input> <br></br>
                 </article>
 
-                {/* DB에서 주문 정보 불러오기 */}
                <h2>2. 주문 메뉴 정보</h2>
                {mapToComponent(this.state.basketData)}
 

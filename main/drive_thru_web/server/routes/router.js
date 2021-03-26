@@ -194,14 +194,13 @@ router.post('/deleteFromBasket', (req, res) => {
 // getUserInfo
 router.post('/getUserInfo', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
-    let userData = [];
 
     const sqlCodeToUserTable = `
     select * from usertable
     where (UserWebId = ${userwebid});`;
 
     db.query(sqlCodeToUserTable, (err, rows) => {
-        userData = JSON.parse(JSON.stringify(rows));
+        const userData = JSON.parse(JSON.stringify(rows));
 
         if (!err) {
             console.log(userData);
