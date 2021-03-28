@@ -49,8 +49,6 @@ export default class Basket extends Component {
         }).then(data => {
             const allBasket = data.basket;
             const allBasketMenu = data.menu;
-            console.log(allBasketMenu);
-            console.log(allBasket);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             //this.state.basketData = allBasket;
@@ -129,7 +127,6 @@ export default class Basket extends Component {
         // const bodygetBasket = JSON.stringify({
         //     userWebId: this.state.customer_id,
         // })
-        console.log(this.state.basketData);
         return (
             <div>
                 <h2>주문 메뉴 정보</h2>

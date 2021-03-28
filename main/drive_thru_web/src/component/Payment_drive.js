@@ -67,11 +67,9 @@ export default class Payment_drive extends Component {
                 PhoneNum : userInfoData[0].PhoneNum,
                 CarId : carData[0].CarId
             })
-            console.log(carData);
             this.setState({
                 userInfo : _userInfo
             })
-            console.log(this.state.userInfo[0]);
 
             // 확인을 위한 console.log
             // if (getMenuIsError) {
@@ -124,8 +122,6 @@ export default class Payment_drive extends Component {
         }).then(data => {
             const allBasket = data.basket;
             const allBasketMenu = data.menu;
-            console.log(allBasketMenu);
-            console.log(allBasket);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             //this.state.basketData = allBasket;
@@ -197,8 +193,6 @@ export default class Payment_drive extends Component {
         };
         return (
             <div>
-
-                {/* DB에서 사용자 정보 불러오기 */}
                <h2>1. 주문 정보</h2>
                 <article className="OrderInfoTitle">
                     이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -245,9 +239,8 @@ export default class Payment_drive extends Component {
                         ></input> PAYCO
                 </article>
                 
-                {/* 결제 정보 DB로 보내기 */}
                 <button style={btnStyle} onClick={function () {
-                    this.props.Payment(this.state.name,this.state.phone,this.state.carNumber);
+                    this.props.Payment();
                     this.getFetch(bodyOrder);                 
                }.bind(this)}>결제하기</button>
             </div>

@@ -65,12 +65,9 @@ export default class Payment_onFoot extends Component {
                 UserName : userInfoData[0].UserName,
                 PhoneNum : userInfoData[0].PhoneNum
             })
-            console.log(_userInfo);
             this.setState({
                 userInfo : _userInfo
             })
-            console.log(this.state.userInfo[0]);
-
             // 확인을 위한 console.log
             // if (getMenuIsError) {
             //     console.log(whatIsError);
@@ -122,8 +119,6 @@ export default class Payment_onFoot extends Component {
         }).then(data => {
             const allBasket = data.basket;
             const allBasketMenu = data.menu;
-            //console.log(allBasketMenu);
-            //console.log(allBasket);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             this.state.basketData = allBasket;
@@ -238,7 +233,7 @@ export default class Payment_onFoot extends Component {
                 
                 {/* 결제 정보 DB로 보내기 */}
                 <button style={btnStyle} onClick={function () {
-                    this.props.Payment(this.state.name,this.state.phone);
+                    this.props.Payment();
                     this.getFetch(bodyOrder);                  
                }.bind(this)}>결제하기</button>
             </div>
