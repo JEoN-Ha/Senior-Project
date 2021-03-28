@@ -18,7 +18,8 @@ export default class Payment_drive extends Component {
             basketData : [{id:null, nameKorea:null, price:null, count:null}],
             userInfo : [{
                 UserName:null, PhoneNum:null, CarId:null
-            }]
+            }],
+            payment : 'creditCard'
         }  
     }
 
@@ -28,7 +29,7 @@ export default class Payment_drive extends Component {
 
     componentDidMount() {
         const bodygetBasket = JSON.stringify({
-            userWebId: this.state.customer_id,
+            userWebId: this.state.customer_id
         })
         this.getBasketData(bodygetBasket);
         this.getUserInfo(bodygetBasket);
@@ -37,6 +38,7 @@ export default class Payment_drive extends Component {
     handleRadio(event) {
         let obj = {} // erase other radios
         obj[event.target.value] = event.target.checked // true —- target.checked 속성을 이용해서 라디오 버튼이 선택되었는지 여부를 확인한다.
+        this.state.payment = event.target.value;
         this.setState({radioGroup: obj})
     }
 
@@ -166,11 +168,16 @@ export default class Payment_drive extends Component {
             lineHeight: 1.5,
             width: "100px"
         }
-        const bodyOrder = JSON.stringify({
+        // const bodyOrder = JSON.stringify({
+        //     userWebId: this.state.customer_id,
+        //     carId: this.state.carNumber,
+        //     payment: 1
+        // });
+        const bodygetBasket = JSON.stringify({
             userWebId: this.state.customer_id,
-            carId: this.state.carNumber,
-            payment: 1
-        });
+            carid: this.state.userInfo[0].CarId,
+            payment: this.state.payment
+        })
         const mapToComponent = data => {
             return data.map((basket, i) => {
                 return (<BasketInfo basket={basket} key={i}
@@ -240,8 +247,8 @@ export default class Payment_drive extends Component {
                 </article>
                 
                 <button style={btnStyle} onClick={function () {
-                    this.props.Payment();
-                    this.getFetch(bodyOrder);                 
+                    this.getFetch(bodygetBasket);
+                    this.props.Payment();                 
                }.bind(this)}>결제하기</button>
             </div>
         )

@@ -54,12 +54,12 @@ export default class Basket extends Component {
             //this.state.basketData = allBasket;
             let _basketData = []
             for (let i = 0; i < allBasket.length; i++) {
-            _basketData.push({
-                id: allBasket[i].BasketId,
-                nameKorea: allBasketMenu[i].FoodNameKor,
-                price: allBasketMenu[i].Price,
-                count: allBasket[i].BasketMenuCount
-            })
+                _basketData.push({
+                    id: allBasket[i].BasketId,
+                    nameKorea: allBasketMenu[i].FoodNameKor,
+                    price: allBasketMenu[i].Price,
+                    count: allBasket[i].BasketMenuCount
+                })
             }
             this.setState({
             basketData: _basketData,

@@ -248,16 +248,12 @@ router.post('/getBasket', (req, res) => {
         for (let i = 0; i < allBasketData.length; i++) {
             let sqlCodeToMenuboard = `
             select * from menuboard where (MenuNo = ${allBasketData[i].BasketMenuNo});`;
-            console.log(i);
             db.query(sqlCodeToMenuboard, (error, results) => {
                 basketMenuData = JSON.parse(JSON.stringify(results));
-                console.log(basketMenuData);
                 // basketMenuData 는 [{}] 꼴이기 때문에 0번째 원소를 넣어주면 됨
                 allBasketMenuData.push(basketMenuData[0]);
-
                 if (i === allBasketData.length - 1) {
                     if (!err) {
-                        console.log(allBasketMenuData);
                         res.status(200).json({
                             basket: allBasketData,
                             menu: allBasketMenuData,
