@@ -1,7 +1,16 @@
-'use strict';
+// 'use strict';
 
 var utils = require('../utils/writer.js');
 var Default = require('../service/DefaultService');
+
+const db = mysql.createPool({
+  host: 'milkthistle.mysql.database.azure.com',
+  user: 'toeic@milkthistle',
+  password: 'Jeonha12#',
+  database: 'untactdt',
+  port: 3306,
+  ssl: false
+})
 
 module.exports.cancelOrderFromBasketPOST = function cancelOrderFromBasketPOST (req, res, next, userWebId, menuNo) {
   Default.cancelOrderFromBasketPOST(userWebId, menuNo)
