@@ -201,15 +201,30 @@ router.post('/getUserInfo', (req, res) => {
 
     db.query(sqlCodeToUserTable, (err, rows) => {
         const userData = JSON.parse(JSON.stringify(rows));
+        let sqlCodeToCar = `
+        select * from car
+        where (CarWebId = ${userwebid});`;
+        db.query(sqlCodeToCar, (err,results) => {
+            const carData = JSON.parse(JSON.stringify(results))
+            if (!err) {
+                console.log(carData);
+                res.status(200).json({
+                    user: userData,
+                    car: carData,
+                    isError: false,
+                    explainError: null
+                })
+            }  
+        })
 
-        if (!err) {
-            console.log(userData);
-            res.status(200).json({
-                user: userData,
-                isError: false,
-                explainError: null
-            })
-        }  
+        // if (!err) {
+        //     console.log(userData);
+        //     res.status(200).json({
+        //         user: userData,
+        //         isError: false,
+        //         explainError: null
+        //     })
+        // }  
     })
 })
 // ----------------------------------------------------------------------------------------------

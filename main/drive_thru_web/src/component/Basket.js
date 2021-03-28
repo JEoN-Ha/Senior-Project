@@ -9,7 +9,7 @@ export default class Basket extends Component {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
         isLoading: false,
-        basketData : []
+        basketData : [{id:null, nameKorea:null, price:null, count:null}]
     }
     constructor(props){
         super(props);

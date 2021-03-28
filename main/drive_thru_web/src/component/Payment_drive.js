@@ -15,7 +15,10 @@ export default class Payment_drive extends Component {
                 creditCard: true, cellphone: false,
                 kakaoPay: false, PAYCO: false
             },
-            basketData : []
+            basketData : [{id:null, nameKorea:null, price:null, count:null}],
+            userInfo : [{
+                UserName:null, PhoneNum:null, CarId:null
+            }]
         }  
     }
 
@@ -28,12 +31,53 @@ export default class Payment_drive extends Component {
             userWebId: this.state.customer_id,
         })
         this.getBasketData(bodygetBasket);
+        this.getUserInfo(bodygetBasket);
     };
 
     handleRadio(event) {
         let obj = {} // erase other radios
         obj[event.target.value] = event.target.checked // true —- target.checked 속성을 이용해서 라디오 버튼이 선택되었는지 여부를 확인한다.
         this.setState({radioGroup: obj})
+    }
+
+    getUserInfo = (_body) => {
+        fetch(this.state.jeonhaUrl + '/getUserInfo', {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: _body
+        }).then(res => {
+            if (res.status === 200) {
+                // 정상 작동
+                console.log('UserInfo Success!');
+            } else if (res.status === 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        }).then(data => {
+            const userInfoData = data.user;
+            const carData = data.car;
+            const getUserIsError = data.isError;
+            const whatIsError = data.explainError;
+            let _userInfo = [];
+            _userInfo.push({
+                UserName : userInfoData[0].UserName,
+                PhoneNum : userInfoData[0].PhoneNum,
+                CarId : carData[0].CarId
+            })
+            console.log(carData);
+            this.setState({
+                userInfo : _userInfo
+            })
+            console.log(this.state.userInfo[0]);
+
+            // 확인을 위한 console.log
+            // if (getMenuIsError) {
+            //     console.log(whatIsError);
+            // }
+        })
     }
 
     getFetch(_body){
@@ -158,18 +202,18 @@ export default class Payment_drive extends Component {
                <h2>1. 주문 정보</h2>
                 <article className="OrderInfoTitle">
                     이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="name" placeholder="이름을 입력하세요."
+                    <input type="text" name="name" placeholder={this.state.userInfo[0].UserName}
                         onChange={function (e) {
                             this.setState({name:e.target.value});
                             // this.props.onChangeName(this.state.name)                         
                         }.bind(this)}></input> <br></br>
                     연락처&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="phone" placeholder="전화번호를 입력하세요."
+                    <input type="text" name="phone" placeholder={this.state.userInfo[0].PhoneNum}
                         onChange={function (e) {
                             this.setState({phone:e.target.value});
                             // this.props.onChangePhone(this.state.phone)                          
                         }.bind(this)}></input> <br></br>
-                    차량번호<input type="text" name="carNumber" placeholder="차량번호를 입력하세요."
+                    차량번호<input type="text" name="carNumber" placeholder={this.state.userInfo[0].CarId}
                         onChange={function (e) {
                             this.setState({carNumber:e.target.value});
                             // this.props.onChangeCarNumber(this.state.carNumber)                          

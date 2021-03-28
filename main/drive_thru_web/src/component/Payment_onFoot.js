@@ -15,7 +15,7 @@ export default class Payment_onFoot extends Component {
                 creditCard: true, cellphone: false,
                 kakaoPay: false, PAYCO: false
             },
-            basketData : [],
+            basketData : [{id:null, nameKorea:null, price:null, count:null}],
             userInfo : [{
                 UserName:null, PhoneNum:null
             }]
@@ -126,8 +126,8 @@ export default class Payment_onFoot extends Component {
             //console.log(allBasket);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
-            //this.state.basketData = allBasket;
-            let _basketData = []
+            this.state.basketData = allBasket;
+            let _basketData = [];
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
                 id: allBasket[i].BasketId,
