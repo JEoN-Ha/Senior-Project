@@ -9,7 +9,7 @@ export default createStore(function(state, action){
             PW_state:false,
             orderName:'상품을 선택해주세요.', orderCount:0,orderID:null,
             customerType:null, isCarNumberDisabled:null,
-            jeonhaUrl: 'https://app.swaggerhub.com/apis/kiJiyeon/Jeonha-redux/1.0.0'
+            jeonhaUrl: 'http://vincenzzo.azurewebsites.net'
         }
     }
 
