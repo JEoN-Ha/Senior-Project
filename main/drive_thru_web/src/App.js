@@ -13,7 +13,21 @@ import SideBar from './component/SideBar';
 
 class App extends Component {
 
-
+  componentDidMount(){
+    this.socket = new WebSocket('ws://localhost:5000', ['json']);
+    this.socket.onerror = err => {
+        console.log(err)
+    }
+    this.socket.onmessage = e => {
+        let res = JSON.parse(e.data);
+        console.log(e, res);
+        let copyArr = [...this.state.message]
+        copyArr.push(res);
+        this.setState({
+            message: copyArr
+        });
+    }
+}
   render() {
     return (
       <div className="Root">
