@@ -196,6 +196,39 @@ fetch(jeonhaUrl + '/updateFromBasket', {
         //     console.log(whatIsError);
         // }
     })
+// ----------------------------------------------------------------------------------------------
+// getUserInfo
+
+const bodygetUserInfo = JSON.stringify({
+    userWebId: 'fora',
+})
+
+fetch(jeonhaUrl + '/getUserInfo', {
+    method: "post",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: bodygetUserInfo
+}).then(res => {
+    if (res.status === 200) {
+        // 정상 작동
+        console.log('Success!');
+    } else if (res.status === 400) {
+        // 실패시
+        console.log('Failed!');
+    }
+    return res.json();
+})
+    .then(data => {
+        const userInfo = data.user;
+        const getUserIsError = data.isError;
+        const whatIsError = data.explainError;
+
+        // 확인을 위한 console.log
+        // if (getMenuIsError) {
+        //     console.log(whatIsError);
+        // }
+    })
 
 // ----------------------------------------------------------------------------------------------
 // getBasket

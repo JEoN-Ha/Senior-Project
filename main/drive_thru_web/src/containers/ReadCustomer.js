@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 function mapDispatchToProps(dispatch){
     return {
         onClick:function(){
-            dispatch({type:'LOGOUT',customer_id:null,PW:null});
+            dispatch({type:'LOGOUT',customer_id:null,PW:null,mode_content:'welcome'});
         }
     }
 }
