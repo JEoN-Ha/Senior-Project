@@ -48,7 +48,8 @@ export default class Basket extends Component {
             return res.json();
         }).then(data => {
             const allBasket = data.basket;
-            const allBasketMenu = data.menu;
+            let allBasketMenu = [{BasketId:null, FoodNameKor:null, Price:null,BasketMenuCount:null}]
+            allBasketMenu = data.menu;
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             //this.state.basketData = allBasket;
