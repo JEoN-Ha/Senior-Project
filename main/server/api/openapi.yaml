@@ -1,0 +1,371 @@
+openapi: 3.0.0
+info:
+  title: Jeonha-redux
+  description: Untact DriveThru를 위한 API 명세서
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/kiJiyeon/Jeonha-redux/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://jeonhaapi.azurewebsites.net
+  description: SwaggerHub API Auto Mocking
+paths:
+  /signUP:
+    post:
+      summary: Post Member's Data API
+      operationId: signUPPOST
+      parameters:
+      - name: UserWebId
+        in: query
+        description: users membership ID
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: UserName
+        in: query
+        description: user name
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: PW
+        in: query
+        description: user's password
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: PhoneNum
+        in: query
+        description: user's phone number
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: carId
+        in: query
+        description: user's car ID
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successfully posted Member's Data !
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+        "400":
+          description: failed to post Member's Data ! it must be overlaped ID or PW
+            / or you typed too long ID or PW
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      x-swagger-router-controller: Default
+  /signIn:
+    post:
+      summary: post ID & Password from DB to compare DB's and Web's
+      operationId: signInPOST
+      parameters:
+      - name: UserWebId
+        in: query
+        description: user's id that inputed when sign up
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: PW
+        in: query
+        description: user's password that inputed when sign up
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successfully posted ID & Password !
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+        "400":
+          description: failed to post Member's Data ! it must be Id Error or PW Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
+      x-swagger-router-controller: Default
+  /getMenuData:
+    get:
+      summary: Get Menu API
+      operationId: getMenuDataGET
+      responses:
+        "200":
+          description: successfully got Menu Data !
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: failed to get Menu Data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+      x-swagger-router-controller: Default
+  /insertIntoBasket:
+    post:
+      summary: put something to Basket before the order
+      operationId: insertIntoBasketPOST
+      parameters:
+      - name: OrderToMenu_MenuNo
+        in: query
+        description: menu number
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: OrderWebId
+        in: query
+        description: user Web ID
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: WEBCarId
+        in: query
+        description: Car id that user inputed when order
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: OrderPayment
+        in: query
+        description: payment
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: MenuNo
+        in: query
+        description: id number of menu
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: MenuCount
+        in: query
+        description: quantity of menus users ordered
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successfully inserted(posted) menus into basket !
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+      x-swagger-router-controller: Default
+  /order:
+    get:
+      summary: to check the order-list
+      operationId: orderGET
+      responses:
+        "200":
+          description: successfully got the order-list & user's info!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+      x-swagger-router-controller: Default
+  /paying:
+    post:
+      summary: clicked `paying`
+      operationId: payingPOST
+      parameters:
+      - name: OrderState
+        in: query
+        description: to note which state is it now
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successfully posted OrderState !
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+      x-swagger-router-controller: Default
+  /CancelOrderFromBasket:
+    post:
+      summary: update orderstate to mark `deleted` from basket
+      operationId: cancelOrderFromBasketPOST
+      parameters:
+      - name: UserWebId
+        in: query
+        description: user's id that inputed when sign up
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: MenuNo
+        in: query
+        description: id number of menu
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successfully deleted from basket !
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+      x-swagger-router-controller: Default
+  /CancelOrder:
+    post:
+      summary: update orderstate to mark `deleted` from OrderList
+      operationId: cancelOrderPOST
+      parameters:
+      - name: UserWebId
+        in: query
+        description: user's id that inputed when sign up
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successfully deleted from ordertomenu!
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    inline_response_400:
+      type: object
+      properties:
+        IdOverlap:
+          type: boolean
+        PwOverlap:
+          type: boolean
+        DbError:
+          type: boolean
+    inline_response_400_1:
+      type: object
+      properties:
+        IdError:
+          type: boolean
+        PwError:
+          type: boolean
+    inline_response_200:
+      type: object
+      properties:
+        MenuNo:
+          type: integer
+        FoodNameKor:
+          type: string
+        FoodNameEng:
+          type: string
+        Price:
+          type: integer
+      example:
+        Price: 6
+        MenuNo: 0
+        FoodNameKor: FoodNameKor
+        FoodNameEng: FoodNameEng
+    inline_response_400_2:
+      type: object
+      properties:
+        GetError:
+          type: string
+    inline_response_200_1:
+      type: object
+      properties:
+        OrderToMenu_OrderNo:
+          type: integer
+        OrderToMenu_MenuNo:
+          type: string
+        OrderWebId:
+          type: string
+        WEBCarId:
+          type: integer
+        OrderState:
+          type: integer
+        OrderPayment:
+          type: integer
+        MenuNo:
+          type: integer
+        MenuCount:
+          type: integer
+        Price:
+          type: integer
+      example:
+        OrderWebId: OrderWebId
+        MenuCount: 2
+        Price: 7
+        MenuNo: 5
+        OrderToMenu_OrderNo: 0
+        WEBCarId: 6
+        OrderPayment: 5
+        OrderToMenu_MenuNo: OrderToMenu_MenuNo
+        OrderState: 1
+    inline_response_200_2:
+      type: object
+      properties:
+        UserName:
+          type: string
+        PhoneNum:
+          type: string
+        carId:
+          type: string
+        OrderToMenu_MenuNo:
+          type: integer
+        MenuCount:
+          type: integer
+        OrderPayment:
+          type: integer
+      example:
+        UserName: UserName
+        MenuCount: 6
+        PhoneNum: PhoneNum
+        OrderPayment: 1
+        OrderToMenu_MenuNo: 0
+        carId: carId
+    inline_response_200_3:
+      type: object
+      properties:
+        OrderState:
+          type: integer
+      example:
+        OrderState: 0
