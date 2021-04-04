@@ -54,7 +54,8 @@ export default class Basket extends Component {
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             //this.state.basketData = allBasket;
-            let _basketData = [{id:null, nameKorea:null, price:null, count:null, menuNo:null}]
+            // let _basketData = [{id:null, nameKorea:null, price:null, count:null, menuNo:null}]
+            let _basketData = [];
             for (let i = 0; i < allBasket.length; i++) {
                 _basketData.push({
                     id: allBasket[i].BasketId,
