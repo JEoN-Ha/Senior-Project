@@ -20,7 +20,7 @@ export default class Payment_onFoot extends Component {
             userInfo : [{
                 UserName:null, PhoneNum:null
             }],
-            payment : null
+            payment : 1
         }  
     }
 
@@ -40,8 +40,6 @@ export default class Payment_onFoot extends Component {
         let obj = {} // erase other radios
         obj[event.target.value] = event.target.checked // true —- target.checked 속성을 이용해서 라디오 버튼이 선택되었는지 여부를 확인한다.
         this.setState({radioGroup: obj});
-        console.log(event.target.defaultValue);
-        console.log(this.state.payment);
     }
 
     getUserInfo = (_body) => {
@@ -167,10 +165,10 @@ export default class Payment_onFoot extends Component {
             lineHeight: 1.5,
             width: "100px"
         }
-        const bodyOrder = JSON.stringify({
+        let bodyOrder = JSON.stringify({
             userWebId: this.state.customer_id,
             carId: this.state.carNumber,
-            payment: 1
+            payment: this.state.payment
         });
         const mapToComponent = data => {
             return data.map((basket, i) => {
@@ -219,20 +217,19 @@ export default class Payment_onFoot extends Component {
                     <h3>온라인 결제</h3>
                     <input type="radio" name="radioGroup" value="creditCard"
                         checked={this.state.radioGroup['creditCard']}
-                        onChange={function (e) {this.handleRadio(e)}.bind(this),
-                            this.setState({payment:e.target.value})}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 1;}.bind(this)}
                         ></input> 신용카드
                     <input type="radio" name="radioGroup" value="cellphone"
                         checked={this.state.radioGroup['cellphone']}
-                        onChange={function (e) {this.handleRadio(e)}.bind(this)}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 2;}.bind(this)}
                         ></input> 휴대폰 <br></br>
                     <input type="radio" name="radioGroup" value="kakaoPay"
                         checked={this.state.radioGroup['kakaoPay']}
-                        onChange={function (e) {this.handleRadio(e)}.bind(this)}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 3;}.bind(this)}
                         ></input> 카카오페이
                     <input type="radio" name="radioGroup" value="PAYCO"
                         checked={this.state.radioGroup['PAYCO']}
-                        onChange={function (e) {this.handleRadio(e)}.bind(this)}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 4;}.bind(this)}
                         ></input> PAYCO
                 </article>
                 

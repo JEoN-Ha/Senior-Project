@@ -299,7 +299,9 @@ router.post('/order', (req, res) => {
         if (err) {
             getInsertIdError = false;
         }
+        console.log(dbData);
         currentOrderNo = dbData[0].OrderNo;
+        console.log(currentOrderNo);
     })
 
     const sqlCodeToBasketTable = `
