@@ -185,26 +185,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200_1'
       x-swagger-router-controller: Default
-  /order:
+  /getBasket:
     get:
-      summary: to check the order-list
-      operationId: orderGET
+      summary: to show what's in my basket
+      operationId: getBasketGET
       responses:
         "200":
-          description: successfully got the order-list & user's info!
+          description: successfully got the Basket list!
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_2'
       x-swagger-router-controller: Default
-  /paying:
+  /updateFromBasket:
     post:
-      summary: clicked `paying`
-      operationId: payingPOST
+      summary: to add things to Basket
+      operationId: updateFromBasketPOST
       parameters:
-      - name: OrderState
+      - name: UserWebId
         in: query
-        description: to note which state is it now
+        description: user's id that inputed when sign up
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: MenuNo
+        in: query
+        description: id number of menu
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: MenuCount
+        in: query
+        description: quantity of menus users ordered
         required: true
         style: form
         explode: true
@@ -212,16 +228,23 @@ paths:
           type: integer
       responses:
         "200":
-          description: successfully posted OrderState !
+          description: successfully posted ID & Password !
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_3'
+                type: object
+                x-content-type: application/json
+        "400":
+          description: failed to post Member's Data ! it must be Id Error or PW Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
       x-swagger-router-controller: Default
-  /CancelOrderFromBasket:
+  /deleteFromBasket:
     post:
       summary: update orderstate to mark `deleted` from basket
-      operationId: cancelOrderFromBasketPOST
+      operationId: deleteFromBasketPOST
       parameters:
       - name: UserWebId
         in: query
@@ -248,6 +271,30 @@ paths:
                 type: object
                 x-content-type: application/json
       x-swagger-router-controller: Default
+  /order:
+    get:
+      summary: to check the order-list
+      operationId: orderGET
+      responses:
+        "200":
+          description: successfully got the order-list & user's info!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+      x-swagger-router-controller: Default
+  /getOrder:
+    get:
+      summary: to show Ordered list
+      operationId: getOrderGET
+      responses:
+        "200":
+          description: successfully got the Order list!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+      x-swagger-router-controller: Default
   /CancelOrder:
     post:
       summary: update orderstate to mark `deleted` from OrderList
@@ -269,6 +316,27 @@ paths:
               schema:
                 type: object
                 x-content-type: application/json
+      x-swagger-router-controller: Default
+  /paying:
+    post:
+      summary: clicked `paying`
+      operationId: payingPOST
+      parameters:
+      - name: OrderState
+        in: query
+        description: to note which state is it now
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successfully posted OrderState !
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5'
       x-swagger-router-controller: Default
 components:
   schemas:
@@ -343,6 +411,22 @@ components:
     inline_response_200_2:
       type: object
       properties:
+        BasketId:
+          type: string
+        BasketMenuNo:
+          type: integer
+        BasketMenuCount:
+          type: integer
+        BasketState:
+          type: integer
+      example:
+        BasketMenuCount: 6
+        BasketMenuNo: 0
+        BasketId: BasketId
+        BasketState: 1
+    inline_response_200_3:
+      type: object
+      properties:
         UserName:
           type: string
         PhoneNum:
@@ -362,7 +446,20 @@ components:
         OrderPayment: 1
         OrderToMenu_MenuNo: 0
         carId: carId
-    inline_response_200_3:
+    inline_response_200_4:
+      type: object
+      properties:
+        OrderToMenu_OrderNo:
+          type: integer
+        OrderToMenu_MenuNo:
+          type: integer
+        Menucount:
+          type: integer
+      example:
+        Menucount: 1
+        OrderToMenu_OrderNo: 0
+        OrderToMenu_MenuNo: 6
+    inline_response_200_5:
       type: object
       properties:
         OrderState:
