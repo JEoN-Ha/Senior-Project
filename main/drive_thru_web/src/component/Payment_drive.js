@@ -100,7 +100,7 @@ export default class Payment_drive extends Component {
             const orderIsError = data.isError;
             const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
             // 확인을 위한 console.log
-            console.log(orderIsError, userOrderNo);
+            // console.log(orderIsError, userOrderNo);
         })
     }
 
@@ -131,6 +131,7 @@ export default class Payment_drive extends Component {
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
                 id: allBasket[i].BasketId,
+                //menuNo: allBasket[i].BasketMenuNo,
                 nameKorea: allBasketMenu[i].FoodNameKor,
                 price: allBasketMenu[i].Price,
                 count: allBasket[i].BasketMenuCount
@@ -168,6 +169,7 @@ export default class Payment_drive extends Component {
             lineHeight: 1.5,
             width: "100px"
         }
+        console.log(this.state.basketData);
         // const bodyOrder = JSON.stringify({
         //     userWebId: this.state.customer_id,
         //     carId: this.state.carNumber,
@@ -249,7 +251,7 @@ export default class Payment_drive extends Component {
                 
                 <button style={btnStyle} onClick={function () {
                     this.props.Payment();
-                    this.getFetch(bodyOrder);                 
+                    this.getFetch(bodyOrder);            
                }.bind(this)}>결제하기</button>
             </div>
         )

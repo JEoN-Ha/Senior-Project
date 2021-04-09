@@ -343,8 +343,19 @@ router.post('/order', (req, res) => {
         }
     })
 
+    const sqlCodeTodeleteBasket =  `
+    delete from baskettable where BasketId = ${userwebid}`
 
-    if (orderTableError && getInsertIdError && basketError && orderToMenuError) {
+    let deleteBasketError = true;
+
+    db.query(sqlCodeTodeleteBasket, (err,rows) => {
+        if (err) {
+            deleteBasketError = false;
+        }
+    })
+
+
+    if (orderTableError && getInsertIdError && basketError && orderToMenuError&&deleteBasketError) {
         res.status(200).json({
             isError: false,
             orderNo: currentOrderNo
