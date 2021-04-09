@@ -19,7 +19,7 @@ export default class Payment_drive extends Component {
             userInfo : [{
                 UserName:null, PhoneNum:null, CarId:null
             }],
-            payment : 'creditCard'
+            payment : 1
         }  
     }
 
@@ -38,7 +38,6 @@ export default class Payment_drive extends Component {
     handleRadio(event) {
         let obj = {} // erase other radios
         obj[event.target.value] = event.target.checked // true —- target.checked 속성을 이용해서 라디오 버튼이 선택되었는지 여부를 확인한다.
-        this.state.payment = event.target.value;
         this.setState({radioGroup: obj})
     }
 
@@ -72,6 +71,7 @@ export default class Payment_drive extends Component {
             this.setState({
                 userInfo : _userInfo
             })
+            console.log(this.state.userInfo[0].CarId)
 
             // 확인을 위한 console.log
             // if (getMenuIsError) {
@@ -100,7 +100,7 @@ export default class Payment_drive extends Component {
             const orderIsError = data.isError;
             const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
             // 확인을 위한 console.log
-            console.log(orderIsError, userOrderNo);
+            // console.log(orderIsError, userOrderNo);
         })
     }
 
@@ -127,10 +127,11 @@ export default class Payment_drive extends Component {
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             //this.state.basketData = allBasket;
-            let _basketData = []
+            let _basketData = [{id:null,nameKorea:null,price:null,count:null}]
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
                 id: allBasket[i].BasketId,
+                //menuNo: allBasket[i].BasketMenuNo,
                 nameKorea: allBasketMenu[i].FoodNameKor,
                 price: allBasketMenu[i].Price,
                 count: allBasket[i].BasketMenuCount
@@ -168,16 +169,18 @@ export default class Payment_drive extends Component {
             lineHeight: 1.5,
             width: "100px"
         }
+        console.log(this.state.basketData);
         // const bodyOrder = JSON.stringify({
         //     userWebId: this.state.customer_id,
         //     carId: this.state.carNumber,
         //     payment: 1
         // });
-        const bodygetBasket = JSON.stringify({
+        let bodyOrder = JSON.stringify({
             userWebId: this.state.customer_id,
             carid: this.state.userInfo[0].CarId,
             payment: this.state.payment
         })
+        console.log(this.state.userInfo[0].CarId);
         const mapToComponent = data => {
             return data.map((basket, i) => {
                 return (<BasketInfo basket={basket} key={i}
@@ -230,25 +233,25 @@ export default class Payment_drive extends Component {
                     <h3>온라인 결제</h3>
                     <input type="radio" name="radioGroup" value="creditCard"
                         checked={this.state.radioGroup['creditCard']}
-                        onChange={this.handleRadio}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 1;}.bind(this)}
                         ></input> 신용카드
                     <input type="radio" name="radioGroup" value="cellphone"
                         checked={this.state.radioGroup['cellphone']}
-                        onChange={this.handleRadio}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 2;}.bind(this)}
                         ></input> 휴대폰 <br></br>
                     <input type="radio" name="radioGroup" value="kakaoPay"
                         checked={this.state.radioGroup['kakaoPay']}
-                        onChange={this.handleRadio}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 3;}.bind(this)}
                         ></input> 카카오페이
                     <input type="radio" name="radioGroup" value="PAYCO"
                         checked={this.state.radioGroup['PAYCO']}
-                        onChange={this.handleRadio}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 4;}.bind(this)}
                         ></input> PAYCO
                 </article>
                 
                 <button style={btnStyle} onClick={function () {
-                    this.getFetch(bodygetBasket);
-                    this.props.Payment();                 
+                    this.props.Payment();
+                    this.getFetch(bodyOrder);            
                }.bind(this)}>결제하기</button>
             </div>
         )

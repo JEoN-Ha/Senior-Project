@@ -272,12 +272,13 @@ router.post('/getBasket', (req, res) => {
 // order
 router.post('/order', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
-    const carid = `'${req.body.carId}'`;
+    const carid = `'${req.body.carid}'`;
     const payment = `${req.body.payment}`;
+    console.log(carid);
 
     let orderTableError = true;
     let getInsertIdError = true;
-    const currentOrderNo = 0;
+    let currentOrderNo = 0;
 
     const sqlCodeToOrderTable = `
     insert into ordertable(OrderWebId, WebCarId, OrderPayment)
@@ -299,7 +300,9 @@ router.post('/order', (req, res) => {
         if (err) {
             getInsertIdError = false;
         }
+        console.log(dbData);
         currentOrderNo = dbData[0].OrderNo;
+        console.log(currentOrderNo);
     })
 
     const sqlCodeToBasketTable = `
@@ -312,11 +315,11 @@ router.post('/order', (req, res) => {
 
     db.query(sqlCodeToBasketTable, (err, rows) => {
         basketData = JSON.parse(JSON.stringify(rows));
-        // console.log(dbData);
-        for (let i = 0; i < basketData.length(); i++) {
+        // console.log(basketData.length);
+        for (let i = 0; i < basketData.length; i++) {
             let sqlCodeToOrderToMenu = `
             insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
-            values(${currentOrderNo}, ${basketData[i].BasketMenuNo}, ${BasketMenuCount});`;
+            values(${currentOrderNo}, ${basketData[i].BasketMenuNo}, ${basketData[i].BasketMenuCount});`;
             db.query(sqlCodeToOrderToMenu, (err, rowResults) => {
                 if (err) {
                     basketError = basketError && false;
@@ -340,8 +343,19 @@ router.post('/order', (req, res) => {
         }
     })
 
+    const sqlCodeTodeleteBasket =  `
+    delete from baskettable where BasketId = ${userwebid}`
 
-    if (orderTableError && getInsertIdError && basketError && orderToMenuError) {
+    let deleteBasketError = true;
+
+    db.query(sqlCodeTodeleteBasket, (err,rows) => {
+        if (err) {
+            deleteBasketError = false;
+        }
+    })
+
+
+    if (orderTableError && getInsertIdError && basketError && orderToMenuError&&deleteBasketError) {
         res.status(200).json({
             isError: false,
             orderNo: currentOrderNo
