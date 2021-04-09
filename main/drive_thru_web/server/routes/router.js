@@ -272,8 +272,9 @@ router.post('/getBasket', (req, res) => {
 // order
 router.post('/order', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
-    const carid = `'${req.body.carId}'`;
+    const carid = `'${req.body.carid}'`;
     const payment = `${req.body.payment}`;
+    console.log(carid);
 
     let orderTableError = true;
     let getInsertIdError = true;

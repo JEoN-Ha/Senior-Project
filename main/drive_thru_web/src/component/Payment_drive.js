@@ -178,6 +178,7 @@ export default class Payment_drive extends Component {
             carid: this.state.userInfo[0].CarId,
             payment: this.state.payment
         })
+        console.log(this.state.userInfo[0].CarId);
         const mapToComponent = data => {
             return data.map((basket, i) => {
                 return (<BasketInfo basket={basket} key={i}
