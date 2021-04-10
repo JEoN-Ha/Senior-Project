@@ -409,6 +409,7 @@ router.post('/getOrder', (req, res) => {
     select OrderNo from ordertable
     where (OrderWebId = ${userwebid});`;
     let getOrderNoToOrderToMenu = true;
+    let getOrderMenuError = true;
 
     let orderNoData = [];
     let orderData = [];
@@ -417,44 +418,59 @@ router.post('/getOrder', (req, res) => {
             getOrderNoToOrderToMenu = false;
         } else {
             orderNoData = JSON.parse(JSON.stringify(rows));
-            let getOrderMenuError = true;
-
-            for (let i = 0; i < orderNoData.length(); i++) {
+            for (let i = 0; i < orderNoData.length; i++) {
                 let sqlCodeGetOrderToMenu = `
-            select * from ordertomenu
-            where (OrderToMenu_OrderNo = ${orderNoData[i].OrderNo});`;
+                select * from ordertomenu
+                where (OrderToMenu_OrderNo = ${orderNoData[i].OrderNo});`;
 
                 db.query(sqlCodeGetOrderToMenu, (err, rowResults) => {
-                    if (err) {
-                        getOrderMenuError = getOrderMenuError && false;
-                    } else {
-                        orderData.push(rowResults); // for 문 돌 때마다 OrderNo에 따른 주문 정보가 나오는데 그것을 OrderData 리스트에 푸쉬함
-                        // 즉 orderData 변수안에는 구조가 다음과 같음
-                        /* 
-                        [
-                            [{}, {}, {},...],       -> OrderNo가 1인 것에 대한 주문 정보
-                            [{}, {}, {},...],       -> OrderNo가 3인 것에 대한 주문 정보
-                            [{}, {}, {},...],       -> OrderNo가 7인 것에 대한 주문 정보
-                            [{}, {}, {},...]        -> OrderNo가 10인 것에 대한 주문 정보
-                        ]
-                        */
-                    }
+                    orderData.push(rowResults); // for 문 돌 때마다 OrderNo에 따른 주문 정보가 나오는데 그것을 OrderData 리스트에 푸쉬함
+                    // if(i===orderNoData.length-1) {
+                    //     if(!err) {
+                    //         res.status(200).json({
+                    //             isError: false,
+                    //             orderAllData: orderData
+                    //         })
+                    //     }
+                    // }
                 })
+                console.log(orderData);
+            }
+            
+            for (let i=0; i < orderData.length; i++){
+                for (let j=0; j < orderData[i].length; j++){
+                    let sqlCodeGetOrderMenu = `
+                    select * from orderboard where (MenuNo = ${orderData[i][j].menuCount})`;
+
+                    db.query(sqlCodeGetOrderMenu, (err,results) => {
+                        orderMenuData.push(results);
+                        if(i===orderData.length-1 && j===orderData.length-1) {
+                            if(!err) {
+                                res.status(200).json({
+                                    isError: false,
+                                    orderAllData: orderData,
+                                    menu: orderMenuData
+                                })
+                            }
+                        }
+                    })
+                }
+                
             }
         }
     })
 
-    if (getOrderNoToOrderToMenu && getOrderMenuError) {
-        res.status(200).json({
-            isError: false,
-            orderAllData: orderData
-        })
-    } else {
-        res.status(400).json({
-            isError: true,
-            orderAllData: null
-        })
-    }
+    // if (getOrderNoToOrderToMenu && getOrderMenuError) {
+    //     res.status(200).json({
+    //         isError: false,
+    //         orderAllData: orderData
+    //     })
+    // } else {
+    //     res.status(400).json({
+    //         isError: true,
+    //         orderAllData: null
+    //     })
+    // }
 })
 
 

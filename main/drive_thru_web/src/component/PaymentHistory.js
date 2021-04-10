@@ -20,6 +20,7 @@ export default class PaymentHistory extends Component {
             //     count : 2,
             //     price : '10,600'
             // }
+            {id:null, nameKorea:null, price:null, count:null}
         ]
     }
     componentWillUnmount() {
@@ -58,20 +59,24 @@ export default class PaymentHistory extends Component {
         }).then(data => {
             const isError = data.isError;
             const orderHistory = data.orderAllData;
-            this.state.paymentData = orderHistory;
+            //this.state.paymentData = orderHistory;
+            console.log(orderHistory[0])
             let _orderHistory = []
             for (let i = 0; i < orderHistory.length; i++) {
-            _orderHistory.push({
-                id: orderHistory[i].MenuNo,     //DB보고 수정하기
-                nameKorea: orderHistory[i].FoodNameKor,
-                nameEnglish: orderHistory[i].FoodNameEng,
-                price: orderHistory[i].Price,
-            })
+                for(let j=0; j < orderHistory[i].length; j++){
+                    _orderHistory.push({
+                        id: orderHistory[i].MenuNo,     //DB보고 수정하기
+                        nameKorea: orderHistory[i].FoodNameKor,
+                        price: orderHistory[i].Price,
+                        count: orderHistory[i][j].MenuCount
+                    })
+                }
             }
             this.setState({
             paymentData: _orderHistory,
             isLoading: true
             })
+            console.log(this.state.paymentData)
             // 확인을 위한 console.log
             // console.log(isError);
             // console.log(orderHistory);

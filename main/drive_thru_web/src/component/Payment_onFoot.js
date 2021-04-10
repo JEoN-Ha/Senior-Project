@@ -197,14 +197,12 @@ export default class Payment_onFoot extends Component {
                     이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="text" name="name" placeholder={this.state.userInfo[0].UserName}
                         onChange={function (e) {
-                            this.setState({name:e.target.value});
-                            // this.props.onChangeName(this.state.name)                         
+                            this.setState({name:e.target.value});                       
                         }.bind(this)}></input> <br></br>
                     연락처&nbsp;&nbsp;&nbsp;
                     <input type="text" name="phone" placeholder={this.state.userInfo[0].PhoneNum}
                         onChange={function (e) {
-                            this.setState({phone:e.target.value});
-                            // this.props.onChangePhone(this.state.phone)                          
+                            this.setState({phone:e.target.value});                  
                         }.bind(this)}></input> <br></br>
                 </article>
 
