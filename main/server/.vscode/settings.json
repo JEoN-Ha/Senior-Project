@@ -3,6 +3,6 @@
         "node_modules{,/**}",
         ".vscode{,/**}"
     ],
-    "appService.defaultWebAppToDeploy": "/subscriptions/4e92f78d-026f-4807-a334-1223f9fb3061/resourceGroups/testgroup/providers/Microsoft.Web/sites/vincenzzo",
-    "appService.deploySubpath": "."
+    "appService.deploySubpath": ".",
+    "appService.defaultWebAppToDeploy": "/subscriptions/6cb58a44-dd71-4d76-bdc4-07983c82eb43/resourceGroups/jiyeoni/providers/Microsoft.Web/sites/server1sttrial"
 }
