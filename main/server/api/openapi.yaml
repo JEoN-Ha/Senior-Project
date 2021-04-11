@@ -185,10 +185,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200_1'
       x-swagger-router-controller: Default
-  /getBasket:
+  '/getBasket/{userWebId}':
     get:
       summary: to show what's in my basket
-      operationId: getBasketGET
+      operationId: getBasketUserWebIdGET
+      parameters:
+      - name: userWebId
+        in: path
+        description: ID of User to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: successfully got the Basket list!

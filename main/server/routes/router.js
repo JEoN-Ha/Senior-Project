@@ -192,10 +192,8 @@ router.post('/deleteFromBasket', (req, res) => {
 
 // ----------------------------------------------------------------------------------------------
 // getBasket
-router.post('/getBasket', (req, res) => {
+router.get(`/getBasket/${userWebId}`, (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
-
-
     const sqlCodeToBasketTable = `
     select * from baskettable
     where (BasketId = ${userwebid} and
