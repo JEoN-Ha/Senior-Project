@@ -37,8 +37,9 @@ class BasketInfo extends Component {
 
     render() {
         const bodyCancelOrder = JSON.stringify({
-            orderNo: this.props.payment.id
+            orderNo: this.props.payment.orderNo
         });
+        console.log(this.props.payment.orderNo)
         return (
             <div>
                 <hr/>

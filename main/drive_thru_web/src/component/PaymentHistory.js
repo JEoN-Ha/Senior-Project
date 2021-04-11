@@ -7,7 +7,7 @@ export default class PaymentHistory extends Component {
     state = {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
-        orderHistory : [{menuNo:null, nameKorea:null, price:null, count:null}],
+        orderHistory : [{orderNo:null, menuNo:null, nameKorea:null, price:null, count:null}],
         menuData: [{id:null, nameKorea:null, nameEnglish:null, pirce:null}]
     }
     componentWillUnmount() {
@@ -83,12 +83,14 @@ export default class PaymentHistory extends Component {
             const orderHistory = data.orderAllData;
             //this.state.paymentData = orderHistory;
             let _orderHistory = []
+            console.log(orderHistory)
             for (let i = 0; i < orderHistory.length; i++) {
                 for(let j=0; j < orderHistory[i].length; j++){
                     for(let k=0; k<this.state.menuData.length; k++){
                         if(orderHistory[i][j].OrderToMenu_MenuNo == this.state.menuData[k].id)
                         {
                             _orderHistory.push({
+                                orderNo: orderHistory[i][j].OrderToMenu_OrderNo,
                                 menuNo: orderHistory[i][j].OrderToMenu_MenuNo,
                                 nameKorea: this.state.menuData[k].nameKorea,
                                 price: this.state.menuData[k].price,
@@ -133,9 +135,6 @@ export default class PaymentHistory extends Component {
         return (
             <div>
                <h2>결제 내역</h2>
-                {/* DB로부터 장바구니 내역 가져오기 */}
-                {/* {this.getFetch(bodyGetOrder)} */}
-                {/* 장바구니 내역 그리기 */}
                 {mapToComponent(this.state.orderHistory)}
             </div>
         )
