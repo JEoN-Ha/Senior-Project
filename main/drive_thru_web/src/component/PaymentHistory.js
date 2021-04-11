@@ -7,21 +7,8 @@ export default class PaymentHistory extends Component {
     state = {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
-        paymentData : [  // DB 연결 후 null로 바꾸기
-            // {
-            //     id : 1,
-            //     nameKorea : '아메리카노',
-            //     count : 1,
-            //     price : '4,400'
-            // },
-            // {
-            //     id : 2,
-            //     nameKorea : '돌체 블랙 밀크티',
-            //     count : 2,
-            //     price : '10,600'
-            // }
-            {id:null, nameKorea:null, price:null, count:null}
-        ]
+        orderHistory : [{menuNo:null, nameKorea:null, price:null, count:null}],
+        menuData: [{id:null, nameKorea:null, nameEnglish:null, pirce:null}]
     }
     componentWillUnmount() {
         console.log('componentWillUnmount');
@@ -31,6 +18,7 @@ export default class PaymentHistory extends Component {
         const bodyGetOrder = JSON.stringify({
             userWebId: this.state.customer_id
         });
+        this.getMenuData();
         this.getOrderHistory(bodyGetOrder);
     };
 
@@ -38,6 +26,40 @@ export default class PaymentHistory extends Component {
         let obj = {} // erase other radios
         obj[event.target.value] = event.target.checked // true —- target.checked 속성을 이용해서 라디오 버튼이 선택되었는지 여부를 확인한다.
         this.setState({radioGroup: obj})
+    }
+
+    getMenuData = () => {
+        fetch(this.state.jeonhaUrl + '/getMenuData')
+        .then(res => {
+            if (res.status === 200) {
+                // 정상 작동
+                console.log('Success!');
+            } else if (res.status === 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        })
+        .then(data => {
+            const allMenuData = data.menu; // 모든 음식 메뉴 정보: 리스트 안에 객체 형태 [{}, {}, {}, ...]
+            const getMenuIsError = data.isError;
+            const whatIsError = data.explainError;
+            let menuAllData = []
+            for (let i = 0; i < allMenuData.length; i++) {
+            menuAllData.push({
+                id: allMenuData[i].MenuNo,
+                nameKorea: allMenuData[i].FoodNameKor,
+                nameEnglish: allMenuData[i].FoodNameEng,
+                price: allMenuData[i].Price,
+            })
+            }
+            this.setState({
+            menuData: menuAllData,
+            isLoading: true
+            })
+            // 확인을 위한 console.log
+            // console.log(allMenuData, getMenuIsError, whatIsError);
+        });
     }
 
     getOrderHistory = (_body) => {
@@ -60,23 +82,27 @@ export default class PaymentHistory extends Component {
             const isError = data.isError;
             const orderHistory = data.orderAllData;
             //this.state.paymentData = orderHistory;
-            console.log(orderHistory[0])
             let _orderHistory = []
             for (let i = 0; i < orderHistory.length; i++) {
                 for(let j=0; j < orderHistory[i].length; j++){
-                    _orderHistory.push({
-                        id: orderHistory[i].MenuNo,     //DB보고 수정하기
-                        nameKorea: orderHistory[i].FoodNameKor,
-                        price: orderHistory[i].Price,
-                        count: orderHistory[i][j].MenuCount
-                    })
+                    for(let k=0; k<this.state.menuData.length; k++){
+                        if(orderHistory[i][j].OrderToMenu_MenuNo == this.state.menuData[k].id)
+                        {
+                            _orderHistory.push({
+                                menuNo: orderHistory[i][j].OrderToMenu_MenuNo,
+                                nameKorea: this.state.menuData[k].nameKorea,
+                                price: this.state.menuData[k].price,
+                                count: orderHistory[i][j].MenuCount
+                            })
+                        }
+                    }
                 }
             }
             this.setState({
-            paymentData: _orderHistory,
+            orderHistory: _orderHistory,
             isLoading: true
             })
-            console.log(this.state.paymentData)
+            console.log(this.state.orderHistory)
             // 확인을 위한 console.log
             // console.log(isError);
             // console.log(orderHistory);
@@ -89,7 +115,7 @@ export default class PaymentHistory extends Component {
                 return (<PaymentInfo payment={payment} key={i}
                   getCount = {function(_count,_id){
                     let i = 0;
-                    let data = Array.from(this.state.paymentData);
+                    let data = Array.from(this.state.orderHistory);
                     while(i < data.length){
                         if(data[i].id === _id){
                             data[i].count = _count;
@@ -98,7 +124,7 @@ export default class PaymentHistory extends Component {
                         i = i + 1;
                     }
                     this.setState({
-                        paymentData:data
+                        orderHistory:data
                     });
                   }.bind(this)}
                   ></PaymentInfo>);
@@ -110,7 +136,7 @@ export default class PaymentHistory extends Component {
                 {/* DB로부터 장바구니 내역 가져오기 */}
                 {/* {this.getFetch(bodyGetOrder)} */}
                 {/* 장바구니 내역 그리기 */}
-                {mapToComponent(this.state.paymentData)}
+                {mapToComponent(this.state.orderHistory)}
             </div>
         )
     }

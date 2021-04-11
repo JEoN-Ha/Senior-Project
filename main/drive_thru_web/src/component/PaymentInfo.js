@@ -44,7 +44,7 @@ class BasketInfo extends Component {
                 <hr/>
                 <span>{this.props.payment.nameKorea}</span><br/>
                 <span>{this.props.payment.count}개</span><br/>
-                <span>{this.props.payment.price}원</span><br/>
+                <span>{this.props.payment.price * this.props.payment.count}원</span><br/>
                 <input type="button" value="취소하기" onClick={function(e) {
                  this.onClickCancle(bodyCancelOrder)
                 }.bind(this)}></input>

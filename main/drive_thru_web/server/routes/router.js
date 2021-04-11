@@ -425,37 +425,15 @@ router.post('/getOrder', (req, res) => {
 
                 db.query(sqlCodeGetOrderToMenu, (err, rowResults) => {
                     orderData.push(rowResults); // for 문 돌 때마다 OrderNo에 따른 주문 정보가 나오는데 그것을 OrderData 리스트에 푸쉬함
-                    // if(i===orderNoData.length-1) {
-                    //     if(!err) {
-                    //         res.status(200).json({
-                    //             isError: false,
-                    //             orderAllData: orderData
-                    //         })
-                    //     }
-                    // }
-                })
-                console.log(orderData);
-            }
-            
-            for (let i=0; i < orderData.length; i++){
-                for (let j=0; j < orderData[i].length; j++){
-                    let sqlCodeGetOrderMenu = `
-                    select * from orderboard where (MenuNo = ${orderData[i][j].menuCount})`;
-
-                    db.query(sqlCodeGetOrderMenu, (err,results) => {
-                        orderMenuData.push(results);
-                        if(i===orderData.length-1 && j===orderData.length-1) {
-                            if(!err) {
-                                res.status(200).json({
-                                    isError: false,
-                                    orderAllData: orderData,
-                                    menu: orderMenuData
-                                })
-                            }
+                    if(i===orderNoData.length-1) {
+                        if(!err) {
+                            res.status(200).json({
+                                isError: false,
+                                orderAllData: orderData
+                            })
                         }
-                    })
-                }
-                
+                    }
+                })
             }
         }
     })
