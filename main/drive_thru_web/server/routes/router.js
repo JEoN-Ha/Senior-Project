@@ -274,7 +274,6 @@ router.post('/order', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
     const carid = `'${req.body.carid}'`;
     const payment = `${req.body.payment}`;
-    console.log(carid);
 
     let orderTableError = true;
     let getInsertIdError = true;
@@ -284,9 +283,9 @@ router.post('/order', (req, res) => {
     insert into ordertable(OrderWebId, WebCarId, OrderPayment)
     values (${userwebid}, ${carid}, ${payment});`;
 
-    const sqlCodeGetInsertId = `
-    select * from ordertable
-    order by OrderNo DESC limit 1;`;
+    // const sqlCodeGetInsertId = `
+    // select * from ordertable
+    // order by OrderNo DESC limit 1;`;
 
 
     db.query(sqlCodeToOrderTable, (err, results) => {
@@ -295,67 +294,171 @@ router.post('/order', (req, res) => {
         }
     })
 
+    // db.query(sqlCodeGetInsertId, (err, getId) => {
+    //     let dbData = JSON.parse(JSON.stringify(getId));
+    //     if (err) {
+    //         getInsertIdError = false;
+    //     }
+    //     console.log(dbData);
+    //     currentOrderNo = dbData[0].OrderNo;
+    //     console.log(currentOrderNo);
+    // })
+
+    // const sqlCodeToBasketTable = `
+    // select BasketMenuNo, BasketMenuCount from baskettable
+    // where (BasketId = ${userwebid} and 
+    //     BasketState = 0);`;
+
+    // let basketData = [];
+    // let basketError = true;
+
+    // db.query(sqlCodeToBasketTable, (err, rows) => {
+    //     basketData = JSON.parse(JSON.stringify(rows));
+    //     // console.log(basketData.length);
+    //     for (let i = 0; i < basketData.length; i++) {
+    //         let sqlCodeToOrderToMenu = `
+    //         insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
+    //         values(${currentOrderNo}, ${basketData[i].BasketMenuNo}, ${basketData[i].BasketMenuCount});`;
+    //         db.query(sqlCodeToOrderToMenu, (err, rowResults) => {
+    //             if (err) {
+    //                 basketError = basketError && false;
+    //             }
+    //         })
+    //     }
+
+    // })
+
+
+    // const sqlCodeToUpdateOrderToMenu = `
+    // update ordertomenu
+    // set OrderState = 2
+    // where OrderToMenu_OrderNo = ${currentOrderNo};`;
+
+    // let orderToMenuError = true;
+
+    // db.query(sqlCodeToUpdateOrderToMenu, (err, rows) => {
+    //     if (err) {
+    //         orderToMenuError = false;
+    //     }
+    // })
+
+    // const sqlCodeTodeleteBasket =  `
+    // delete from baskettable where BasketId = ${userwebid}`
+
+    // let deleteBasketError = true;
+
+    // db.query(sqlCodeTodeleteBasket, (err,rows) => {
+    //     if (err) {
+    //         deleteBasketError = false;
+    //     }
+    // })
+
+    if (orderTableError) {
+        res.status(200).json({
+            isError: false,
+            //orderNo: currentOrderNo
+        })
+    } else {
+        res.status(400).json({
+            isError: true,
+            orderNo: null
+        })
+    }
+    // if (orderTableError && getInsertIdError && basketError && orderToMenuError&&deleteBasketError) {
+    //     res.status(200).json({
+    //         isError: false,
+    //         orderNo: currentOrderNo
+    //     })
+    // } else {
+    //     res.status(400).json({
+    //         isError: true,
+    //         orderNo: null
+    //     })
+    // }
+})
+// ----------------------------------------------------------------------------------------------
+// afterOrder
+router.post('/afterOrder', (req, res) => {
+    const userwebid = `'${req.body.userWebId}'`;
+    // const sqlCodeGetInsertId = `
+    // select * from ordertable order by OrderNo DESC limit 1;`;
+
+    const sqlCodeFlush = `
+    flush privileges;`;
+
+    const sqlCodeGetInsertId = `
+    select * from ordertable;`;
+
+    let getInsertIdError = true;
+    let getFlushError = true;
+    let currentOrderNo = 0;
+
+    db.query(sqlCodeFlush, (err,results) => {
+        if(err){
+            getFlushError = false;
+        }
+    })
+
     db.query(sqlCodeGetInsertId, (err, getId) => {
-        const dbData = JSON.parse(JSON.stringify(getId));
+        let dbData = JSON.parse(JSON.stringify(getId));
         if (err) {
             getInsertIdError = false;
         }
         console.log(dbData);
-        currentOrderNo = dbData[0].OrderNo;
-        console.log(currentOrderNo);
+        // currentOrderNo = dbData[0].OrderNo;
+        // console.log(currentOrderNo);
     })
 
-    const sqlCodeToBasketTable = `
-    select BasketMenuNo, BasketMenuCount from baskettable
-    where (BasketId = ${userwebid} and 
-        BasketState = 0);`;
+    // const sqlCodeToBasketTable = `
+    // select BasketMenuNo, BasketMenuCount from baskettable
+    // where (BasketId = ${userwebid} and 
+    //     BasketState = 0);`;
 
-    let basketData = [];
-    let basketError = true;
+    // let basketData = [];
+    // let basketError = true;
 
-    db.query(sqlCodeToBasketTable, (err, rows) => {
-        basketData = JSON.parse(JSON.stringify(rows));
-        // console.log(basketData.length);
-        for (let i = 0; i < basketData.length; i++) {
-            let sqlCodeToOrderToMenu = `
-            insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
-            values(${currentOrderNo}, ${basketData[i].BasketMenuNo}, ${basketData[i].BasketMenuCount});`;
-            db.query(sqlCodeToOrderToMenu, (err, rowResults) => {
-                if (err) {
-                    basketError = basketError && false;
-                }
-            })
-        }
+    // db.query(sqlCodeToBasketTable, (err, rows) => {
+    //     basketData = JSON.parse(JSON.stringify(rows));
+    //     // console.log(basketData.length);
+    //     for (let i = 0; i < basketData.length; i++) {
+    //         let sqlCodeToOrderToMenu = `
+    //         insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
+    //         values(${currentOrderNo}, ${basketData[i].BasketMenuNo}, ${basketData[i].BasketMenuCount});`;
+    //         db.query(sqlCodeToOrderToMenu, (err, rowResults) => {
+    //             if (err) {
+    //                 basketError = basketError && false;
+    //             }
+    //         })
+    //     }
 
-    })
-
-
-    const sqlCodeToUpdateOrderToMenu = `
-    update ordertomenu
-    set OrderState = 2
-    where OrderToMenu_OrderNo = ${currentOrderNo};`;
-
-    let orderToMenuError = true;
-
-    db.query(sqlCodeToUpdateOrderToMenu, (err, rows) => {
-        if (err) {
-            orderToMenuError = false;
-        }
-    })
-
-    const sqlCodeTodeleteBasket =  `
-    delete from baskettable where BasketId = ${userwebid}`
-
-    let deleteBasketError = true;
-
-    db.query(sqlCodeTodeleteBasket, (err,rows) => {
-        if (err) {
-            deleteBasketError = false;
-        }
-    })
+    // })
 
 
-    if (orderTableError && getInsertIdError && basketError && orderToMenuError&&deleteBasketError) {
+    // const sqlCodeToUpdateOrderToMenu = `
+    // update ordertomenu
+    // set OrderState = 2
+    // where OrderToMenu_OrderNo = ${currentOrderNo};`;
+
+    // let orderToMenuError = true;
+
+    // db.query(sqlCodeToUpdateOrderToMenu, (err, rows) => {
+    //     if (err) {
+    //         orderToMenuError = false;
+    //     }
+    // })
+
+    // const sqlCodeTodeleteBasket =  `
+    // delete from baskettable where BasketId = ${userwebid}`
+
+    // let deleteBasketError = true;
+
+    // db.query(sqlCodeTodeleteBasket, (err,rows) => {
+    //     if (err) {
+    //         deleteBasketError = false;
+    //     }
+    // })
+    
+    if (getFlushError && getInsertIdError) {
         res.status(200).json({
             isError: false,
             orderNo: currentOrderNo
@@ -368,8 +471,6 @@ router.post('/order', (req, res) => {
     }
 })
 
-
-
 // ----------------------------------------------------------------------------------------------
 // cancelOrder
 
@@ -381,6 +482,8 @@ router.post('/cancelOrder', (req, res) => {
     set OrderState = 5
     where OrderToMenu_OrderNo = ${orderno} AND OrderState = 2;`;
     let orderToMenuError = true;
+
+    console.log(orderno);
 
     db.query(sqlCodeToOrderToMenu, (err, rows) => {
         if (err) {
