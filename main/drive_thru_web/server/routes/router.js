@@ -266,11 +266,43 @@ router.post('/getBasket', (req, res) => {
         }   
     })
 })
+// ----------------------------------------------------------------------------------------------
+// getLastOrderNo
+router.get('/getLastOrderNo', (req, res) => {
 
+    let getInsertIdError = true;
+    let currentOrderNo = 0;
+
+    const sqlCodeGetInsertId = `
+    select * from ordertable
+    order by OrderNo DESC limit 1;`;
+
+    db.query(sqlCodeGetInsertId, (err, getId) => {
+        let dbData = JSON.parse(JSON.stringify(getId));
+        if (err) {
+            getInsertIdError = false;
+        }
+        console.log(dbData[0].OrderNo);
+        currentOrderNo = dbData[0].OrderNo;
+
+        if (getInsertIdError) {
+            res.status(200).json({
+                isError: false,
+                orderNo: currentOrderNo
+            })
+        } else {
+            res.status(400).json({
+                isError: true,
+                orderNo: null
+            })
+        }
+    })  
+})
 
 // ----------------------------------------------------------------------------------------------
 // order
 router.post('/order', (req, res) => {
+    const orderNo = `'${req.body.orderNo}'`;
     const userwebid = `'${req.body.userWebId}'`;
     const carid = `'${req.body.carid}'`;
     const payment = `${req.body.payment}`;
@@ -280,8 +312,8 @@ router.post('/order', (req, res) => {
     let currentOrderNo = 0;
 
     const sqlCodeToOrderTable = `
-    insert into ordertable(OrderWebId, WebCarId, OrderPayment)
-    values (${userwebid}, ${carid}, ${payment});`;
+    insert into ordertable(OrderNo,OrderWebId, WebCarId, OrderPayment)
+    values (${orderNo},${userwebid}, ${carid}, ${payment});`;
 
     // const sqlCodeGetInsertId = `
     // select * from ordertable
@@ -292,47 +324,47 @@ router.post('/order', (req, res) => {
         if (err) {
             orderTableError = false;
         }
+        const sqlCodeToBasketTable = `
+        select BasketMenuNo, BasketMenuCount from baskettable
+        where (BasketId = ${userwebid} and 
+            BasketState = 0);`;
+
+        let basketData = [];
+        let basketError = true;
+
+        db.query(sqlCodeToBasketTable, (err, rows) => {
+            basketData = JSON.parse(JSON.stringify(rows));
+            console.log(basketData);
+            for (let i = 0; i < basketData.length; i++) {
+                let sqlCodeToOrderToMenu = `
+                    insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo,OrderState, MenuCount)
+                    values(${orderNo}, ${basketData[i].BasketMenuNo},${2}, ${basketData[i].BasketMenuCount});`;
+                console.log(basketData[0].BasketMenuNo);
+                db.query(sqlCodeToOrderToMenu, (err, rowResults) => {
+                    if (err) {
+                        basketError = basketError && false;
+                    }
+                    if (i == basketData.length -1){
+                        if (getInsertIdError && basketError) {
+                            res.status(200).json({
+                                isError: false
+                            })
+                        } else {
+                            res.status(400).json({
+                                isError: true
+                            })
+                        }
+                    }
+                })
+            }
+        })
     })
 
-    // db.query(sqlCodeGetInsertId, (err, getId) => {
-    //     let dbData = JSON.parse(JSON.stringify(getId));
-    //     if (err) {
-    //         getInsertIdError = false;
-    //     }
-    //     console.log(dbData);
-    //     currentOrderNo = dbData[0].OrderNo;
-    //     console.log(currentOrderNo);
-    // })
-
-    // const sqlCodeToBasketTable = `
-    // select BasketMenuNo, BasketMenuCount from baskettable
-    // where (BasketId = ${userwebid} and 
-    //     BasketState = 0);`;
-
-    // let basketData = [];
-    // let basketError = true;
-
-    // db.query(sqlCodeToBasketTable, (err, rows) => {
-    //     basketData = JSON.parse(JSON.stringify(rows));
-    //     // console.log(basketData.length);
-    //     for (let i = 0; i < basketData.length; i++) {
-    //         let sqlCodeToOrderToMenu = `
-    //         insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
-    //         values(${currentOrderNo}, ${basketData[i].BasketMenuNo}, ${basketData[i].BasketMenuCount});`;
-    //         db.query(sqlCodeToOrderToMenu, (err, rowResults) => {
-    //             if (err) {
-    //                 basketError = basketError && false;
-    //             }
-    //         })
-    //     }
-
-    // })
-
-
+    
     // const sqlCodeToUpdateOrderToMenu = `
     // update ordertomenu
     // set OrderState = 2
-    // where OrderToMenu_OrderNo = ${currentOrderNo};`;
+    // where OrderToMenu_OrderNo = ${orderNo};`;
 
     // let orderToMenuError = true;
 
@@ -353,21 +385,10 @@ router.post('/order', (req, res) => {
     //     }
     // })
 
-    if (orderTableError) {
-        res.status(200).json({
-            isError: false,
-            //orderNo: currentOrderNo
-        })
-    } else {
-        res.status(400).json({
-            isError: true,
-            orderNo: null
-        })
-    }
-    // if (orderTableError && getInsertIdError && basketError && orderToMenuError&&deleteBasketError) {
+    // if (orderTableError) {
     //     res.status(200).json({
     //         isError: false,
-    //         orderNo: currentOrderNo
+    //         //orderNo: currentOrderNo
     //     })
     // } else {
     //     res.status(400).json({
@@ -375,98 +396,39 @@ router.post('/order', (req, res) => {
     //         orderNo: null
     //     })
     // }
+    // if (getInsertIdError && basketError && deleteBasketError) {
+    //     res.status(200).json({
+    //         isError: false
+    //     })
+    // } else {
+    //     res.status(400).json({
+    //         isError: true
+    //     })
+    // }
 })
 // ----------------------------------------------------------------------------------------------
-// afterOrder
-router.post('/afterOrder', (req, res) => {
+// updateBasketState
+router.post('/updateBasketState', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
-    // const sqlCodeGetInsertId = `
-    // select * from ordertable order by OrderNo DESC limit 1;`;
 
-    const sqlCodeFlush = `
-    flush privileges;`;
+    const sqlCodeUpdateBasketState =  `
+    update baskettable set BasketState = ${1} where ((BasketId = ${userwebid}) && BasketState = ${0})`
 
-    const sqlCodeGetInsertId = `
-    select * from ordertable;`;
+    let basketStateError = true;
 
-    let getInsertIdError = true;
-    let getFlushError = true;
-    let currentOrderNo = 0;
-
-    db.query(sqlCodeFlush, (err,results) => {
-        if(err){
-            getFlushError = false;
-        }
-    })
-
-    db.query(sqlCodeGetInsertId, (err, getId) => {
-        let dbData = JSON.parse(JSON.stringify(getId));
+    db.query(sqlCodeUpdateBasketState, (err,rows) => {
         if (err) {
-            getInsertIdError = false;
+            basketStateError = false;
         }
-        console.log(dbData);
-        // currentOrderNo = dbData[0].OrderNo;
-        // console.log(currentOrderNo);
     })
 
-    // const sqlCodeToBasketTable = `
-    // select BasketMenuNo, BasketMenuCount from baskettable
-    // where (BasketId = ${userwebid} and 
-    //     BasketState = 0);`;
-
-    // let basketData = [];
-    // let basketError = true;
-
-    // db.query(sqlCodeToBasketTable, (err, rows) => {
-    //     basketData = JSON.parse(JSON.stringify(rows));
-    //     // console.log(basketData.length);
-    //     for (let i = 0; i < basketData.length; i++) {
-    //         let sqlCodeToOrderToMenu = `
-    //         insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
-    //         values(${currentOrderNo}, ${basketData[i].BasketMenuNo}, ${basketData[i].BasketMenuCount});`;
-    //         db.query(sqlCodeToOrderToMenu, (err, rowResults) => {
-    //             if (err) {
-    //                 basketError = basketError && false;
-    //             }
-    //         })
-    //     }
-
-    // })
-
-
-    // const sqlCodeToUpdateOrderToMenu = `
-    // update ordertomenu
-    // set OrderState = 2
-    // where OrderToMenu_OrderNo = ${currentOrderNo};`;
-
-    // let orderToMenuError = true;
-
-    // db.query(sqlCodeToUpdateOrderToMenu, (err, rows) => {
-    //     if (err) {
-    //         orderToMenuError = false;
-    //     }
-    // })
-
-    // const sqlCodeTodeleteBasket =  `
-    // delete from baskettable where BasketId = ${userwebid}`
-
-    // let deleteBasketError = true;
-
-    // db.query(sqlCodeTodeleteBasket, (err,rows) => {
-    //     if (err) {
-    //         deleteBasketError = false;
-    //     }
-    // })
-    
-    if (getFlushError && getInsertIdError) {
+    if (basketStateError) {
         res.status(200).json({
-            isError: false,
-            orderNo: currentOrderNo
+            isError: false
         })
     } else {
         res.status(400).json({
-            isError: true,
-            orderNo: null
+            isError: true
         })
     }
 })

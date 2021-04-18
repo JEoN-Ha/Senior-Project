@@ -20,7 +20,8 @@ export default class Payment_onFoot extends Component {
             userInfo : [{
                 UserName:null, PhoneNum:null
             }],
-            payment : 1
+            payment : 1,
+            lastOrderNo : null
         }  
     }
 
@@ -34,7 +35,27 @@ export default class Payment_onFoot extends Component {
         })
         this.getBasketData(bodygetBasket);
         this.getUserInfo(bodygetBasket);
+        this.getLastOrderNo();
     };
+
+    getLastOrderNo = () => {    // 가장 마지막 OrderNo를 불러옴
+        fetch(this.state.jeonhaUrl + '/getLastOrderNo')
+        .then(res => {
+            if (res.status === 200) {
+                // 정상 작동
+                console.log('OrderNo Success!');
+            } else if (res.status === 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        }).then(data => {
+            this.state.lastOrderNo = data.orderNo;
+            console.log(this.state.lastOrderNo);
+            const getUserIsError = data.isError;
+            const whatIsError = data.explainError;
+        })
+    }
 
     handleRadio(event) {
         let obj = {} // erase other radios
@@ -97,33 +118,33 @@ export default class Payment_onFoot extends Component {
             const orderIsError = data.isError;
             //const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
             // 확인을 위한 console.log
-            //console.log(orderIsError, userOrderNo);
+            console.log(orderIsError);
         }) 
     }
 
-    getAfterOrder(_body){
-        fetch(this.state.jeonhaUrl + '/afterOrder', {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: _body
-        }).then(res => {
-            if (res.status === 200) {
-                // 정상 작동
-                console.log('Success!');
-            } else if (res.status === 400) {
-                // 실패시
-                console.log('Failed!');
-            }
-            return res.json();
-        }).then(data => {
-            const orderIsError = data.isError;
-            const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
-            // 확인을 위한 console.log
-            //console.log(orderIsError, userOrderNo);
-        }) 
-    }
+   deleteBasket = (_body) => {
+    fetch(this.state.jeonhaUrl + '/updateBasketState', {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: _body
+    }).then(res => {
+        if (res.status === 200) {
+            // 정상 작동
+            console.log('Success!');
+        } else if (res.status === 400) {
+            // 실패시
+            console.log('Failed!');
+        }
+        return res.json();
+    }).then(data => {
+        const orderIsError = data.isError;
+        //const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
+        // 확인을 위한 console.log
+        console.log(orderIsError);
+    })
+   }
 
     getBasketData = (_body) => {
         fetch(this.state.jeonhaUrl + '/getBasket', {
@@ -190,6 +211,7 @@ export default class Payment_onFoot extends Component {
             width: "100px"
         }
         let bodyOrder = JSON.stringify({
+            orderNo: this.state.lastOrderNo + 1,
             userWebId: this.state.customer_id,
             carId: this.state.carNumber,
             payment: this.state.payment
@@ -259,7 +281,7 @@ export default class Payment_onFoot extends Component {
                 <button style={btnStyle} onClick={function () {
                     this.props.Payment();
                     this.getOrder(bodyOrder);
-                    this.getAfterOrder(bodyOrder);                
+                    this.deleteBasket(bodyOrder);                
                }.bind(this)}>결제하기</button>
             </div>
         )
