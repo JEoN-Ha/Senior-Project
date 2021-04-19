@@ -307,6 +307,8 @@ router.post('/order', (req, res) => {
     const carid = `'${req.body.carid}'`;
     const payment = `${req.body.payment}`;
 
+    console.log(orderNo);
+
     let orderTableError = true;
     let getInsertIdError = true;
     let currentOrderNo = 0;
@@ -314,11 +316,6 @@ router.post('/order', (req, res) => {
     const sqlCodeToOrderTable = `
     insert into ordertable(OrderNo,OrderWebId, WebCarId, OrderPayment)
     values (${orderNo},${userwebid}, ${carid}, ${payment});`;
-
-    // const sqlCodeGetInsertId = `
-    // select * from ordertable
-    // order by OrderNo DESC limit 1;`;
-
 
     db.query(sqlCodeToOrderTable, (err, results) => {
         if (err) {
@@ -334,7 +331,7 @@ router.post('/order', (req, res) => {
 
         db.query(sqlCodeToBasketTable, (err, rows) => {
             basketData = JSON.parse(JSON.stringify(rows));
-            console.log(basketData);
+            console.log(rows);
             for (let i = 0; i < basketData.length; i++) {
                 let sqlCodeToOrderToMenu = `
                     insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo,OrderState, MenuCount)
@@ -345,92 +342,31 @@ router.post('/order', (req, res) => {
                         basketError = basketError && false;
                     }
                     if (i == basketData.length -1){
-                        if (getInsertIdError && basketError) {
-                            res.status(200).json({
-                                isError: false
-                            })
-                        } else {
-                            res.status(400).json({
-                                isError: true
-                            })
-                        }
+                        const sqlCodeUpdateBasketState =  `
+                        update baskettable set BasketState = ${1} where ((BasketId = ${userwebid}) && BasketState = ${0})`
+
+                        let basketStateError = true;
+
+                        db.query(sqlCodeUpdateBasketState, (err,rows) => {
+                            if (err) {
+                                basketStateError = false;
+                            }
+                            if (basketStateError && getInsertIdError && basketError) {
+                                res.status(200).json({
+                                    isError: false
+                                })
+                            } else {
+                                res.status(400).json({
+                                    isError: true
+                                })
+                            }
+                        })
+                        
                     }
                 })
             }
         })
     })
-
-    
-    // const sqlCodeToUpdateOrderToMenu = `
-    // update ordertomenu
-    // set OrderState = 2
-    // where OrderToMenu_OrderNo = ${orderNo};`;
-
-    // let orderToMenuError = true;
-
-    // db.query(sqlCodeToUpdateOrderToMenu, (err, rows) => {
-    //     if (err) {
-    //         orderToMenuError = false;
-    //     }
-    // })
-
-    // const sqlCodeTodeleteBasket =  `
-    // delete from baskettable where BasketId = ${userwebid}`
-
-    // let deleteBasketError = true;
-
-    // db.query(sqlCodeTodeleteBasket, (err,rows) => {
-    //     if (err) {
-    //         deleteBasketError = false;
-    //     }
-    // })
-
-    // if (orderTableError) {
-    //     res.status(200).json({
-    //         isError: false,
-    //         //orderNo: currentOrderNo
-    //     })
-    // } else {
-    //     res.status(400).json({
-    //         isError: true,
-    //         orderNo: null
-    //     })
-    // }
-    // if (getInsertIdError && basketError && deleteBasketError) {
-    //     res.status(200).json({
-    //         isError: false
-    //     })
-    // } else {
-    //     res.status(400).json({
-    //         isError: true
-    //     })
-    // }
-})
-// ----------------------------------------------------------------------------------------------
-// updateBasketState
-router.post('/updateBasketState', (req, res) => {
-    const userwebid = `'${req.body.userWebId}'`;
-
-    const sqlCodeUpdateBasketState =  `
-    update baskettable set BasketState = ${1} where ((BasketId = ${userwebid}) && BasketState = ${0})`
-
-    let basketStateError = true;
-
-    db.query(sqlCodeUpdateBasketState, (err,rows) => {
-        if (err) {
-            basketStateError = false;
-        }
-    })
-
-    if (basketStateError) {
-        res.status(200).json({
-            isError: false
-        })
-    } else {
-        res.status(400).json({
-            isError: true
-        })
-    }
 })
 
 // ----------------------------------------------------------------------------------------------

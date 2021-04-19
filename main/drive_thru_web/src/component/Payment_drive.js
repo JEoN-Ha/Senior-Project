@@ -19,7 +19,8 @@ export default class Payment_drive extends Component {
             userInfo : [{
                 UserName:null, PhoneNum:null, CarId:null
             }],
-            payment : 1
+            payment : 1,
+            lastOrderNo : null
         }  
     }
 
@@ -33,7 +34,27 @@ export default class Payment_drive extends Component {
         })
         this.getBasketData(bodygetBasket);
         this.getUserInfo(bodygetBasket);
+        this.getLastOrderNo();
     };
+
+    getLastOrderNo = () => {    // 가장 마지막 OrderNo를 불러옴
+        fetch(this.state.jeonhaUrl + '/getLastOrderNo')
+        .then(res => {
+            if (res.status === 200) {
+                // 정상 작동
+                console.log('OrderNo Success!');
+            } else if (res.status === 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        }).then(data => {
+            this.state.lastOrderNo = data.orderNo;
+            console.log(this.state.lastOrderNo);
+            const getUserIsError = data.isError;
+            const whatIsError = data.explainError;
+        })
+    }
 
     handleRadio(event) {
         let obj = {} // erase other radios
@@ -80,7 +101,7 @@ export default class Payment_drive extends Component {
         })
     }
 
-    getFetch(_body){
+    getOrder(_body){
         fetch(this.state.jeonhaUrl + '/order', {
             method: "post",
             headers: {
@@ -171,6 +192,7 @@ export default class Payment_drive extends Component {
         }
 
         let bodyOrder = JSON.stringify({
+            orderNo: this.state.lastOrderNo + 1,
             userWebId: this.state.customer_id,
             carid: this.state.userInfo[0].CarId,
             payment: this.state.payment
@@ -243,7 +265,7 @@ export default class Payment_drive extends Component {
                 
                 <button style={btnStyle} onClick={function () {
                     this.props.Payment();
-                    this.getFetch(bodyOrder);            
+                    this.getOrder(bodyOrder);            
                }.bind(this)}>결제하기</button>
             </div>
         )
