@@ -69,7 +69,7 @@ class SignUpContent extends Component {
     });
       return (
         <div className="SignUp">
-            <h2>JEoN-Ha 회원가입</h2>
+            <h2>회원가입</h2>
             이름<br></br>
             <input type="text" name="name" placeholder="이름을 입력해주세요."
                 size="30"
