@@ -25,8 +25,8 @@ class MenuInfo extends Component {
               this.props.onClickName(e.target.innerText, this.state.orderName,
                 this.props.menu.id)
             }.bind(this)}>{this.props.menu.nameKorea}</span><br/>
-            <span>{this.props.menu.nameEnglish}</span><br/>
-            <span>{this.props.menu.price}</span><br/>
+            &nbsp;&nbsp;&nbsp;<span>{this.props.menu.nameEnglish}</span><br/>
+            &nbsp;&nbsp;&nbsp;<span>{this.props.menu.price}원</span><br/>
             <hr/>
           </div>
       );
