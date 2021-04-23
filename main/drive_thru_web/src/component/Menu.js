@@ -81,9 +81,6 @@ class Menu extends Component {
 
     return (
       <div>
-        {/* DB로부터 메뉴 가져오기 */}
-        {/* {this.getMenuData()} */}
-        {/* menu 여러개 그리기 */}
         {mapToComponent(this.state.menuData)}
       </div>
     )
