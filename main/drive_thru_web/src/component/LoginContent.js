@@ -6,7 +6,8 @@ class LoginContent extends Component {
     state = {
         customer_id:null,
         PW:null,
-        jeonhaUrl:store.getState().jeonhaUrl
+        jeonhaUrl:store.getState().jeonhaUrl,
+        login:store.getState().login
     }
 
     componentWillUnmount() {
@@ -35,9 +36,24 @@ class LoginContent extends Component {
         // id, pw 성공여부 변수
         const idSuccess = data.id;
         const pwSuccess = data.pw;
-    
+        
+        if (idSuccess === true && pwSuccess === true)
+        {
+          // alert('로그인이 완료됐습니다.');
+          this.setState({
+            login:true
+          })
+          // this.state.login = true;
+        }
+        else{
+          this.setState({
+            login:false
+          })
+          // this.state.login = false;
+        }
         // 확인을 위한 console.log
-        // console.log(idSuccess, pwSuccess);
+        console.log(idSuccess, pwSuccess);
+        console.log(this.state.login);
       });
     }
     
@@ -73,9 +89,10 @@ class LoginContent extends Component {
               }.bind(this)}></input>
             <input style={btnStyle} 
               type="button" value="LOGIN" onClick={function(){
-              this.props.onClick(this.state.customer_id,this.state.PW);
               this.getFetch(bodySignIn);
-              alert('로그인이 완료됐습니다.');
+              console.log(this.state.login);
+              this.props.onClick(this.state.customer_id,this.state.PW,this.state.login);
+              // alert('로그인이 완료됐습니다.');
             }.bind(this)}></input>
           </article>
       );
