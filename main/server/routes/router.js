@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const db = require('../dbconnection');
@@ -192,15 +191,9 @@ router.post('/deleteFromBasket', (req, res) => {
 
 // ----------------------------------------------------------------------------------------------
 // getBasket
-const customer_id = `'${req.body.userWebId}'`
-router.post('/getBasket/'+ customer_id, (req, res) => {
-    const userwebid = `'${req.body.userWebId}'`;
-    const sqlCodeToBasketTable = `
-    select * from baskettable
-    where (BasketId = ${userwebid} and
-        BasketState = 0);`;
-
-
+router.get('/getBasket', (req, res) => {
+    const userwebid = `${req.body.userWebId}`;
+    const sqlCodeToBasketTable = `select * from baskettable where BasketId = ${userwebid} and BasketState = 0;`;
     db.query(sqlCodeToBasketTable, (err, rows) => {
         const allBasketData = JSON.parse(JSON.stringify(rows));
         if (!err) {
@@ -218,7 +211,6 @@ router.post('/getBasket/'+ customer_id, (req, res) => {
         }
     })
 })
-
 // ----------------------------------------------------------------------------------------------
 // order
 router.post('/order', (req, res) => {
@@ -237,14 +229,11 @@ router.post('/order', (req, res) => {
     const sqlCodeGetInsertId = `
     select * from ordertable
     order by OrderNo DESC limit 1;`;
-
-
     db.query(sqlCodeToOrderTable, (err, results) => {
         if (err) {
             orderTableError = false;
         }
     })
-
     db.query(sqlCodeGetInsertId, (err, getId) => {
         const dbData = JSON.parse(JSON.stringify(getId));
         if (err) {
@@ -276,8 +265,6 @@ router.post('/order', (req, res) => {
         }
 
     })
-
-
     const sqlCodeToUpdateOrderToMenu = `
     update ordertomenu
     set OrderState = 2
@@ -290,8 +277,6 @@ router.post('/order', (req, res) => {
             orderToMenuError = false;
         }
     })
-
-
     if (orderTableError && getInsertIdError && basketError && orderToMenuError) {
         res.status(200).json({
             isError: false,
@@ -304,9 +289,6 @@ router.post('/order', (req, res) => {
         })
     }
 })
-
-
-
 // ----------------------------------------------------------------------------------------------
 // cancelOrder
 

@@ -1,3 +1,4 @@
+---
 openapi: 3.0.0
 info:
   title: Jeonha-redux
@@ -6,13 +7,12 @@ info:
 servers:
 - url: https://virtserver.swaggerhub.com/kiJiyeon/Jeonha-redux/1.0.0
   description: SwaggerHub API Auto Mocking
-- url: https://jeonhaapi.azurewebsites.net
+- url: https://server1sttrial.azurewebsites.net
   description: SwaggerHub API Auto Mocking
 paths:
   /signUP:
     post:
       summary: Post Member's Data API
-      operationId: signUPPOST
       parameters:
       - name: UserWebId
         in: query
@@ -61,19 +61,15 @@ paths:
             application/json:
               schema:
                 type: object
-                x-content-type: application/json
         "400":
-          description: failed to post Member's Data ! it must be overlaped ID or PW
-            / or you typed too long ID or PW
+          description: failed to post Member's Data ! it must be overlaped ID or PW / or you typed too long ID or PW
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400'
-      x-swagger-router-controller: Default
   /signIn:
     post:
       summary: post ID & Password from DB to compare DB's and Web's
-      operationId: signInPOST
       parameters:
       - name: UserWebId
         in: query
@@ -98,18 +94,15 @@ paths:
             application/json:
               schema:
                 type: object
-                x-content-type: application/json
         "400":
           description: failed to post Member's Data ! it must be Id Error or PW Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400_1'
-      x-swagger-router-controller: Default
   /getMenuData:
     get:
       summary: Get Menu API
-      operationId: getMenuDataGET
       responses:
         "200":
           description: successfully got Menu Data !
@@ -123,11 +116,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400_2'
-      x-swagger-router-controller: Default
   /insertIntoBasket:
     post:
       summary: put something to Basket before the order
-      operationId: insertIntoBasketPOST
       parameters:
       - name: OrderToMenu_MenuNo
         in: query
@@ -184,32 +175,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_1'
-      x-swagger-router-controller: Default
-  '/getBasket/{userWebId}':
+  /getBasket:
     get:
-      summary: to show what's in my basket
-      operationId: getBasketUserWebIdGET
       parameters:
-      - name: userWebId
-        in: path
-        description: ID of User to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: UserWebId
+          in: query
+          description: users membership ID
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
-          description: successfully got the Basket list!
+          description: successfully got basket list !
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_2'
-      x-swagger-router-controller: Default
+        "400":
+          description: failed to get Menu Data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
   /updateFromBasket:
     post:
       summary: to add things to Basket
-      operationId: updateFromBasketPOST
       parameters:
       - name: UserWebId
         in: query
@@ -242,18 +234,15 @@ paths:
             application/json:
               schema:
                 type: object
-                x-content-type: application/json
         "400":
           description: failed to post Member's Data ! it must be Id Error or PW Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400_1'
-      x-swagger-router-controller: Default
   /deleteFromBasket:
     post:
       summary: update orderstate to mark `deleted` from basket
-      operationId: deleteFromBasketPOST
       parameters:
       - name: UserWebId
         in: query
@@ -278,12 +267,9 @@ paths:
             application/json:
               schema:
                 type: object
-                x-content-type: application/json
-      x-swagger-router-controller: Default
   /order:
     get:
       summary: to check the order-list
-      operationId: orderGET
       responses:
         "200":
           description: successfully got the order-list & user's info!
@@ -291,11 +277,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_3'
-      x-swagger-router-controller: Default
   /getOrder:
     get:
       summary: to show Ordered list
-      operationId: getOrderGET
       responses:
         "200":
           description: successfully got the Order list!
@@ -303,11 +287,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_4'
-      x-swagger-router-controller: Default
   /CancelOrder:
     post:
       summary: update orderstate to mark `deleted` from OrderList
-      operationId: cancelOrderPOST
       parameters:
       - name: UserWebId
         in: query
@@ -324,12 +306,9 @@ paths:
             application/json:
               schema:
                 type: object
-                x-content-type: application/json
-      x-swagger-router-controller: Default
   /paying:
     post:
       summary: clicked `paying`
-      operationId: payingPOST
       parameters:
       - name: OrderState
         in: query
@@ -346,7 +325,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_5'
-      x-swagger-router-controller: Default
 components:
   schemas:
     inline_response_400:
@@ -376,11 +354,6 @@ components:
           type: string
         Price:
           type: integer
-      example:
-        Price: 6
-        MenuNo: 0
-        FoodNameKor: FoodNameKor
-        FoodNameEng: FoodNameEng
     inline_response_400_2:
       type: object
       properties:
@@ -407,32 +380,17 @@ components:
           type: integer
         Price:
           type: integer
-      example:
-        OrderWebId: OrderWebId
-        MenuCount: 2
-        Price: 7
-        MenuNo: 5
-        OrderToMenu_OrderNo: 0
-        WEBCarId: 6
-        OrderPayment: 5
-        OrderToMenu_MenuNo: OrderToMenu_MenuNo
-        OrderState: 1
     inline_response_200_2:
       type: object
       properties:
         BasketId:
-          type: string
+          type: integer
         BasketMenuNo:
-          type: integer
+          type: string
         BasketMenuCount:
-          type: integer
+          type: string
         BasketState:
           type: integer
-      example:
-        BasketMenuCount: 6
-        BasketMenuNo: 0
-        BasketId: BasketId
-        BasketState: 1
     inline_response_200_3:
       type: object
       properties:
@@ -448,13 +406,6 @@ components:
           type: integer
         OrderPayment:
           type: integer
-      example:
-        UserName: UserName
-        MenuCount: 6
-        PhoneNum: PhoneNum
-        OrderPayment: 1
-        OrderToMenu_MenuNo: 0
-        carId: carId
     inline_response_200_4:
       type: object
       properties:
@@ -464,14 +415,8 @@ components:
           type: integer
         Menucount:
           type: integer
-      example:
-        Menucount: 1
-        OrderToMenu_OrderNo: 0
-        OrderToMenu_MenuNo: 6
     inline_response_200_5:
       type: object
       properties:
         OrderState:
           type: integer
-      example:
-        OrderState: 0
