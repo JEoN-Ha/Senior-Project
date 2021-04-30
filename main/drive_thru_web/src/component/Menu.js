@@ -27,16 +27,14 @@ class Menu extends Component {
     })
       .then(res => {
         if (res.status === 200) {
-          // 정상 작동
           console.log('Success!');
         } else if (res.status === 400) {
-          // 실패시
           console.log('Failed!');
         }
         return res.json();
       })
       .then(data => {
-        const allMenuData = data.menu; // 모든 음식 메뉴 정보: 리스트 안에 객체 형태 [{}, {}, {}, ...]
+        const allMenuData = data.menu;
         const getMenuIsError = data.isError;
         const whatIsError = data.explainError;
         let menuAllData = []
@@ -52,10 +50,7 @@ class Menu extends Component {
           menuData: menuAllData,
           isLoading: true
         })
-        // this.state.menuData = allMenuData;  // 모든 음식 메뉴 데이터를 state에 저장 CHECK
-        // console.log(allMenuData);  CHECK
-        // 확인을 위한 console.log
-        // console.log(allMenuData, getMenuIsError, whatIsError);
+        
       });
   }
   render() {

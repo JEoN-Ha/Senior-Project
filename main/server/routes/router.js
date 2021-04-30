@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const db = require('../dbconnection');
@@ -194,32 +193,45 @@ router.post('/deleteFromBasket', (req, res) => {
 // getBasket
 router.post('/getBasket', (req, res) => {
     const userwebid = `'${req.body.userWebId}'`;
+    let allBasketData = [];
+    let allBasketMenuData = [];
+    let basketMenuData = [];
 
+    let getBasketError = true;
 
     const sqlCodeToBasketTable = `
     select * from baskettable
     where (BasketId = ${userwebid} and
         BasketState = 0);`;
 
-
     db.query(sqlCodeToBasketTable, (err, rows) => {
-        const allBasketData = JSON.parse(JSON.stringify(rows));
-        if (!err) {
-            res.status(200).json({
-                basket: allBasketData,
-                isError: false,
-                explainError: null
+        allBasketData = JSON.parse(JSON.stringify(rows));
+
+        for (let i = 0; i < allBasketData.length; i++) {
+            let sqlCodeToMenuboard = `
+            select * from menuboard where (MenuNo = ${allBasketData[i].BasketMenuNo});`;
+            console.log(i);
+            db.query(sqlCodeToMenuboard, (error, results) => {
+                basketMenuData = JSON.parse(JSON.stringify(results));
+                console.log(basketMenuData);
+                // basketMenuData 는 [{}] 꼴이기 때문에 0번째 원소를 넣어주면 됨
+                allBasketMenuData.push(basketMenuData[0]);
+
+                if (i === allBasketData.length - 1) {
+                    if (!err) {
+                        console.log(allBasketMenuData);
+                        res.status(200).json({
+                            basket: allBasketData,
+                            menu: allBasketMenuData,
+                            isError: false,
+                            explainError: null
+                        })
+                    }
+                }
             })
-        } else {
-            res.status(400).json({
-                basket: null,
-                isError: true,
-                explainError: err
-            })
-        }
+        }   
     })
 })
-
 // ----------------------------------------------------------------------------------------------
 // order
 router.post('/order', (req, res) => {
@@ -238,14 +250,11 @@ router.post('/order', (req, res) => {
     const sqlCodeGetInsertId = `
     select * from ordertable
     order by OrderNo DESC limit 1;`;
-
-
     db.query(sqlCodeToOrderTable, (err, results) => {
         if (err) {
             orderTableError = false;
         }
     })
-
     db.query(sqlCodeGetInsertId, (err, getId) => {
         const dbData = JSON.parse(JSON.stringify(getId));
         if (err) {
@@ -277,8 +286,6 @@ router.post('/order', (req, res) => {
         }
 
     })
-
-
     const sqlCodeToUpdateOrderToMenu = `
     update ordertomenu
     set OrderState = 2
@@ -291,8 +298,6 @@ router.post('/order', (req, res) => {
             orderToMenuError = false;
         }
     })
-
-
     if (orderTableError && getInsertIdError && basketError && orderToMenuError) {
         res.status(200).json({
             isError: false,
@@ -305,9 +310,6 @@ router.post('/order', (req, res) => {
         })
     }
 })
-
-
-
 // ----------------------------------------------------------------------------------------------
 // cancelOrder
 

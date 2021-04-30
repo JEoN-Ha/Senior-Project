@@ -10,7 +10,7 @@ export default createStore(function(state, action){
             orderName:'상품을 선택해주세요.', orderCount:0,orderID:null,
             customerType:null, isCarNumberDisabled:null,
             login:null,
-            jeonhaUrl: 'http://localhost:4000'
+            jeonhaUrl: 'https://server1sttrial.azurewebsites.net'
         }
     }
 
