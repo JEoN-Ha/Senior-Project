@@ -32,7 +32,7 @@ export default class Basket extends Component {
     getBasketData = (_body) => {
         fetch(this.state.jeonhaUrl + '/getBasket',{
             credentials: 'include', 
-            method: "get",
+            method: "post",
             headers: {
                 "Content-Type": "application/json"
             },
