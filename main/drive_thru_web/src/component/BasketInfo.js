@@ -18,7 +18,7 @@ class BasketInfo extends Component {
     }
 
     onClickDelete(_body){
-        fetch(this.state.jeonhaUrl + '/updateFromBasket', {
+        fetch(this.state.jeonhaUrl + '/deleteFromBasket', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"
@@ -33,23 +33,24 @@ class BasketInfo extends Component {
                 console.log('Failed!');
             }
             return res.json();
-        }).then(data => {
-            const getMenuIsError = data.isError;
-            const whatIsError = data.explainError;
-    
-            // 확인을 위한 console.log
-            // if (getMenuIsError) {
-            //     console.log(whatIsError);
-            // }
         })
+            .then(data => {
+                const getMenuIsError = data.isError;
+                const whatIsError = data.explainError;
+        
+                if (getMenuIsError) {
+                    console.log(whatIsError);
+                }
+            })
     }
 
     render() {
         const bodyDeleteFromBasket = JSON.stringify({
             userWebId: this.state.customer_id,
-            menuNo: this.props.basket.id,
+            menuNo: this.props.basket.menuNo,
             menuCount: this.props.basket.count
         })
+        console.log(this.props.basket);
         const menuTotalPrice = this.props.basket.count*this.props.basket.price;
         return (
             <div>

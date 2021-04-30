@@ -69,7 +69,7 @@ class SignUpContent extends Component {
     });
       return (
         <div className="SignUp">
-            <h2>JEoN-Ha 회원가입</h2>
+            <h2>회원가입</h2>
             이름<br></br>
             <input type="text" name="name" placeholder="이름을 입력해주세요."
                 size="30"
@@ -101,24 +101,31 @@ class SignUpContent extends Component {
                 type="button" value="확인" onClick={function () {
                 this.props.onClickCheck(this.state.PW,this.state.PW_check)                     
             }.bind(this)}></input><br></br>
-            차량번호 1<br></br>
+            Phone Number<br></br>
+            <input type="text" name="PhoneNum" placeholder="전화번호를 입력해주세요."
+                size="30"
+                phoneNum={this.state.phoneNum}
+                onChange={function (e) {
+                    this.setState({phoneNum:e.target.value});                    
+                }.bind(this)}></input><br></br>
+            차량번호<br></br>
             <input type="text" name="carNum1" placeholder="대표 차량번호를 입력해주세요."
                 size="30"
                 carNum1={this.state.carNum1}
                 onChange={function (e) {
                     this.setState({carNum1:e.target.value});                    
                 }.bind(this)}></input><br></br>
-            차량번호 2<br></br>
+            {/* 차량번호 2<br></br>
             <input type="text" name="carNum2" placeholder="두번째 차량번호를 입력해주세요."
                 size="30"
                 carNum2={this.state.carNum2}
                 onChange={function (e) {
                     this.setState({carNum2:e.target.value});                    
-                }.bind(this)}></input><br></br>
+                }.bind(this)}></input><br></br> */}
             <input style={btnStyle}
                 type="button" value="Sign up" onClick={function(){
                 this.props.onClickSignUp(this.state.name,this.state.ID,
-                this.state.PW_state,this.state.carNum1)
+                this.state.PW_state,this.state.phoneNum,this.state.carNum1)
                 this.getFetch(bodySignUp)
                 }.bind(this)}></input>
         </div>

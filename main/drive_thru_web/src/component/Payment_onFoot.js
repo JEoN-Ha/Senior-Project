@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import BasketInfo from '../containers/BasketInfo';
 import "./Component.css";
 import store from '../store';
+import e from 'cors';
 
 export default class Payment_onFoot extends Component {
     constructor(props) {
@@ -18,7 +19,9 @@ export default class Payment_onFoot extends Component {
             basketData : [{id:null, nameKorea:null, price:null, count:null}],
             userInfo : [{
                 UserName:null, PhoneNum:null
-            }]
+            }],
+            payment : 1,
+            lastOrderNo : null
         }  
     }
 
@@ -32,12 +35,32 @@ export default class Payment_onFoot extends Component {
         })
         this.getBasketData(bodygetBasket);
         this.getUserInfo(bodygetBasket);
+        this.getLastOrderNo();
     };
+
+    getLastOrderNo = () => {    // 가장 마지막 OrderNo를 불러옴
+        fetch(this.state.jeonhaUrl + '/getLastOrderNo')
+        .then(res => {
+            if (res.status === 200) {
+                // 정상 작동
+                console.log('OrderNo Success!');
+            } else if (res.status === 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        }).then(data => {
+            this.state.lastOrderNo = data.orderNo;
+            console.log(this.state.lastOrderNo);
+            const getUserIsError = data.isError;
+            const whatIsError = data.explainError;
+        })
+    }
 
     handleRadio(event) {
         let obj = {} // erase other radios
         obj[event.target.value] = event.target.checked // true —- target.checked 속성을 이용해서 라디오 버튼이 선택되었는지 여부를 확인한다.
-        this.setState({radioGroup: obj})
+        this.setState({radioGroup: obj});
     }
 
     getUserInfo = (_body) => {
@@ -75,7 +98,7 @@ export default class Payment_onFoot extends Component {
         })
     }
 
-    getFetch(_body){
+    getOrder(_body){
         fetch(this.state.jeonhaUrl + '/order', {
             method: "post",
             headers: {
@@ -93,10 +116,35 @@ export default class Payment_onFoot extends Component {
             return res.json();
         }).then(data => {
             const orderIsError = data.isError;
-            const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
+            //const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
             // 확인을 위한 console.log
-            //console.log(orderIsError, userOrderNo);
-        }) 
+            console.log(orderIsError);
+        })
+        // }).then(
+        //     fetch(this.state.jeonhaUrl + '/updateBasketState', {
+        //         method: "post",
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         body: _body
+        //     }).then(res => {
+        //         if (res.status === 200) {
+        //             // 정상 작동
+        //             console.log('Success!');
+        //         } else if (res.status === 400) {
+        //             // 실패시
+        //             console.log('Failed!');
+        //         }
+        //         return res.json();
+        //     }).then(data => {
+        //         const orderIsError = data.isError;
+        //         //const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
+        //         // 확인을 위한 console.log
+        //         console.log(orderIsError);
+        //     })
+        // )
+
+        
     }
 
     getBasketData = (_body) => {
@@ -163,10 +211,11 @@ export default class Payment_onFoot extends Component {
             lineHeight: 1.5,
             width: "100px"
         }
-        const bodyOrder = JSON.stringify({
+        let bodyOrder = JSON.stringify({
+            orderNo: this.state.lastOrderNo + 1,
             userWebId: this.state.customer_id,
             carId: this.state.carNumber,
-            payment: 1
+            payment: this.state.payment
         });
         const mapToComponent = data => {
             return data.map((basket, i) => {
@@ -195,14 +244,12 @@ export default class Payment_onFoot extends Component {
                     이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="text" name="name" placeholder={this.state.userInfo[0].UserName}
                         onChange={function (e) {
-                            this.setState({name:e.target.value});
-                            // this.props.onChangeName(this.state.name)                         
+                            this.setState({name:e.target.value});                       
                         }.bind(this)}></input> <br></br>
                     연락처&nbsp;&nbsp;&nbsp;
                     <input type="text" name="phone" placeholder={this.state.userInfo[0].PhoneNum}
                         onChange={function (e) {
-                            this.setState({phone:e.target.value});
-                            // this.props.onChangePhone(this.state.phone)                          
+                            this.setState({phone:e.target.value});                  
                         }.bind(this)}></input> <br></br>
                 </article>
 
@@ -215,26 +262,26 @@ export default class Payment_onFoot extends Component {
                     <h3>온라인 결제</h3>
                     <input type="radio" name="radioGroup" value="creditCard"
                         checked={this.state.radioGroup['creditCard']}
-                        onChange={this.handleRadio}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 1;}.bind(this)}
                         ></input> 신용카드
                     <input type="radio" name="radioGroup" value="cellphone"
                         checked={this.state.radioGroup['cellphone']}
-                        onChange={this.handleRadio}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 2;}.bind(this)}
                         ></input> 휴대폰 <br></br>
                     <input type="radio" name="radioGroup" value="kakaoPay"
                         checked={this.state.radioGroup['kakaoPay']}
-                        onChange={this.handleRadio}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 3;}.bind(this)}
                         ></input> 카카오페이
                     <input type="radio" name="radioGroup" value="PAYCO"
                         checked={this.state.radioGroup['PAYCO']}
-                        onChange={this.handleRadio}
+                        onChange={function (e) {this.handleRadio(e); this.state.payment = 4;}.bind(this)}
                         ></input> PAYCO
                 </article>
                 
                 {/* 결제 정보 DB로 보내기 */}
                 <button style={btnStyle} onClick={function () {
                     this.props.Payment();
-                    this.getFetch(bodyOrder);                  
+                    this.getOrder(bodyOrder);            
                }.bind(this)}>결제하기</button>
             </div>
         )

@@ -13,8 +13,8 @@ function mapDispatchToProps(dispatch){
                 alert('비밀번호를 다시 입력해주세요.');
             } 
         },
-        onClickSignUp:function (_name,_ID,_check,_carNum) {
-            if(_name !== null && _ID !== null && _check === true && _carNum !== null) {
+        onClickSignUp:function (_name,_ID,_check,_phoneNum,_carNum) {
+            if(_name !== null && _ID !== null && _check === true && _phoneNum !== null && _carNum !== null) {
                 dispatch({type:'회원가입 완료', mode_content:'LOGIN'});
                 alert('회원가입이 완료되었습니다.');
             }
