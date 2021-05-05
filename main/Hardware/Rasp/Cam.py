@@ -9,7 +9,7 @@ cap.set(cv2.CAP_PROP_FPS, 30)
 if cap.isOpened():
     while True:
         ret, frame = cap.read()
-        cv2.imshow("cam", frame) # showing Image
+        cv2.imshow("cam", frame``) # showing Image
         print("imshow")
         # cv2.imwrite("./img/photo.jpg", frame)
 else:
