@@ -152,7 +152,6 @@ export default class Payment_drive extends Component {
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
                 id: allBasket[i].BasketId,
-                //menuNo: allBasket[i].BasketMenuNo,
                 nameKorea: allBasketMenu[i].FoodNameKor,
                 price: allBasketMenu[i].Price,
                 count: allBasket[i].BasketMenuCount
@@ -175,7 +174,7 @@ export default class Payment_drive extends Component {
         for (let i=0; i<_basketdata.length; i++){
             totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
         }
-        return totalPrice
+        return totalPrice;
     }
 
     render() {
