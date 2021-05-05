@@ -6,14 +6,13 @@ if cap.isOpened():
         ret, frame = cap.read()
         if ret:
             cv2.imshow("cam", frame) # showing Image
-            if cv2.waitKey(1) != -1:
-                cv2.imwrite("./img/photo.png", frame)
-                break
-            else:
-                print("no frame")
-                break
+            print("imshow")
+            cv2.imwrite("./img/photo.jpg", frame)
+        else:
+            print("can't ret")
+            
+
 else:
     print("can't open camera")
 
 cap.release()
-cv2.destroyAllWinodws()
