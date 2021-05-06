@@ -28,7 +28,7 @@ This API call can also recognize remote image text (shown in next example, Read 
 '''
 print("===== Read File - local =====")
 # Get image of handwriting
-local_image_handwritten_path = os.path.join (images_folder + "/img/test1.jpg")
+local_image_handwritten_path = os.path.join (images_folder + "/img/test3.jpg")
 # Open the image
 local_image_handwritten = open(local_image_handwritten_path, "rb")
 

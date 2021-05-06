@@ -19,7 +19,7 @@ endpoint = "https://jeonha-ocr.cognitiveservices.azure.com/"# "PASTE_YOUR_COMPUT
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
 
-images_folder = os.path.join(os.path.dirname(os.path.abspath('RequestOCR.py')))
+images_folder = os.path.join(os.path.dirname(os.path.abspath('RequestOCR_Printed.py')))
 
 
 '''
@@ -28,7 +28,7 @@ This example will extract, using OCR, printed text in an image, then print resul
 '''
 print("===== Detect Printed Text with OCR - local =====")
 # Get an image with printed text
-local_image_printed_text_path = os.path.join (images_folder + "/img/test1.jpg")
+local_image_printed_text_path = os.path.join (images_folder + "/img/test3.jpg")
 print(local_image_printed_text_path)
 
 local_image_printed_text = open(local_image_printed_text_path, "rb")

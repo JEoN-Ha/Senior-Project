@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 import pytesseract
-
+import matplotlib.pyplot as plt
+plt.style.use('dark_background')
 
 img_ori = cv2.imread('../img/test1.jpg')
 gray = cv2.cvtColor(img_ori, cv2.COLOR_BGR2GRAY)
@@ -53,4 +53,6 @@ img_cropped = cv2.getRectSubPix(
     center=(int(plate_cx), int(plate_cy))
 )
 
-cv2.imwrite('./img/testify.jpg', img_cropped)
+# cv2.imwrite('../img/testify.jpg', img_cropped)
+plt.imshow(img_cropped, cmap='gray')
+plt.savefig('../img/testify.jpg')
