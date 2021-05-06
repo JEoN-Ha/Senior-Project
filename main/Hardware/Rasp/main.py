@@ -1,11 +1,15 @@
 import Motor_Sensor
+import Cam
 import time
+import RequestOCR_hand
+import requests
+import json
 
 class J_System():
     def __init__(self):
         self.P_C_Mortor = Motor_Sensor.J_Servo(12)        # P_C is Product Classification
         self.USV_Sensor = Motor_Sensor.J_USV(16, 18)
-        
+        self.Car_Cam = Cam.J_Cam(0)
         self.P_C_Mortor.pwm.start(P_C_Mortor.angle_to_percent(90))
 
         
@@ -20,9 +24,11 @@ class J_System():
 
     def start(self):
         if (self.updateDistanceList() <= 10):
-            # TODO: 사진 찰칵
+            # 사진 찰칵
+            imgFileName = self.Car_Cam.photoClick()
 
-            # TODO: Api 요청
+            # Api 요청
+            carNumber = RequestOCR_hand.requestREST_handwritten(imgFileName)
 
             # Api응답에 따른 Logic
             isEqual = True

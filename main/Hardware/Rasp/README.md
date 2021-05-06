@@ -4,9 +4,15 @@
 ## BCM
 ![image](https://user-images.githubusercontent.com/48875566/117110093-9a5c5300-adc0-11eb-9bc7-692d62cb4283.png)
 
+# Raspbian Package
+`sudo apt install tesseract-ocr`
+`sudo apt install libtesseract-dev`
+
+`sudo apt install tesseract-ocr tesseract-ocr-script-hang tesseract-ocr-script-hang-vert`
 # Python Package
 `pip install --upgrade azure-cognitiveservices-vision-computervision`
 `pip install pillow`
+`pip install pytesseract`
 
 # Need things
 - Raspberry Pi 공식 전원장치
