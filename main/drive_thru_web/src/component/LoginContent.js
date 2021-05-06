@@ -7,8 +7,17 @@ class LoginContent extends Component {
         customer_id:null,
         PW:null,
         jeonhaUrl:store.getState().jeonhaUrl,
-        login:store.getState().login
+        ID_Success:store.getState().ID_Success,
+        PW_Success:store.getState().PW_Success
     }
+
+    constructor(props){
+      super(props);
+      store.subscribe(function () {
+          this.setState({ID_Success:store.getState().ID_Success,
+            PW_Success:store.getState().PW_Success});           
+      }.bind(this));
+  }
 
     componentWillUnmount() {
       console.log('componentWillUnmount');
@@ -37,27 +46,20 @@ class LoginContent extends Component {
         const idSuccess = data.id;
         const pwSuccess = data.pw;
         
-        if (idSuccess === true && pwSuccess === true)
-        {
-          // alert('로그인이 완료됐습니다.');
-          this.setState({
-            login:true
-          })
-          // this.state.login = true;
-        }
-        else{
-          this.setState({
-            login:false
-          })
-          // this.state.login = false;
-        }
+        this.setState({
+          ID_Success : idSuccess,
+          PW_Success : pwSuccess
+        })
+
+        this.props.onClick(this.state.customer_id,this.state.PW,this.state.ID_Success,this.state.PW_Success);
         // 확인을 위한 console.log
         console.log(idSuccess, pwSuccess);
-        console.log(this.state.login);
+        console.log(this.state.ID_Success, this.state.PW_Success);
       });
     }
     
     render() {
+      console.log(this.state.ID_Success);
       const btnStyle = {
         color: "white",
         background: "#815854",
@@ -90,9 +92,6 @@ class LoginContent extends Component {
             <input style={btnStyle} 
               type="button" value="LOGIN" onClick={function(){
               this.getFetch(bodySignIn);
-              console.log(this.state.login);
-              this.props.onClick(this.state.customer_id,this.state.PW,this.state.login);
-              // alert('로그인이 완료됐습니다.');
             }.bind(this)}></input>
           </article>
       );
