@@ -19,7 +19,7 @@ endpoint = "https://jeonha-ocr.cognitiveservices.azure.com/"# "PASTE_YOUR_COMPUT
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
 
-
+images_folder = os.path.join (os.path.dirname(os.path.abspath(__file__)), "images")
 # '''
 # Read File, recognize handwritten text - local
 # This example extracts text from a handwritten local image, then prints results.
