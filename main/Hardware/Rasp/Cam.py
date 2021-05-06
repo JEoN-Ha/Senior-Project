@@ -11,7 +11,8 @@ if cap.isOpened():
         ret, frame = cap.read()
         cv2.imshow("cam", frame) # showing Image
         print("imshow")
-        # cv2.imwrite("./img/photo.jpg", frame)
+        cv2.imwrite("./img/photo.jpg", frame)
+        break
 else:
     print("can't open camera")
 

@@ -5,6 +5,8 @@
 ![image](https://user-images.githubusercontent.com/48875566/117110093-9a5c5300-adc0-11eb-9bc7-692d62cb4283.png)
 
 # Python Package
+`pip install --upgrade azure-cognitiveservices-vision-computervision`
+`pip install pillow`
 
 # Need things
 - Raspberry Pi 공식 전원장치
