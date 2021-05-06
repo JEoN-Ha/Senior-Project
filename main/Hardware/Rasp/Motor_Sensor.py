@@ -49,7 +49,7 @@ class J_USV(): # USV is UltraSonic Wave
 
     
     
-    def distanceInCm(duration):
+    def distanceInCm(self, duration):
         # cm 환산 함수
         # 아두이노 UltraDistSensor 코드에서 가져옴 Known Issue
         # 물체에 도착후 돌아오는 시간 계산
@@ -62,16 +62,16 @@ class J_USV(): # USV is UltraSonic Wave
         # duration은 왕복 시간이니 인식까지의 시간에서 2로 나눔
         return (duration/2)/29.1
 
-    def print_distance(distance):
+    def print_distance(self, distance):
         # 거리 표시
         if distance == 0:
-            distanceMsg = 'Distance : out of range                   \r'
+            distanceMsg = 'Distance : out of range \r'
         else:
             distanceMsg = 'Distance : ' + str(distance) + 'cm' + '        \r'
 
 
 
-    def getDistance():
+    def getDistance(self):
         # 거리 구하기 메서드
         while True:
             #171206 중간에 통신 안되는 문제 개선용      
@@ -114,10 +114,12 @@ class J_USV(): # USV is UltraSonic Wave
             pulse_duration = (pulse_end - pulse_start) * 1000000
 
             # 시간을 cm로 환산
-            distance = distanceInCm(pulse_duration)
+            distance = self.distanceInCm(pulse_duration)
 
             # 자리수 반올림
             distance = round(distance, 2)
 
             # 표시
-            print_distance(distance)
+            self.print_distance(distance)
+            
+            return distance
