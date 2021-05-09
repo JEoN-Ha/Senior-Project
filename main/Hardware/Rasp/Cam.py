@@ -1,6 +1,7 @@
 import cv2
 import time
 import zbar
+import os
 
 # cv2.namedWindow('img', cv2.WINDOW_NORMAL)
 class J_Cam():
@@ -14,7 +15,7 @@ class J_Cam():
     def photoClick(self):
         if self.cap.isOpened():
             now = time.localtime()
-            imgName = 'cam_' + str(now.tm_year) + '/' + str(now.tm_mon) + '/' + str(now.tm_mday) + '/' + str(now.tm_hour) + '/' + str(now.tm_min) + '/' +  str(now.tm_sec) + '.jpg'
+            imgName = 'cam_' + str(now.tm_year) + '_' + str(now.tm_mon) + '_' + str(now.tm_mday) + '_' + str(now.tm_hour) + '_' + str(now.tm_min) + '_' +  str(now.tm_sec) + '.jpg'
             ret, frame = self.cap.read()
             # cv2.imshow("cam", frame) # showing Image
             # print("imshow")
@@ -26,18 +27,21 @@ class J_Cam():
         else:
             print("can't open camera")
 
-    def qrCodeScanning(self, filPath):
+    def qrCodeScanning(self, fileName):
         if self.cap.isOpened():
-            qrImg = cv2.imread(filPath, cv2.IMREAD_GRAYSCALE)
-            decodeData = ""
+            filePath = self.cuurentfolder + "/img/" + fileName
+            qrImg = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
+            decodeData = []
             scanner = zbar.Scanner()
             results = scanner.scan(qrImg)
             for result in results:
-                decodeData += result.data
+                decodeData.append(result.data.decode())
             
             if (decodeData == "null"):
                 print("QR Code not detected")
             else:
                 print(decodeData)
+                if os.path.isfile(filePath):
+                    os.remove(filePath)
 
 # cap.release()
