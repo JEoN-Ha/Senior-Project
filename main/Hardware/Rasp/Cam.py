@@ -23,12 +23,12 @@ class J_Cam():
         else:
             print("can't open camera")
 
-    def qrCodeScanning(self):
+    def qrCodeScanning(self, filPath):
         if self.cap.isOpened():
-            ret, frame = self.cap.read()
+            qrImg = cv2.imread(filPath, cv2.IMREAD_GRAYSCALE)
             decodeData = ""
             scanner = zbar.Scanner()
-            results = scanner.scan(frame)
+            results = scanner.scan()
             for result in results:
                 decodeData += result.data
             

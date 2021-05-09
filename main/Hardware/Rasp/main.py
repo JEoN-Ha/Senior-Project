@@ -42,7 +42,8 @@ class J_System():
                 # TODO: 함수 형태로 물건 가림막 작동 시작
     
     def qrcode(self):
-        self.qrcode_Cam.qrCodeScanning()
+        filePath = self.qrcode_Cam.photoClick()
+        self.qrcode_Cam.qrCodeScanning(filePath)
 
         
 
