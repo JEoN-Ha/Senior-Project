@@ -18,6 +18,8 @@ class J_Cam():
             # cv2.imshow("cam", frame) # showing Image
             # print("imshow")
             imgPath = "./img/" + imgName
+            print(imgName)
+            print(imgPath)
             cv2.imwrite(imgPath, frame)
             return imgName
         else:
@@ -28,7 +30,7 @@ class J_Cam():
             qrImg = cv2.imread(filPath, cv2.IMREAD_GRAYSCALE)
             decodeData = ""
             scanner = zbar.Scanner()
-            results = scanner.scan()
+            results = scanner.scan(qrImg)
             for result in results:
                 decodeData += result.data
             
