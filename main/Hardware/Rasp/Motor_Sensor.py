@@ -7,6 +7,7 @@ GPIO.setwarnings(False) #Disable warnings
 
 class J_Servo():
     def __init__(self, pinNumber):
+        # GPIO.setUp pin Number 7, 11, 12, 13, 15
         self.pinNumber = pinNumber
         self.frequency = 50
         GPIO.setup(self.pinNumber, GPIO.OUT)

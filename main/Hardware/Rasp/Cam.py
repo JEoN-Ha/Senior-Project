@@ -31,17 +31,26 @@ class J_Cam():
         if self.cap.isOpened():
             filePath = self.cuurentfolder + "/img/" + fileName
             qrImg = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
-            decodeData = []
             scanner = zbar.Scanner()
-            results = scanner.scan(qrImg)
-            for result in results:
-                decodeData.append(result.data.decode())
-            
-            if (decodeData == "null"):
-                print("QR Code not detected")
-            else:
-                print(decodeData)
-                if os.path.isfile(filePath):
-                    os.remove(filePath)
+            results = scanner.scan(qrImg)            
+            # decodeData = []
+            # for result in results:
+            #     decodeData.append(result.data.decode())
+            decodeData = ""
+            try:
+                decodeData = results.data.decode()
+                
+                if (decodeData == ""):
+                    print("QR Code not detected")
+                    return -1
+                else:
+                    print(decodeData)
+                    if os.path.isfile(filePath):
+                        os.remove(filePath)
+                    return decodeData
+            except:
+                print("QR decoding Error")
+                return -1
+
 
 # cap.release()
