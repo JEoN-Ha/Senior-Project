@@ -1,7 +1,6 @@
-import cv2
-img = cv2.imread('./img/photo.jpg')
+import qrcode
 
-crop_img = img[50:200, 10:200]
-
-cv2.imshow("original", crop_img)
-cv2.waitKey(0)
+for i in range(10):
+    fileName = str(i)
+    img = qrcode.make(fileName)
+    img.save('./img/qrcode/' + fileName +'.jpg')
