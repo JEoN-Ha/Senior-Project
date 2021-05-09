@@ -9,6 +9,7 @@ class J_Cam():
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,640)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
         self.cap.set(cv2.CAP_PROP_FPS, 30)
+        self.cuurentfolder = os.path.join(os.path.dirname(os.path.abspath('Cam.py')))
 
     def photoClick(self):
         if self.cap.isOpened():
@@ -17,7 +18,7 @@ class J_Cam():
             ret, frame = self.cap.read()
             # cv2.imshow("cam", frame) # showing Image
             # print("imshow")
-            imgPath = "./img/" + imgName
+            imgPath = self.cuurentfolder + "/img/" + imgName
             print(imgName)
             print(imgPath)
             cv2.imwrite(imgPath, frame)
