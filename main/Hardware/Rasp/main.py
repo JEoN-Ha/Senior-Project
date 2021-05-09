@@ -9,7 +9,8 @@ class J_System():
     def __init__(self):
         self.P_C_Mortor = Motor_Sensor.J_Servo(12)        # P_C is Product Classification
         self.USV_Sensor = Motor_Sensor.J_USV(16, 18)
-        self.Car_Cam = Cam.J_Cam(0)
+        # self.Car_Cam = Cam.J_Cam(0)
+        self.qrcode_Cam = Cam.J_Cam(0)
         self.P_C_Mortor.pwm.start(P_C_Mortor.angle_to_percent(90))
 
         
@@ -39,6 +40,9 @@ class J_System():
                 # TODO: Product Classification Cam Start
                 # TODO: QR 코드 인식
                 # TODO: 함수 형태로 물건 가림막 작동 시작
+    
+    def qrcode(self):
+        self.qrcode_Cam.qrCodeScanning()
 
         
 
