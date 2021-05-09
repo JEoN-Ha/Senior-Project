@@ -68,7 +68,9 @@ export default class Basket extends Component {
             this.setState({
             basketData: _basketData,
             isLoading: true
-            })
+            });
+
+            console.log(this.state.basketData);
             //this.state.basketData = 
             // 확인을 위한 console.log
             // if (getMenuIsError) {
@@ -81,9 +83,6 @@ export default class Basket extends Component {
         let totalPrice = 0;
         for (let i=0; i<_basketdata.length; i++){
             totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
-        }
-        if(totalPrice === 0){
-            this.props.zeroTotal()
         }
         return totalPrice
     }
@@ -113,7 +112,8 @@ export default class Basket extends Component {
         }
         const mapToComponent = data => {
             return data.map((basket, i) => {
-                return (<BasketInfo basket={basket} key={i}
+                return (
+                <BasketInfo basket={basket} key={i}
                   getCount = {function(_count,_id){
                     let i = 0;
                     let data = Array.from(this.state.basketData);

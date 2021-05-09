@@ -54,7 +54,6 @@ class BasketInfo extends Component {
             menuNo: this.props.basket.menuNo,
             menuCount: this.props.basket.count
         })
-        console.log(this.props.basket);
         const menuTotalPrice = this.props.basket.count*this.props.basket.price;
         return (
             <div>
