@@ -48,15 +48,13 @@ export default class Basket extends Component {
             return res.json();
         }).then(data => {
             const allBasket = data.basket;
-            let allBasketMenu = [];
-            allBasketMenu = data.menu;
-            //console.log(allBasketMenu);
+            //let allBasketMenu = [{BasketId:null, FoodNameKor:null, Price:null, BasketMenuCount:null, MenuNo:null}];
+            const allBasketMenu = data.menu;
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
-            //this.state.basketData = allBasket;
-            // let _basketData = [{id:null, nameKorea:null, price:null, count:null, menuNo:null}]
             let _basketData = [];
             for (let i = 0; i < allBasket.length; i++) {
+                console.log(allBasketMenu[i].FoodNameKor,i);
                 _basketData.push({
                     id: allBasket[i].BasketId,
                     nameKorea: allBasketMenu[i].FoodNameKor,
@@ -65,18 +63,25 @@ export default class Basket extends Component {
                     menuNo: allBasketMenu[i].MenuNo
                 })
             }
+            return _basketData
+        }).then(_basketData => {
             this.setState({
             basketData: _basketData,
             isLoading: true
             });
-
-            console.log(this.state.basketData);
-            //this.state.basketData = 
-            // 확인을 위한 console.log
-            // if (getMenuIsError) {
-            //     console.log(whatIsError);
-            // }
         })
+        //     this.setState({
+        //     basketData: _basketData,
+        //     isLoading: true
+        //     });
+
+        //     console.log(this.state.basketData);
+        //     //this.state.basketData = 
+        //     // 확인을 위한 console.log
+        //     // if (getMenuIsError) {
+        //     //     console.log(whatIsError);
+        //     // }
+        // })
     }
 
     getTotalPrice(_basketdata){
