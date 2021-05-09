@@ -10,6 +10,7 @@ export default createStore(function(state, action){
             orderName:'상품을 선택해주세요.', orderCount:0,orderID:null,
             customerType:null, isCarNumberDisabled:null,
             ID_Success:null, PW_Success:null,
+            Basket_Delete:false,
             jeonhaUrl: 'http://localhost:4000'
         }
     }
@@ -77,6 +78,15 @@ export default createStore(function(state, action){
     }
     if(action.type === 'PAYMENT_CLICK') {
         return {...state, mode_content:'welcome'}  
+    }
+    if(action.type === 'BASKET DELETE') {
+        return {...state, Basket_Delete:true, mode_content:'MENU'}  
+    }
+    if(action.type === 'BASKET DELET') {
+        return {...state, Basket_Delete:true, mode_content:'장바구니'}  
+    }
+    if(action.type === 'NO BASKET') {
+        return {...state, mode_content:'MENU'}  
     }
 
     // 마이페이지

@@ -82,6 +82,9 @@ export default class Basket extends Component {
         for (let i=0; i<_basketdata.length; i++){
             totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
         }
+        if(totalPrice === 0){
+            this.props.zeroTotal()
+        }
         return totalPrice
     }
 

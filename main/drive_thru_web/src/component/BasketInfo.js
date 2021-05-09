@@ -17,6 +17,10 @@ class BasketInfo extends Component {
     console.log('componentWillUnmount');
     }
 
+    componentDidUpdate() {
+
+    }
+
     onClickDelete(_body){
         fetch(this.state.jeonhaUrl + '/deleteFromBasket', {
             method: "post",
@@ -60,6 +64,7 @@ class BasketInfo extends Component {
                 <span>{menuTotalPrice}원 </span>
                 <input type="button" value="X" onClick={function(e) {
                  this.onClickDelete(bodyDeleteFromBasket)
+                 this.props.onClickDelete()
                 }.bind(this)}></input>
                 <hr/>
             </div>
