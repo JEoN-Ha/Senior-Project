@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 
 const connection = mysql.createPool({
-    host: 'jeonhadatabase.mysql.database.azure.com',
-    user: 'jiyeoni@jeonhadatabase',
-    password: 'Jeonha12#',
+    host: 'jeonhadb.mysql.database.azure.com',
+    user: 'PaengGiReum@jeonhadb',
+    password: 'Hanium!@#$',
     database: 'untactdt',
     port: 3306,
     ssl: false

@@ -4,5 +4,5 @@
         ".vscode{,/**}"
     ],
     "appService.deploySubpath": ".",
-    "appService.defaultWebAppToDeploy": "/subscriptions/6cb58a44-dd71-4d76-bdc4-07983c82eb43/resourceGroups/jiyeoni/providers/Microsoft.Web/sites/server1sttrial"
+    "appService.defaultWebAppToDeploy": "/subscriptions/ac1668bb-7c4d-432d-bb54-c9a24b998b59/resourceGroups/Jeonha/providers/Microsoft.Web/sites/jeonha-server"
 }
