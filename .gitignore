@@ -33,3 +33,6 @@
 
 # Raspberry Pi
 __pycache__/
+
+# VScode Setting
+.vscode
