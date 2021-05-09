@@ -14,7 +14,7 @@ class J_Cam():
         if self.cap.isOpened():
             now = time.localtime()
             imgName = 'cam_' + str(now.tm_year) + '/' + str(now.tm_mon) + '/' + str(now.tm_mday) + '/' + str(now.tm_hour) + '/' + str(now.tm_min) + '/' +  str(now.tm_sec) + '.jpg'
-            ret, frame = cap.read()
+            ret, frame = self.cap.read()
             # cv2.imshow("cam", frame) # showing Image
             # print("imshow")
             imgPath = "./img/" + imgName
@@ -25,7 +25,7 @@ class J_Cam():
 
     def qrCodeScanning(self):
         if self.cap.isOpened():
-            ret, frame = cap.read()
+            ret, frame = self.cap.read()
             decodeData = ""
             scanner = zbar.Scanner()
             results = scanner.scan(frame)

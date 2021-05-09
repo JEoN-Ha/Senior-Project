@@ -11,7 +11,7 @@ class J_System():
         self.USV_Sensor = Motor_Sensor.J_USV(16, 18)
         # self.Car_Cam = Cam.J_Cam(0)
         self.qrcode_Cam = Cam.J_Cam(0)
-        self.P_C_Mortor.pwm.start(P_C_Mortor.angle_to_percent(90))
+        # self.P_C_Mortor.pwm.start(P_C_Mortor.angle_to_percent(90))
 
         
 
@@ -50,6 +50,7 @@ class J_System():
 
 if __name__ == "__main__":
     JEoNHa = J_System()
-    JEoNHa.start()
+    # JEoNHa.start()
+    JEoNHa.qrcode()
 
 # P_C_Mortor.exitServo()
