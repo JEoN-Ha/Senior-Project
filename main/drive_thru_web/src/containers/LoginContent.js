@@ -7,7 +7,7 @@ function mapDispatchToProps(dispatch){
             console.log(_PWsuccess)
             if(_IDsuccess === true && _PWsuccess === true){
                 alert('로그인이 완료됐습니다.');
-                dispatch({type:'LOGIN_CLICK',customer_id:_ID,PW:_PW,ID_Success:_IDsuccess,PW_Success:_PWsuccess,mode_content:'welcome'});
+                dispatch({type:'LOGIN_CLICK',customer_id:_ID,PW:_PW,ID_Success:_IDsuccess,PW_Success:_PWsuccess,mode_content:'MENU'});
             }
             else{
                 alert('아이디 또는 패스워드가 일치하지 않습니다.');
