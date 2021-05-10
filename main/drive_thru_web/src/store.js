@@ -11,7 +11,8 @@ export default createStore(function(state, action){
             customerType:null, isCarNumberDisabled:null,
             ID_Success:null, PW_Success:null,
             Basket_Delete:false,
-            jeonhaUrl: 'http://localhost:4000'
+            jeonhaUrl: 'http://localhost:4000',
+            menuAllData : [{id:null,nameKorea:null,nameEnglish:null,price:null}]
         }
     }
 
@@ -58,6 +59,9 @@ export default createStore(function(state, action){
     }
     if(action.type === 'BASKET_CLICK') {
         return {...state, orderName:'상품을 선택해주세요.'}   //DB에 넘겨주고 orderCount와 orderName을 null로 만들기
+    }
+    if(action.type === 'MENU SAVE') {
+        return {...state, menuAllData:action.menuAllData}   //DB에 넘겨주고 orderCount와 orderName을 null로 만들기
     }
 
     // 장바구니

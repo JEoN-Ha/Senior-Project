@@ -50,6 +50,7 @@ class Menu extends Component {
           menuData: menuAllData,
           isLoading: true
         })
+        this.props.menuSave(this.state.menuData);
         // this.state.menuData = allMenuData;  // 모든 음식 메뉴 데이터를 state에 저장 CHECK
         // console.log(allMenuData);  CHECK
         // 확인을 위한 console.log

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import store from '../store';
 import Welcome from './Welcome';
-import Menu from './Menu';
+import Menu from '../containers/Menu';
 import MyPage from '../containers/MyPage';
 import BasketButton_con from '../containers/BasketButton_con';
 

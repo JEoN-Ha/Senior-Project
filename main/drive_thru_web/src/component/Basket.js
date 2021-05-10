@@ -54,17 +54,16 @@ export default class Basket extends Component {
             const whatIsError = data.explainError;
             let _basketData = [];
             for (let i = 0; i < allBasket.length; i++) {
-                console.log(allBasketMenu[i].FoodNameKor,i);
+                //console.log(allBasketMenu[i].FoodNameKor,i);
                 _basketData.push({
                     id: allBasket[i].BasketId,
-                    nameKorea: allBasketMenu[i].FoodNameKor,
-                    price: allBasketMenu[i].Price,
+                    basketNo: allBasket[i].BasketMenuNo,
+                    //nameKorea: allBasketMenu[i].FoodNameKor,
+                    //price: allBasketMenu[i].Price,
                     count: allBasket[i].BasketMenuCount,
-                    menuNo: allBasketMenu[i].MenuNo
+                    //menuNo: allBasketMenu[i].MenuNo
                 })
             }
-            return _basketData
-        }).then(_basketData => {
             this.setState({
             basketData: _basketData,
             isLoading: true

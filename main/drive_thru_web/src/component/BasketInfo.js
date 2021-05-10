@@ -4,11 +4,13 @@ import store from '../store';
 class BasketInfo extends Component {
     state = {orderName:store.getState().orderName,
     customer_id:store.getState().customer_id,
-    jeonhaUrl:store.getState().jeonhaUrl}
+    jeonhaUrl:store.getState().jeonhaUrl, menuAllData:store.getState().menuAllData,
+    nameKorea:null, price:null, menuNo:null}
     constructor(props){
     super(props);
     store.subscribe(function () {
-        this.setState({orderName:store.getState().orderName}
+        this.setState({orderName:store.getState().orderName,
+            menuAllData:store.getState().menuAllData}
         );           
     }.bind(this));
     };
@@ -49,16 +51,23 @@ class BasketInfo extends Component {
     }
 
     render() {
+        for (let i=0;i<this.state.menuAllData.length;i++){
+            if(this.props.basket.basketNo === this.state.menuAllData[i].id){
+                this.state.nameKorea = this.state.menuAllData[i].nameKorea;
+                this.state.price = this.state.menuAllData[i].price;
+                this.state.menuNo = this.state.menuAllData[i].id;
+            }
+        }
+        const menuTotalPrice = this.props.basket.count*this.state.price;
         const bodyDeleteFromBasket = JSON.stringify({
             userWebId: this.state.customer_id,
-            menuNo: this.props.basket.menuNo,
+            menuNo: this.state.menuNo,
             menuCount: this.props.basket.count
         })
-        const menuTotalPrice = this.props.basket.count*this.props.basket.price;
         return (
             <div>
                 <hr/>
-                <span>{this.props.basket.nameKorea}</span><br/>
+                <span>{this.state.nameKorea}</span><br/>
                 <span>{this.props.basket.count}개 </span>
                 <span>{menuTotalPrice}원 </span>
                 <input type="button" value="X" onClick={function(e) {
