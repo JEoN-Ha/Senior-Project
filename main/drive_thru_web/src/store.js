@@ -10,7 +10,9 @@ export default createStore(function(state, action){
             orderName:'상품을 선택해주세요.', orderCount:0,orderID:null,
             customerType:null, isCarNumberDisabled:null,
             jeonhaUrl: 'https://jeonha-server.azurewebsites.net',
-            ID_Success:null, PW_Success:null
+            ID_Success:null, PW_Success:null,
+            Basket_Delete:false,
+            menuAllData : [{id:null,nameKorea:null,nameEnglish:null,price:null}]
         }
     }
 
@@ -19,7 +21,7 @@ export default createStore(function(state, action){
         return {...state, mode_content:'LOGIN'}    //...state는 이전 state를 복사
     }
     if(action.type === 'LOGIN_CLICK') {
-        return {...state, customer_id:action.customer_id, PW:action.PW, mode:'readCustomer', mode_content:'welcome'}    //...state는 이전 state를 복사
+        return {...state, customer_id:action.customer_id, PW:action.PW, mode:'readCustomer', mode_content:'MENU'}    //...state는 이전 state를 복사
     }
     if(action.type === 'LOGOUT') {
         return {...state, customer_id:action.customer_id, PW:action.PW, mode:'login', mode_content:'welcome'}
@@ -58,6 +60,9 @@ export default createStore(function(state, action){
     if(action.type === 'BASKET_CLICK') {
         return {...state, orderName:'상품을 선택해주세요.'}   //DB에 넘겨주고 orderCount와 orderName을 null로 만들기
     }
+    if(action.type === 'MENU SAVE') {
+        return {...state, menuAllData:action.menuAllData}   //DB에 넘겨주고 orderCount와 orderName을 null로 만들기
+    }
 
     // 장바구니
     if(action.type === '장바구니') {
@@ -77,6 +82,15 @@ export default createStore(function(state, action){
     }
     if(action.type === 'PAYMENT_CLICK') {
         return {...state, mode_content:'welcome'}  
+    }
+    if(action.type === 'BASKET DELETE') {
+        return {...state, Basket_Delete:true, mode_content:'MENU'}  
+    }
+    if(action.type === 'BASKET DELET') {
+        return {...state, Basket_Delete:true, mode_content:'장바구니'}  
+    }
+    if(action.type === 'NO BASKET') {
+        return {...state, mode_content:'MENU'}  
     }
 
     // 마이페이지

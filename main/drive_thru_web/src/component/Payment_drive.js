@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BasketInfo from '../containers/BasketInfo';
+import PaymentInfo from '../containers/PaymentInfo';
 import "./Component.css";
 import store from '../store';
 
@@ -20,7 +20,8 @@ export default class Payment_drive extends Component {
                 UserName:null, PhoneNum:null, CarId:null
             }],
             payment : 1,
-            lastOrderNo : null
+            lastOrderNo : null,
+            menuAllData:store.getState().menuAllData
         }  
     }
 
@@ -144,7 +145,6 @@ export default class Payment_drive extends Component {
             return res.json();
         }).then(data => {
             const allBasket = data.basket;
-            const allBasketMenu = data.menu;
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             //this.state.basketData = allBasket;
@@ -152,8 +152,7 @@ export default class Payment_drive extends Component {
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
                 id: allBasket[i].BasketId,
-                nameKorea: allBasketMenu[i].FoodNameKor,
-                price: allBasketMenu[i].Price,
+                basketNo: allBasket[i].BasketMenuNo,
                 count: allBasket[i].BasketMenuCount
             })
             }
@@ -171,8 +170,15 @@ export default class Payment_drive extends Component {
 
     getTotalPrice(_basketdata){
         let totalPrice = 0;
-        for (let i=0; i<_basketdata.length; i++){
-            totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
+        let price = 0;
+
+        for (let i=0;i<_basketdata.length;i++){
+            for(let j=0;j<this.state.menuAllData.length;j++){
+                if(_basketdata[i].basketNo === this.state.menuAllData[j].id){
+                    price = this.state.menuAllData[j].price;
+                    totalPrice = totalPrice + _basketdata[i].count*price;
+                }
+            }  
         }
         return totalPrice;
     }
@@ -198,8 +204,8 @@ export default class Payment_drive extends Component {
         })
         console.log(this.state.userInfo[0].CarId);
         const mapToComponent = data => {
-            return data.map((basket, i) => {
-                return (<BasketInfo basket={basket} key={i}
+            return data.map((payment, i) => {
+                return (<PaymentInfo payment={payment} key={i}
                   getCount = {function(_count,_id){
                     let i = 0;
                     let data = Array.from(this.state.basketData);
@@ -214,7 +220,7 @@ export default class Payment_drive extends Component {
                         basketData:data
                     });
                   }.bind(this)}
-                  ></BasketInfo>);
+                  ></PaymentInfo>);
             });
         };
         return (

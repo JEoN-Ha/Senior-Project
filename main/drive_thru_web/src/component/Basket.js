@@ -9,12 +9,14 @@ export default class Basket extends Component {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
         isLoading: false,
-        basketData : [{id:null, nameKorea:null, price:null, count:null}]
+        basketData : [{id:null, nameKorea:null, price:null, count:null}],
+        menuAllData:store.getState().menuAllData
     }
     constructor(props){
         super(props);
         store.subscribe(function () {
-            this.setState({mode_content:store.getState().mode_content});           
+            this.setState({mode_content:store.getState().mode_content,
+                menuAllData:store.getState().menuAllData});           
         }.bind(this));
     }
 
@@ -49,40 +51,45 @@ export default class Basket extends Component {
             return res.json();
         }).then(data => {
             const allBasket = data.basket;
-            let allBasketMenu = [];
-            allBasketMenu = data.menu;
-            //console.log(allBasketMenu);
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
-            //this.state.basketData = allBasket;
-            // let _basketData = [{id:null, nameKorea:null, price:null, count:null, menuNo:null}]
             let _basketData = [];
             for (let i = 0; i < allBasket.length; i++) {
                 _basketData.push({
                     id: allBasket[i].BasketId,
-                    nameKorea: allBasketMenu[i].FoodNameKor,
-                    price: allBasketMenu[i].Price,
-                    count: allBasket[i].BasketMenuCount,
-                    menuNo: allBasketMenu[i].MenuNo
+                    basketNo: allBasket[i].BasketMenuNo,
+                    count: allBasket[i].BasketMenuCount
                 })
             }
             this.setState({
             basketData: _basketData,
             isLoading: true
-            })
-            //this.state.basketData = 
-            // 확인을 위한 console.log
-            // if (getMenuIsError) {
-            //     console.log(whatIsError);
-            // }
+            });
         })
+        //     console.log(this.state.basketData);
+        //     //this.state.basketData = 
+        //     // 확인을 위한 console.log
+        //     // if (getMenuIsError) {
+        //     //     console.log(whatIsError);
+        //     // }
+        // })
     }
 
     getTotalPrice(_basketdata){
         let totalPrice = 0;
-        for (let i=0; i<_basketdata.length; i++){
-            totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
+        let price = 0;
+
+        for (let i=0;i<_basketdata.length;i++){
+            for(let j=0;j<this.state.menuAllData.length;j++){
+                if(_basketdata[i].basketNo === this.state.menuAllData[j].id){
+                    price = this.state.menuAllData[j].price;
+                    totalPrice = totalPrice + _basketdata[i].count*price;
+                }
+            }  
         }
+        // if(totalPrice === 0){
+        //     this.props.zeroTotal()
+        // }
         return totalPrice
     }
 
@@ -111,7 +118,8 @@ export default class Basket extends Component {
         }
         const mapToComponent = data => {
             return data.map((basket, i) => {
-                return (<BasketInfo basket={basket} key={i}
+                return (
+                <BasketInfo basket={basket} key={i}
                   getCount = {function(_count,_id){
                     let i = 0;
                     let data = Array.from(this.state.basketData);
@@ -129,9 +137,6 @@ export default class Basket extends Component {
                   ></BasketInfo>);
             });
         }; 
-        // const bodygetBasket = JSON.stringify({
-        //     userWebId: this.state.customer_id,
-        // })
         return (
             <div>
                 <h2>주문 메뉴 정보</h2>

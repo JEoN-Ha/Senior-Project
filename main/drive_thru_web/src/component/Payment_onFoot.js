@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BasketInfo from '../containers/BasketInfo';
+import PaymentInfo from '../containers/PaymentInfo';
 import "./Component.css";
 import store from '../store';
 import e from 'cors';
@@ -21,7 +21,8 @@ export default class Payment_onFoot extends Component {
                 UserName:null, PhoneNum:null
             }],
             payment : 1,
-            lastOrderNo : null
+            lastOrderNo : null,
+            menuAllData:store.getState().menuAllData
         }  
     }
 
@@ -120,31 +121,6 @@ export default class Payment_onFoot extends Component {
             // 확인을 위한 console.log
             console.log(orderIsError);
         })
-        // }).then(
-        //     fetch(this.state.jeonhaUrl + '/updateBasketState', {
-        //         method: "post",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: _body
-        //     }).then(res => {
-        //         if (res.status === 200) {
-        //             // 정상 작동
-        //             console.log('Success!');
-        //         } else if (res.status === 400) {
-        //             // 실패시
-        //             console.log('Failed!');
-        //         }
-        //         return res.json();
-        //     }).then(data => {
-        //         const orderIsError = data.isError;
-        //         //const userOrderNo = data.orderNo; // Front애서 배열로 OrderNo를 저장해야 함(결제 주문이 여러개일 수도 있으므로)
-        //         // 확인을 위한 console.log
-        //         console.log(orderIsError);
-        //     })
-        // )
-
-        
     }
 
     getBasketData = (_body) => {
@@ -174,8 +150,9 @@ export default class Payment_onFoot extends Component {
             for (let i = 0; i < allBasket.length; i++) {
             _basketData.push({
                 id: allBasket[i].BasketId,
-                nameKorea: allBasketMenu[i].FoodNameKor,
-                price: allBasketMenu[i].Price,
+                basketNo: allBasket[i].BasketMenuNo,
+                //nameKorea: allBasketMenu[i].FoodNameKor,
+                //price: allBasketMenu[i].Price,
                 count: allBasket[i].BasketMenuCount
             })
             }
@@ -193,8 +170,18 @@ export default class Payment_onFoot extends Component {
 
     getTotalPrice(_basketdata){
         let totalPrice = 0;
-        for (let i=0; i<_basketdata.length; i++){
-            totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
+        // for (let i=0; i<_basketdata.length; i++){
+        //     totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
+        // }
+        let price = 0;
+
+        for (let i=0;i<_basketdata.length;i++){
+            for(let j=0;j<this.state.menuAllData.length;j++){
+                if(_basketdata[i].basketNo === this.state.menuAllData[j].id){
+                    price = this.state.menuAllData[j].price;
+                    totalPrice = totalPrice + _basketdata[i].count*price;
+                }
+            }  
         }
         return totalPrice
     }
@@ -218,8 +205,8 @@ export default class Payment_onFoot extends Component {
             payment: this.state.payment
         });
         const mapToComponent = data => {
-            return data.map((basket, i) => {
-                return (<BasketInfo basket={basket} key={i}
+            return data.map((payment, i) => {
+                return (<PaymentInfo payment={payment} key={i}
                   getCount = {function(_count,_id){
                     let i = 0;
                     let data = Array.from(this.state.basketData);
@@ -234,7 +221,7 @@ export default class Payment_onFoot extends Component {
                         basketData:data
                     });
                   }.bind(this)}
-                  ></BasketInfo>);
+                  ></PaymentInfo>);
             });
         };
         return (
