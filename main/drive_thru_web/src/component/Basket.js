@@ -9,12 +9,14 @@ export default class Basket extends Component {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
         isLoading: false,
-        basketData : [{id:null, nameKorea:null, price:null, count:null}]
+        basketData : [{id:null, nameKorea:null, price:null, count:null}],
+        menuAllData:store.getState().menuAllData
     }
     constructor(props){
         super(props);
         store.subscribe(function () {
-            this.setState({mode_content:store.getState().mode_content});           
+            this.setState({mode_content:store.getState().mode_content,
+                menuAllData:store.getState().menuAllData});           
         }.bind(this));
     }
 
@@ -48,20 +50,14 @@ export default class Basket extends Component {
             return res.json();
         }).then(data => {
             const allBasket = data.basket;
-            //let allBasketMenu = [{BasketId:null, FoodNameKor:null, Price:null, BasketMenuCount:null, MenuNo:null}];
-            const allBasketMenu = data.menu;
             const getMenuIsError = data.isError;
             const whatIsError = data.explainError;
             let _basketData = [];
             for (let i = 0; i < allBasket.length; i++) {
-                //console.log(allBasketMenu[i].FoodNameKor,i);
                 _basketData.push({
                     id: allBasket[i].BasketId,
                     basketNo: allBasket[i].BasketMenuNo,
-                    //nameKorea: allBasketMenu[i].FoodNameKor,
-                    //price: allBasketMenu[i].Price,
-                    count: allBasket[i].BasketMenuCount,
-                    //menuNo: allBasketMenu[i].MenuNo
+                    count: allBasket[i].BasketMenuCount
                 })
             }
             this.setState({
@@ -85,8 +81,16 @@ export default class Basket extends Component {
 
     getTotalPrice(_basketdata){
         let totalPrice = 0;
-        for (let i=0; i<_basketdata.length; i++){
-            totalPrice = totalPrice + _basketdata[i].count*_basketdata[i].price;
+        let price = 0;
+
+        for (let i=0;i<_basketdata.length;i++){
+            for(let j=0;j<this.state.menuAllData.length;j++){
+                if(_basketdata[i].basketNo === this.state.menuAllData[j].id){
+                    price = this.state.menuAllData[j].price;
+                    totalPrice = totalPrice + _basketdata[i].count*price;
+                }
+            }
+            
         }
         return totalPrice
     }
@@ -135,9 +139,6 @@ export default class Basket extends Component {
                   ></BasketInfo>);
             });
         }; 
-        // const bodygetBasket = JSON.stringify({
-        //     userWebId: this.state.customer_id,
-        // })
         return (
             <div>
                 <h2>주문 메뉴 정보</h2>
