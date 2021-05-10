@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PaymentInfo from '../containers/PaymentInfo';
+import PaymentHistoryInfo from '../containers/PaymentHistoryInfo';
 import "./Component.css";
 import store from '../store';
 
@@ -8,7 +8,8 @@ export default class PaymentHistory extends Component {
         customer_id:store.getState().customer_id,
         jeonhaUrl:store.getState().jeonhaUrl,
         orderHistory : [{orderNo:null, menuNo:null, nameKorea:null, price:null, count:null}],
-        menuData: [{id:null, nameKorea:null, nameEnglish:null, pirce:null}]
+        menuData: [{id:null, nameKorea:null, nameEnglish:null, pirce:null}],
+        menuAllData:store.getState().menuAllData
     }
     componentWillUnmount() {
         console.log('componentWillUnmount');
@@ -114,7 +115,7 @@ export default class PaymentHistory extends Component {
     render() {
         const mapToComponent = data => {
             return data.map((payment, i) => {
-                return (<PaymentInfo payment={payment} key={i}
+                return (<PaymentHistoryInfo payment={payment} key={i}
                   getCount = {function(_count,_id){
                     let i = 0;
                     let data = Array.from(this.state.orderHistory);
@@ -129,7 +130,7 @@ export default class PaymentHistory extends Component {
                         orderHistory:data
                     });
                   }.bind(this)}
-                  ></PaymentInfo>);
+                  ></PaymentHistoryInfo>);
             });
         };
         return (
