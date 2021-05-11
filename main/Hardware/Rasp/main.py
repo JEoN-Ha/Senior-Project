@@ -13,8 +13,8 @@ class J_System():
         # self.Car_Cam = Cam.J_Cam(0)
         self.qrcode_Cam = Cam.J_Cam(0)
 
-        # self.VCB_Motor.pwm.start(VCB_Motor.angle_to_percent(90))
-        # self.PC_Motor.pwm.start(PC_Motor.angle_to_percent(90))
+        self.VCB_Motor.pwm.start(VCB_Motor.angle_to_percent(90))
+        self.PC_Motor.pwm.start(PC_Motor.angle_to_percent(90))
 
         
 
@@ -27,35 +27,39 @@ class J_System():
         
 
     def start(self):
-        if (self.updateDistanceList() <= 10):
-            # 사진 찰칵
-            imgFileName = self.Car_Cam.photoClick()
+        while True:
+            if (self.updateDistanceList() <= 10):
+                # 사진 찰칵
+                imgFileName = self.Car_Cam.photoClick()
 
-            # TODO: Api 요청
-            carNumber = RequestOCR_hand.requestREST_handwritten(imgFileName)
+                # TODO: Api 요청
+                carNumber = RequestOCR_hand.requestREST_handwritten(imgFileName)
 
-            # Api응답에 따른 Logic
-            isEqual = True
-            if (isEqual):
-                self.VCB_Motor.pwm.ChangeDutyCycle(VCB_Motor.angle_to_percent(180))   # 180도로 돌림 : 차단기 오픈
-                time.sleep(1)
+                # Api응답에 따른 Logic
+                print(carNumber)
+                isEqual = false
+                if carNumber == '69구 4381':
+                    isEqual = True
+                if (isEqual):
+                    self.VCB_Motor.pwm.ChangeDutyCycle(VCB_Motor.angle_to_percent(180))   # 180도로 돌림 : 차단기 오픈
+                    time.sleep(1)
 
-                if (self.updateDistanceList > 10):
-                    self.VCB_Motor.pwm.ChangeDutyCycle(VCB_Motor.angle_to_percent(90))   # 90도로 돌림 : 차단기 닫힘
+                    if (self.updateDistanceList > 10):
+                        self.VCB_Motor.pwm.ChangeDutyCycle(VCB_Motor.angle_to_percent(90))   # 90도로 돌림 : 차단기 닫힘
 
-                # QR 코드 인식
-                orderNumber = 1                
-                productNumber = 0
-                while(True):
-                    productNumber = self.qrCodeScan()
-                    if int(productNumber) == orderNumber:
-                        break
+                    # QR 코드 인식
+                    orderNumber = 1                
+                    productNumber = 0
+                    while(True):
+                        productNumber = self.qrCodeScan()
+                        if int(productNumber) == orderNumber:
+                            break
 
 
-                # 함수 형태로 물건 가림막 작동 시작
-                self.PC_Motor.pwm.ChangeDutyCycle(PC_Motor.angle_to_percent(180))   # 180도로 돌림 : 가림막으로 가림
-                time.sleep(3)
-                self.PC_Motor.pwm.ChangeDutyCycle(PC_Motor.angle_to_percent(90))   # 180도로 돌림 : 가림막 원상태
+                    # 함수 형태로 물건 가림막 작동 시작
+                    self.PC_Motor.pwm.ChangeDutyCycle(PC_Motor.angle_to_percent(180))   # 180도로 돌림 : 가림막으로 가림
+                    time.sleep(3)
+                    self.PC_Motor.pwm.ChangeDutyCycle(PC_Motor.angle_to_percent(90))   # 180도로 돌림 : 가림막 원상태
     
     def qrCodeScan(self):
         filePath = self.qrcode_Cam.photoClick()
@@ -68,7 +72,7 @@ class J_System():
 
 if __name__ == "__main__":
     JEoNHa = J_System()
-    # JEoNHa.start()
-    JEoNHa.qrcode()
+    JEoNHa.start()
+    
 
 # VCB_Motor.exitServo()
