@@ -13,6 +13,7 @@ class J_Cam():
         self.cuurentfolder = os.path.join(os.path.dirname(os.path.abspath('Cam.py')))
 
     def photoClick(self):
+        print('photoClick')
         if self.cap.isOpened():
             now = time.localtime()
             imgName = 'cam_' + str(now.tm_year) + '_' + str(now.tm_mon) + '_' + str(now.tm_mday) + '_' + str(now.tm_hour) + '_' + str(now.tm_min) + '_' +  str(now.tm_sec) + '.jpg'
@@ -28,29 +29,45 @@ class J_Cam():
             print("can't open camera")
 
     def qrCodeScanning(self, fileName):
+        print('qrCodeScanning')
         if self.cap.isOpened():
             filePath = self.cuurentfolder + "/img/" + fileName
             qrImg = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
             scanner = zbar.Scanner()
             results = scanner.scan(qrImg)            
-            # decodeData = []
-            # for result in results:
-            #     decodeData.append(result.data.decode())
-            decodeData = ""
-            try:
-                decodeData = results.data.decode()
+            decodeData = []
+            for result in results:
+                decodeData.append(result.data.decode())
+            # decodeData = ""
+            
+
+            # decodeData = results.data.decode()
                 
-                if (decodeData == ""):
-                    print("QR Code not detected")
-                    return -1
-                else:
-                    print(decodeData)
-                    if os.path.isfile(filePath):
-                        os.remove(filePath)
-                    return decodeData
-            except:
-                print("QR decoding Error")
+            if (len(decodeData) == 0):
+                print("QR Code not detected")
                 return -1
+            else:
+                print(decodeData)
+                if os.path.isfile(filePath):
+                    os.remove(filePath)
+                return decodeData[0]
+            
+            
+            # try:
+                # decodeData = results.data.decode()
+                
+                # if (decodeData == ""):
+                #     print("QR Code not detected")
+                #     return -1
+                # else:
+                #     print(decodeData)
+                #     if os.path.isfile(filePath):
+                #        os.remove(filePath)
+                #    return decodeData
+            # except:
+            #     print("QR decoding Error")
+                
+            #     return -1
 
 
 # cap.release()

@@ -56,6 +56,8 @@ def requestREST_handwritten(imgString):
                 print(line.text)
                 result += line.text
                 # print(line.bounding_box)
+    print('OCR')
+    print(result)
     
     return result
     '''

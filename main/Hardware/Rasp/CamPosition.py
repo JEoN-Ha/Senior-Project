@@ -9,7 +9,7 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 cap.set(cv2.CAP_PROP_FPS, 30)
 
 if cap.isOpened():
-    imgName = 'A_Postion_' + videoNumber +'.jpg'
+    imgName = 'A_Postion_' + str(videoNumber) +'.jpg'
     ret, frame = cap.read()
     # cv2.imshow("cam", frame) # showing Image
     cuurentfolder = os.path.join(os.path.dirname(os.path.abspath('Cam.py')))
