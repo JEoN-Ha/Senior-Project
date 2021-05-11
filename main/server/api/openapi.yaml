@@ -6,7 +6,7 @@ info:
 servers:
 - url: https://virtserver.swaggerhub.com/kiJiyeon/Jeonha-redux/1.0.0
   description: SwaggerHub API Auto Mocking
-- url: https://server1sttrial.azurewebsites.net
+- url: https://jeonha-server.azurewebsites.net
   description: SwaggerHub API Auto Mocking
 paths:
   /signUP:
