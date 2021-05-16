@@ -8,14 +8,14 @@ insert into usertable(UserWebId, UserName, PW, PhoneNum)
 values ('armful', '임아름', '3333', '01030303030');
 
 
-insert into car(CarWebId, CarId)
-values ('fora22', '11가 1111');
-insert into car(CarWebId, CarId)
-values ('jiyeon', '22나 2222');
-insert into car(CarWebId, CarId)
-values ('armful', '33다 3333');
-insert into car(CarWebId, CarId)
-values ('fora22', '69구 4381');
+insert into car(CarWebId, CarId_first, CarId_mid, CarId_end)
+values ('fora22', '11', '가', '1111');
+insert into car(CarWebId, CarId_first, CarId_mid, CarId_end)
+values ('jiyeon', '22', '나', '2222');
+insert into car(CarWebId, CarId_first, CarId_mid, CarId_end)
+values ('armful', '33', '다', '3333');
+insert into car(CarWebId, CarId_first, CarId_mid, CarId_end)
+values ('fora22', '69', '구', '4381');
 
 insert into statetable(StateNo, WhatState)
 values(1, '결제 전');
@@ -48,19 +48,19 @@ values('호두과자', 'Walnut Cookie', 3000);
 
 
 
-insert into ordertable(OrderWebId, WebCarId, OrderPayment)
-values('fora22', '69구 4381', 1);
+insert into ordertable(OrderWebId, WebCarId_first, WebCarId_mid, WebCarId_end, OrderPayment)
+values('fora22', '69', '구', '4381', 1);
 insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
 values(1, 1, 2);
 
 
-insert into ordertable(OrderWebId, WebCarId, OrderPayment)
-values('jiyeon', '22나 2222', 2);
+insert into ordertable(OrderWebId, WebCarId_first, WebCarId_mid, WebCarId_end, OrderPayment)
+values('jiyeon', '22', '나', '2222', 2);
 insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
 values(2, 2, 1);
 
-insert into ordertable(OrderWebId, WebCarId,  OrderPayment)
-values('fora22', '22나 2222', 1);
+insert into ordertable(OrderWebId, WebCarId_first, WebCarId_mid, WebCarId_end,  OrderPayment)
+values('fora22', '11', '가', '1111', 1);
 insert into ordertomenu(OrderToMenu_OrderNo, OrderToMenu_MenuNo, MenuCount)
 values(1, 3, 2);
 
