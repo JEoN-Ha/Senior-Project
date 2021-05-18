@@ -57,7 +57,7 @@ router.post('/signIn', (req, res) => {
 
     const userwebid = `${req.body.userWebId}`;
     const pw = `${req.body.pw}`;
-
+    
     const sqlCodeToUserTable = `
     select UserWebId, PW from usertable
     where UserWebId = ${userwebidSql};`;
@@ -451,6 +451,55 @@ router.post('/getOrder', (req, res) => {
     //     })
     // }
 })
+
+
+// ----------------------------------------------------------------------------------------------
+// carNumberIsEqual
+
+router.post('/carNumberIsEqual', (req, res) => {
+    const imgCarNumber = `'${req.body.imgCarNumber}'`;
+    // 69구 4381
+    const preImgCarNumber = imgCarNumber.slice(0,2);    // 69
+    const hangleImgCarNumber = imgCarNumber.slice(2,3); // 구
+    const postImgCarNumber = imgCarNumber.slice(4);     // 4381
+
+    const selectOrdertableCarID = `
+    select 
+    update ordertable
+    set OrderState = 5
+    where OrderToMenu_OrderNo = ${orderno} AND OrderState = 2;`;
+
+    const sqlCodeToOrderTable = `
+    insert into ordertable(OrderNo,OrderWebId, WebCarId, OrderPayment)
+    values (${orderNo},${userwebid}, ${carid}, ${payment});`;
+    
+    const sqlTest = `select * from ordertable;`;
+
+    let data = []
+    db.query(sqlTest, (err, rows) => {
+        if (err) {
+            orderToMenuError = false;
+        } else {
+            data = JSON.parse(JSON.stringify(rows));
+            for (let i = 0; i< data.length; i++) {
+                data[i].WebCarId
+
+            }
+        }
+
+    })
+
+    if (orderToMenuError) {
+        res.status(200).json({
+            isError: false
+        })
+    } else {
+        res.status(400).json({
+            isError: true
+        })
+    }
+})
+
 
 
 module.exports = router;

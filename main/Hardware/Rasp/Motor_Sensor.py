@@ -7,6 +7,7 @@ GPIO.setwarnings(False) #Disable warnings
 
 class J_Servo():
     def __init__(self, pinNumber):
+        # GPIO.setUp pin Number 7, 11, 12, 13, 15
         self.pinNumber = pinNumber
         self.frequency = 50
         GPIO.setup(self.pinNumber, GPIO.OUT)
@@ -14,6 +15,7 @@ class J_Servo():
 
     #Set function to calculate percent from angle
     def angle_to_percent(self, angle):
+        print('angle_to_percent')
         if angle > 180 or angle < 0:
             return False
 
@@ -46,10 +48,13 @@ class J_USV(): # USV is UltraSonic Wave
         GPIO.output(self.trig, False)
         print('Waiting For Sensor To Ready')
         time.sleep(1) # 1초
+        self.pulse_start = 0
+        self.pulse_end = 0
 
     
     
     def distanceInCm(self, duration):
+        
         # cm 환산 함수
         # 아두이노 UltraDistSensor 코드에서 가져옴 Known Issue
         # 물체에 도착후 돌아오는 시간 계산
@@ -66,12 +71,15 @@ class J_USV(): # USV is UltraSonic Wave
         # 거리 표시
         if distance == 0:
             distanceMsg = 'Distance : out of range \r'
+            print(distanceMsg)
         else:
-            distanceMsg = 'Distance : ' + str(distance) + 'cm' + '        \r'
+            distanceMsg = 'Distance : ' + str(distance) + 'cm' + '\r'
+            print(distanceMsg)
 
 
 
     def getDistance(self):
+        
         # 거리 구하기 메서드
         while True:
             #171206 중간에 통신 안되는 문제 개선용      
@@ -83,12 +91,15 @@ class J_USV(): # USV is UltraSonic Wave
             time.sleep(0.00001)
             GPIO.output(self.trig, False)
 
-            # ECHO로 신호가 들어 올때까지 대기
+            #while(GPIO.input(self.echo) == 0:
+            #       self.start = ti
+                  
+              #ECHO로 신호가 들어 올때까지 대기
             timeout = time.time()
             while GPIO.input(self.echo) == 0:
                 #들어왔으면 시작 시간을 변수에 저장
-                pulse_start = time.time()
-                if ((pulse_start - timeout)*1000000) >= self.MAX_DURATION_TIMEOUT:
+                self.pulse_start = time.time()
+                if ((self.pulse_start - timeout)*1000000) >= self.MAX_DURATION_TIMEOUT:
                     # 중간에 통신 안되는 문제 개선용 Known Issue       
                     fail = True
                     break
@@ -100,18 +111,19 @@ class J_USV(): # USV is UltraSonic Wave
             timeout = time.time()
             while GPIO.input(self.echo) == 1:
                 #종료 시간 변수에 저장
-                pulse_end = time.time()
-                if ((pulse_end - pulse_start)*1000000) >= self.MAX_DURATION_TIMEOUT:
-                    print_distance(0) 
+                self.pulse_end = time.time()
+                if ((self.pulse_end - self.pulse_start)*1000000) >= self.MAX_DURATION_TIMEOUT:
+                   self.print_distance(0) 
                     # 중간에 통신 안되는 문제 개선용 Known Issue    
-                    fail = True
-                    break
+                   fail = True
+                   break
             # 중간에 통신 안되는 문제 개선용 Known Issue
             if fail:
                 continue
 
-            #인식 시작부터 종료까지의 차가 바로 거리 인식 시간
-            pulse_duration = (pulse_end - pulse_start) * 1000000
+            # 인식 시작부터 종료까지의 차가 바로 거리 인식 시간
+            
+            pulse_duration = (self.pulse_end - self.pulse_start) * 1000000
 
             # 시간을 cm로 환산
             distance = self.distanceInCm(pulse_duration)
@@ -120,6 +132,6 @@ class J_USV(): # USV is UltraSonic Wave
             distance = round(distance, 2)
 
             # 표시
-            self.print_distance(distance)
+            # self.print_distance(distance)
             
             return distance

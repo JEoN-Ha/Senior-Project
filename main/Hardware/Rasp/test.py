@@ -1,7 +1,6 @@
-import cv2
-img = cv2.imread('./img/photo.jpg')
+import requests
 
-crop_img = img[50:200, 10:200]
-
-cv2.imshow("original", crop_img)
-cv2.waitKey(0)
+JeonhaURL = "http://localhost:4000"
+rq = requests.get(JeonhaURL + '/getMenuData')
+print(rq.json())
+print(rq.status_code)
