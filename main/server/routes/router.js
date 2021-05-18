@@ -458,11 +458,20 @@ router.post('/getOrder', (req, res) => {
 
 router.post('/carNumberIsEqual', (req, res) => {
     const imgCarNumber = `'${req.body.imgCarNumber}'`;
+    // 69구 4381
+    const preImgCarNumber = imgCarNumber.slice(0,2);    // 69
+    const hangleImgCarNumber = imgCarNumber.slice(2,3); // 구
+    const postImgCarNumber = imgCarNumber.slice(4);     // 4381
 
-    const sqlCodeToOrderToMenu = `
-    update ordertomenu
+    const selectOrdertableCarID = `
+    select 
+    update ordertable
     set OrderState = 5
     where OrderToMenu_OrderNo = ${orderno} AND OrderState = 2;`;
+
+    const sqlCodeToOrderTable = `
+    insert into ordertable(OrderNo,OrderWebId, WebCarId, OrderPayment)
+    values (${orderNo},${userwebid}, ${carid}, ${payment});`;
     
     const sqlTest = `select * from ordertable;`;
 

@@ -1,6 +1,6 @@
-import qrcode
+import requests
 
-for i in range(10):
-    fileName = str(i)
-    img = qrcode.make(fileName)
-    img.save('./img/qrcode/' + fileName +'.jpg')
+JeonhaURL = "http://localhost:4000"
+rq = requests.get(JeonhaURL + '/getMenuData')
+print(rq.json())
+print(rq.status_code)
