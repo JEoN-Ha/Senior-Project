@@ -16,11 +16,28 @@
 `pip install zbar-py`
 
 # Need things
-- Raspberry Pi 공식 전원장치
-- motor hs-311
-- Another Cam
-- Battery
-- 전압 강하용 회로
+
+- [Raspberry Pi 공식 전원장치 2개](https://www.devicemart.co.kr/goods/view?no=1342118)
+
+- [motor hs-311 4개](https://www.devicemart.co.kr/goods/view?no=11225)
+
+- [Another Cam](https://www.devicemart.co.kr/goods/view?no=38062)
+
+- [라즈베리파이 Cam](https://www.devicemart.co.kr/goods/view?no=1077951)
+
+- [Battery 3개](https://www.devicemart.co.kr/goods/view?no=1360569)
+
+- [전압 강하용 회로 3개](https://www.devicemart.co.kr/goods/view?no=1385980)
+
+- [점퍼 케이블 M/F](https://www.devicemart.co.kr/goods/view?no=1321195)
+
+- [점퍼 케이블 M/M](https://www.devicemart.co.kr/goods/view?no=1321196)
+
+- [점퍼 케이블 F/F](https://www.devicemart.co.kr/goods/view?no=1321192)
+
+- [초음파 거리센서 HC-SR04P](https://www.devicemart.co.kr/goods/view?no=1323062)
+
+- [적외선 센서](https://www.devicemart.co.kr/goods/view?no=1287086#goods_review)
 
 # Reference
 
