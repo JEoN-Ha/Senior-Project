@@ -1,8 +1,36 @@
 import RPi.GPIO as GPIO
 import time
+import math
+import pigpio
 
-GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode
+# GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode
 GPIO.setwarnings(False) #Disable warnings
+
+class J_Servo_pigpio():
+    def __init__(self):
+        self.servo = pigpio.pi()
+        # print(type(self.servo.connected))
+        if (not(self.servo.connected)):
+            print("Error pigpio")
+        else:
+            print("pigpio Connected")
+        
+    def moveAngle(self, pinNumber, angle):
+        if ((angle >= 10) and (angle <= 170)):
+            servoPulseWidth = 600 + (10 * angle)
+        elif ((angle >= 0) and (angle <= 180)):
+            servoPulseWidth = 500 + (11.11 * angle)
+        else:
+            print("Error Angle")
+            servoPulseWidth = 0
+            
+        self.servo.set_servo_pulsewidth(pinNumber, servoPulseWidth)
+        print("motor ", pinNumber, ", move to", angle)
+        time.sleep(1)
+        self.servo.set_servo_pulsewidth(pinNumber, 0)   # servo off
+        
+    def exitServo(self):
+        self.servo.stop()
 
 
 class J_Servo():
@@ -10,6 +38,7 @@ class J_Servo():
         # GPIO.setUp pin Number 7, 11, 12, 13, 15
         self.pinNumber = pinNumber
         self.frequency = 50
+        GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode
         GPIO.setup(self.pinNumber, GPIO.OUT)
         self.pwm = GPIO.PWM(self.pinNumber, self.frequency)        
 
@@ -36,7 +65,7 @@ class J_USV(): # USV is UltraSonic Wave
         # GPIO.setUp pin Number (Board, BCM) : (33, 13), (35, 19), (16, 23), (18, 24)
         self.trig = trig
         self.echo = echo        
-        
+        GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode      
         #거리 타임 아웃 용
         self.MAX_DISTANCE_CM = 300
         self.MAX_DURATION_TIMEOUT = (self.MAX_DISTANCE_CM * 2 * 29.1) #17460 # 17460us = 300cm
@@ -47,7 +76,7 @@ class J_USV(): # USV is UltraSonic Wave
         # HC-SR04 시작 전 잠시 대기
         GPIO.output(self.trig, False)
         print('Waiting For Sensor To Ready')
-        time.sleep(1) # 1초
+        time.sleep(0.1) # 0.1초
         self.pulse_start = 0
         self.pulse_end = 0
 
@@ -132,6 +161,7 @@ class J_USV(): # USV is UltraSonic Wave
             distance = round(distance, 2)
 
             # 표시
-            # self.print_distance(distance)
+            self.print_distance(distance)
             
             return distance
+        

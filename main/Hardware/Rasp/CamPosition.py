@@ -1,7 +1,7 @@
 import cv2
 import os
 
-videoNumber = 0
+videoNumber = 2
 
 cap = cv2.VideoCapture(videoNumber)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH,640)
