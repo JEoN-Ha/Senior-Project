@@ -460,14 +460,44 @@ router.post('/carNumberIsEqual', (req, res) => {
     const imgCarNumber = `'${req.body.imgCarNumber}'`;
     // 69구 4381
     const preImgCarNumber = imgCarNumber.slice(0,2);    // 69
-    const hangleImgCarNumber = imgCarNumber.slice(2,3); // 구
+    const midImgCarNumber = imgCarNumber.slice(2,3); // 구
     const postImgCarNumber = imgCarNumber.slice(4);     // 4381
+    
+    const selectOrdertable_PostCarID = `
+    select OrderNo
+    where WebCarId_end = ${postImgCarNumber};`
+    
+    let postCarId = []
+    let needMoreCarId = true;
+    db.query(selectOrdertable_PostCarID, (err, rows) => {
+        if (err) {
+            orderToMenuError = false;
+        } else {
+            postCarId = JSON.parse(JSON.stringify(rows));
+            if (postCarId.length > 1) {
+                needMoreCarId = true;
+            } else if (postCarId < 1) {
+                // Error
+                
+            } else {
+                // 
+                needMoreCarId = false;
+            }
+            for (let i = 0; i< data.length; i++) {
+                data[i].WebCarId
+                
+            }
+        }
+        
+    })
+    const selectOrdertable_PreCarID = `
+    select OrderNo
+    where WebCarId_first = ${preImgCarNumber};`
+    const selectOrdertable_midCarID = `
+    select OrderNo
+    where WebCarId_mid = ${preImgCarNumber};`
 
-    const selectOrdertableCarID = `
-    select 
-    update ordertable
-    set OrderState = 5
-    where OrderToMenu_OrderNo = ${orderno} AND OrderState = 2;`;
+    
 
     const sqlCodeToOrderTable = `
     insert into ordertable(OrderNo,OrderWebId, WebCarId, OrderPayment)
@@ -475,19 +505,6 @@ router.post('/carNumberIsEqual', (req, res) => {
     
     const sqlTest = `select * from ordertable;`;
 
-    let data = []
-    db.query(sqlTest, (err, rows) => {
-        if (err) {
-            orderToMenuError = false;
-        } else {
-            data = JSON.parse(JSON.stringify(rows));
-            for (let i = 0; i< data.length; i++) {
-                data[i].WebCarId
-
-            }
-        }
-
-    })
 
     if (orderToMenuError) {
         res.status(200).json({
