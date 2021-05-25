@@ -457,64 +457,81 @@ router.post('/getOrder', (req, res) => {
 // carNumberIsEqual
 
 router.post('/carNumberIsEqual', (req, res) => {
-    const imgCarNumber = `'${req.body.imgCarNumber}'`;
+    const imgCarNumber = `${req.body.imgCarNumber}`;
     // 69구 4381
     const preImgCarNumber = imgCarNumber.slice(0,2);    // 69
     const midImgCarNumber = imgCarNumber.slice(2,3); // 구
     const postImgCarNumber = imgCarNumber.slice(4);     // 4381
     
-    const selectOrdertable_PostCarID = `
-    select OrderNo
-    where WebCarId_end = ${postImgCarNumber};`
-    
+    const selectOrdertable_PostCarID = `select * from ordertable where WebCarId_end = '${postImgCarNumber}';`
     let postCarId = []
-    let needMoreCarId = true;
+
+    // index 0 DB Error, index 1 is no matching data, index 2 is WebCarId_end same but no matching WebCarId_pre, 
+    // index 3 is WebCarId_end & WebCarId_pre same but no matching WebCarId_mid
+    let isError = [false, false, false, false];  
+
+    let customerOrderNoArray = [];
+    let lastCustomerOrderNoArray = [];
+    let resultOrderNo = -1;
     db.query(selectOrdertable_PostCarID, (err, rows) => {
         if (err) {
-            orderToMenuError = false;
+            isError[0] = true;
+            console.log("here");
         } else {
             postCarId = JSON.parse(JSON.stringify(rows));
+            // console.log(postCarId);
             if (postCarId.length > 1) {
-                needMoreCarId = true;
-            } else if (postCarId < 1) {
+                for (let i = 0; i< postCarId.length; i++) {
+                    if (postCarId[i].WebCarId_first === preImgCarNumber) {
+                        // 앞 번호 2개 check
+                        customerOrderNoArray.push(i);
+                    }
+                }
+                
+                if (customerOrderNoArray.length > 1) {
+                    // 앞 2개 번호와 뒤 4자리 번호 겹칠 경우
+                    for (let i = 0; i< postCarId.length; i++) {
+                        if ((postCarId[i].WebCarId_mid === midImgCarNumber) && customerOrderNoArray.includes(i)) {
+                            lastCustomerOrderNoArray.push(i);
+                        }
+                    }
+
+                    if (lastCustomerOrderNoArray.length === 1) {
+                        resultOrderNo = lastCustomerOrderNoArray[0];
+                    } else {
+                        isError[3] = true;
+                    }
+
+                } else if (customerOrderNoArray.length < 1) {
+                    isError[2] = true;
+                } else {
+                    resultOrderNo = customerOrderNoArray[0];
+                }
+            } else if (postCarId.length < 1) {
                 // Error
-                
+                isError[1] = true;
             } else {
-                // 
-                needMoreCarId = false;
-            }
-            for (let i = 0; i< data.length; i++) {
-                data[i].WebCarId
-                
+                customerOrderNoArray.push(postCarId[0].OrderNo);
+                resultOrderNo = customerOrderNoArray[0];
+                // console.log(resultOrderNo);
             }
         }
         
+        const errorOccured = isError[0] || isError[1] || isError[2] || isError[3];
+        // console.log(resultOrderNo);
+        if (!errorOccured) {
+            res.status(200).json({
+                isError: isError,
+                resultNo : resultOrderNo
+            })
+        } else {
+            res.status(400).json({
+                isError: isError,
+                resultNo : resultOrderNo
+            })
+        }
     })
-    const selectOrdertable_PreCarID = `
-    select OrderNo
-    where WebCarId_first = ${preImgCarNumber};`
-    const selectOrdertable_midCarID = `
-    select OrderNo
-    where WebCarId_mid = ${preImgCarNumber};`
-
-    
-
-    const sqlCodeToOrderTable = `
-    insert into ordertable(OrderNo,OrderWebId, WebCarId, OrderPayment)
-    values (${orderNo},${userwebid}, ${carid}, ${payment});`;
-    
-    const sqlTest = `select * from ordertable;`;
-
-
-    if (orderToMenuError) {
-        res.status(200).json({
-            isError: false
-        })
-    } else {
-        res.status(400).json({
-            isError: true
-        })
-    }
+   
 })
 
 
