@@ -29,7 +29,7 @@ def requestREST_handwritten(imgString):
     '''
     print("===== Detect Printed Text with OCR - local =====")
     # Get an image with printed text
-    local_image_printed_text_path = os.path.join (images_folder + "/img/" + imgString)
+    local_image_printed_text_path = os.path.join (images_folder + "/img/car/" + imgString)
     print(local_image_printed_text_path)
 
     local_image_printed_text = open(local_image_printed_text_path, "rb")

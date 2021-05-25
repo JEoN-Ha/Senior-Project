@@ -30,7 +30,7 @@ def requestREST_handwritten(imgString):
     '''
     print("===== Read File - local =====")
     # Get image of handwriting
-    local_image_handwritten_path = os.path.join (images_folder + "/img/" + imgString)
+    local_image_handwritten_path = os.path.join (images_folder + "/img/car/" + imgString)
     # Open the image
     local_image_handwritten = open(local_image_handwritten_path, "rb")
 

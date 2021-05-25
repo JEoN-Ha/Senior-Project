@@ -12,15 +12,20 @@ class J_Cam():
         self.cap.set(cv2.CAP_PROP_FPS, 30)
         self.cuurentfolder = os.path.join(os.path.dirname(os.path.abspath('Cam.py')))
 
-    def photoClick(self):
+    def photoClick(self, isCarOrQR):
         print('photoClick')
         if self.cap.isOpened():
             now = time.localtime()
-            imgName = 'cam_' + str(now.tm_year) + '_' + str(now.tm_mon) + '_' + str(now.tm_mday) + '_' + str(now.tm_hour) + '_' + str(now.tm_min) + '_' +  str(now.tm_sec) + '.jpg'
-            ret, frame = self.cap.read()
+            if (isCarOrQR == "car"):
+                imgName = 'car_' + str(now.tm_year) + '_' + str(now.tm_mon) + '_' + str(now.tm_mday) + '_' + str(now.tm_hour) + '_' + str(now.tm_min) + '_' +  str(now.tm_sec) + '.jpg'
+                imgPath = self.cuurentfolder + "/img/car/" + imgName
+            elif (isCarOrQR == "qr"):
+                imgName = 'qr_' + str(now.tm_year) + '_' + str(now.tm_mon) + '_' + str(now.tm_mday) + '_' + str(now.tm_hour) + '_' + str(now.tm_min) + '_' +  str(now.tm_sec) + '.jpg'
+                imgPath = self.cuurentfolder + "/img/qrcode/" + imgName
+
             # cv2.imshow("cam", frame) # showing Image
             # print("imshow")
-            imgPath = self.cuurentfolder + "/img/" + imgName
+            ret, frame = self.cap.read()
             print(imgName)
             print(imgPath)
             cv2.imwrite(imgPath, frame)
@@ -31,7 +36,7 @@ class J_Cam():
     def qrCodeScanning(self, fileName):
         print('qrCodeScanning')
         if self.cap.isOpened():
-            filePath = self.cuurentfolder + "/img/" + fileName
+            filePath = self.cuurentfolder + "/img/qrcode/" + fileName
             qrImg = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
             scanner = zbar.Scanner()
             results = scanner.scan(qrImg)            

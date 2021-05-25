@@ -13,6 +13,7 @@ class J_System():
         self.servo = Motor_Sensor.J_Servo_pigpio()
         self.qrcode_Cam = Cam.J_Cam(2)
         self.Car_Cam = Cam.J_Cam(0)
+        self.JeonhaURL = "http://localhost:4000"
 
         # self.VCB_Motor.pwm.start(self.VCB_Motor.angle_to_percent(90))
         # self.PC_Motor.pwm.start(self.PC_Motor.angle_to_percent(90))
@@ -43,10 +44,13 @@ class J_System():
 
                 # Api응답에 따른 Logic
                 print(carNumber)
-                isEqual = False
-                if carNumber == '69구 4381':
-                    isEqual = True
-                if (isEqual):
+                data = {"imgCarNumber": carNumber}
+                rq = requests.post(self.JeonhaURL + '/carNumberIsEqual', json=data)
+                orderNumber =  rq.json()
+
+                # if carNumber == '69구 4381':
+                #     isEqual = True
+                if (rq.status_code == 200):
                     # self.VCB_Motor.pwm.ChangeDutyCycle(self.VCB_Motor.angle_to_percent(180))   
                     self.servo.moveAngle(17, 160)  # 160도로 돌림 : 차단기 오픈
                     time.sleep(1)
@@ -56,12 +60,11 @@ class J_System():
                         self.servo.moveAngle(17, 50)  # 50도로 돌림 : 차단기 닫힘
 
                     # QR 코드 인식
-                    orderNumber = 4                
                     productNumber = 0
                     # while(True):
                     for i in range(30):
                         productNumber = self.qrCodeScan()
-                        print(productNumber, type(productNumber), int(productNumber))
+                        # print(productNumber, type(productNumber), int(productNumber))
                         if int(productNumber) == orderNumber:
                             print('is Same!!')
                             break
