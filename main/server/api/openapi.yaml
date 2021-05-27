@@ -4,8 +4,6 @@ info:
   description: Untact DriveThru를 위한 API 명세서
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/kiJiyeon/Jeonha-redux/1.0.0
-  description: SwaggerHub API Auto Mocking
 - url: https://jeonha-server.azurewebsites.net
   description: SwaggerHub API Auto Mocking
 paths:
@@ -391,6 +389,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200_6'
       x-swagger-router-controller: Default
+  /carNumberIsEqual:
+    post:
+      operationId: carNumberIsEqualPOST
+      parameters:
+      - name: WebCarId_first
+        in: query
+        description: front of CarId
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: WebCarId_mid
+        in: query
+        description: middle of CarId
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: WebCarId_end
+        in: query
+        description: end of CarId
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successfully posted OrderState !
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_7'
+      x-swagger-router-controller: Default
 components:
   schemas:
     inline_response_400:
@@ -541,3 +575,13 @@ components:
           type: integer
       example:
         OrderState: 0
+    inline_response_200_7:
+      type: object
+      properties:
+        OrderState:
+          type: integer
+      example:
+        WebCarId_first: '12'
+        WebCarId_mid: '나'
+        WebCarId_end: '3456'
+
