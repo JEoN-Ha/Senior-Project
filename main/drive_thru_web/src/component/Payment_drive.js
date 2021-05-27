@@ -88,12 +88,14 @@ export default class Payment_drive extends Component {
             _userInfo.push({
                 UserName : userInfoData[0].UserName,
                 PhoneNum : userInfoData[0].PhoneNum,
-                CarId : carData[0].CarId
+                CarId_first : carData[0].CarId_first,
+                CarId_mid : carData[0].CarId_mid,
+                CarId_end : carData[0].CarId_end
             })
             this.setState({
                 userInfo : _userInfo
             })
-            console.log(this.state.userInfo[0].CarId)
+            console.log(this.state.userInfo[0])
 
             // 확인을 위한 console.log
             // if (getMenuIsError) {
@@ -199,7 +201,9 @@ export default class Payment_drive extends Component {
         let bodyOrder = JSON.stringify({
             orderNo: this.state.lastOrderNo + 1,
             userWebId: this.state.customer_id,
-            carid: this.state.userInfo[0].CarId,
+            carid_first: this.state.userInfo[0].CarId_first,
+            carid_mid: this.state.userInfo[0].CarId_mid,
+            carid_end: this.state.userInfo[0].CarId_end,
             payment: this.state.payment
         })
         console.log(this.state.userInfo[0].CarId);
@@ -237,7 +241,7 @@ export default class Payment_drive extends Component {
                         onChange={function (e) {
                             this.setState({phone:e.target.value});                       
                         }.bind(this)}></input> <br></br>
-                    차량번호<input type="text" name="carNumber" placeholder={this.state.userInfo[0].CarId}
+                    차량번호<input type="text" name="carNumber" placeholder={this.state.userInfo[0].CarId_first+this.state.userInfo[0].CarId_mid+this.state.userInfo[0].CarId_end}
                         onChange={function (e) {
                             this.setState({carNumber:e.target.value});                        
                         }.bind(this)}></input>

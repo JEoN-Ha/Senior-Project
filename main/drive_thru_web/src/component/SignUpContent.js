@@ -65,7 +65,9 @@ class SignUpContent extends Component {
         userName: this.state.name,
         pw: this.state.PW,
         phoneNum: this.state.phoneNum,
-        carId: this.state.carNum1
+        carId_first: this.state.carNum_first,
+        carId_mid: this.state.carNum_mid,
+        carId_end: this.state.carNum_end
     });
       return (
         <div className="SignUp">
@@ -109,23 +111,25 @@ class SignUpContent extends Component {
                     this.setState({phoneNum:e.target.value});                    
                 }.bind(this)}></input><br></br>
             차량번호<br></br>
-            <input type="text" name="carNum1" placeholder="대표 차량번호를 입력해주세요."
-                size="30"
-                carNum1={this.state.carNum1}
+            <input type="text" name="carNum_first" size="6" placeholder="예시) 12"
+                carNum_first={this.state.carNum_first}
                 onChange={function (e) {
-                    this.setState({carNum1:e.target.value});                    
+                    this.setState({carNum_first:e.target.value});                    
+                }.bind(this)}></input>&nbsp;
+            <input type="text" name="carNum_mid" size="4" placeholder="가"
+            carNum_mid={this.state.carNum_mid}
+            onChange={function (e) {
+                this.setState({carNum_mid:e.target.value});                    
+            }.bind(this)}></input>&nbsp;
+            <input type="text" name="carNum_end" size="6" placeholder="3456"
+                carNum_end={this.state.carNum_end}
+                onChange={function (e) {
+                    this.setState({carNum_end:e.target.value});                    
                 }.bind(this)}></input><br></br>
-            {/* 차량번호 2<br></br>
-            <input type="text" name="carNum2" placeholder="두번째 차량번호를 입력해주세요."
-                size="30"
-                carNum2={this.state.carNum2}
-                onChange={function (e) {
-                    this.setState({carNum2:e.target.value});                    
-                }.bind(this)}></input><br></br> */}
             <input style={btnStyle}
                 type="button" value="Sign up" onClick={function(){
                 this.props.onClickSignUp(this.state.name,this.state.ID,
-                this.state.PW_state,this.state.phoneNum,this.state.carNum1)
+                this.state.PW_state,this.state.phoneNum,this.state.carNum_first,this.state.carNum_mid,this.state.carNum_end)
                 this.getFetch(bodySignUp)
                 }.bind(this)}></input>
         </div>
