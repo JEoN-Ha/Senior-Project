@@ -4,7 +4,7 @@ info:
   description: Untact DriveThru를 위한 API 명세서
   version: 1.0.0
 servers:
-- url: https://jeonha-server.azurewebsites.net
+- url: https://server1sttrial.azurewebsites.net
   description: SwaggerHub API Auto Mocking
 paths:
   /signUP:
@@ -44,9 +44,25 @@ paths:
         explode: true
         schema:
           type: string
-      - name: carId
+      - name: WebCarId_first
         in: query
-        description: user's car ID
+        description: front of carId
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: WebCarId_mid
+        in: query
+        description: middle of carId
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: WebCarId_end
+        in: query
+        description: end of carId
         required: true
         style: form
         explode: true
@@ -129,7 +145,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_1'
+                $ref: '#/components/schemas/inline_response_400_2'
       x-swagger-router-controller: Default
   /getMenuData:
     get:
@@ -147,22 +163,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_2'
+                $ref: '#/components/schemas/inline_response_400_3'
       x-swagger-router-controller: Default
   /insertIntoBasket:
     post:
       summary: put something to Basket before the order
       operationId: insertIntoBasketPOST
       parameters:
-      - name: OrderToMenu_MenuNo
-        in: query
-        description: menu number
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
-      - name: OrderWebId
+      - name: BasketId
         in: query
         description: user Web ID
         required: true
@@ -170,22 +178,6 @@ paths:
         explode: true
         schema:
           type: string
-      - name: WEBCarId
-        in: query
-        description: Car id that user inputed when order
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: OrderPayment
-        in: query
-        description: payment
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
       - name: MenuNo
         in: query
         description: id number of menu
@@ -228,13 +220,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_2'
+                $ref: '#/components/schemas/inline_response_200_1'
         "400":
           description: failed to get Menu Data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_2'
+                $ref: '#/components/schemas/inline_response_400_3'
       x-swagger-router-controller: Default
   /updateFromBasket:
     post:
@@ -320,19 +312,36 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_3'
+                $ref: '#/components/schemas/inline_response_200_2'
       x-swagger-router-controller: Default
   /getOrder:
-    get:
+    post:
       summary: to show Ordered list
-      operationId: getOrderGET
+      operationId: getOrderPOST
+      parameters:
+      - name: UserWebId
+        in: query
+        description: user's id that inputed when sign up
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: OrderNo
+        in: query
+        description: to get orderNo
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: successfully got the Order list!
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_4'
+                $ref: '#/components/schemas/inline_response_200_3'
       x-swagger-router-controller: Default
   /getLastOrderNo:
     get:
@@ -344,7 +353,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_5'
+                $ref: '#/components/schemas/inline_response_200_4'
       x-swagger-router-controller: Default
   /CancelOrder:
     post:
@@ -387,31 +396,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_6'
+                $ref: '#/components/schemas/inline_response_200_5'
       x-swagger-router-controller: Default
   /carNumberIsEqual:
     post:
+      summary: to compare carId with DB's
       operationId: carNumberIsEqualPOST
       parameters:
-      - name: WebCarId_first
+      - name: CarId_first
         in: query
-        description: front of CarId
+        description: front of carId
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: WebCarId_mid
+      - name: CarId_mid
         in: query
-        description: middle of CarId
+        description: middle of carId
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: WebCarId_end
+      - name: CarId_end
         in: query
-        description: end of CarId
+        description: end of carId
         required: true
         style: form
         explode: true
@@ -423,7 +433,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_7'
+                $ref: '#/components/schemas/inline_response_200_5'
       x-swagger-router-controller: Default
 components:
   schemas:
@@ -443,6 +453,19 @@ components:
           type: boolean
         PwError:
           type: boolean
+    inline_response_400_2:
+      type: object
+      properties:
+        PhoneNum:
+          type: string
+        UserName:
+          type: string
+        CarId_first:
+          type: string
+        CarId_mid:
+          type: string
+        CarId_end:
+          type: string
     inline_response_200:
       type: object
       properties:
@@ -459,43 +482,12 @@ components:
         MenuNo: 0
         FoodNameKor: FoodNameKor
         FoodNameEng: FoodNameEng
-    inline_response_400_2:
+    inline_response_400_3:
       type: object
       properties:
         GetError:
           type: string
     inline_response_200_1:
-      type: object
-      properties:
-        OrderToMenu_OrderNo:
-          type: integer
-        OrderToMenu_MenuNo:
-          type: string
-        OrderWebId:
-          type: string
-        WEBCarId:
-          type: integer
-        OrderState:
-          type: integer
-        OrderPayment:
-          type: integer
-        MenuNo:
-          type: integer
-        MenuCount:
-          type: integer
-        Price:
-          type: integer
-      example:
-        OrderWebId: OrderWebId
-        MenuCount: 2
-        Price: 7
-        MenuNo: 5
-        OrderToMenu_OrderNo: 0
-        WEBCarId: 6
-        OrderPayment: 5
-        OrderToMenu_MenuNo: OrderToMenu_MenuNo
-        OrderState: 1
-    inline_response_200_2:
       type: object
       properties:
         BasketId:
@@ -511,14 +503,20 @@ components:
         BasketMenuNo: BasketMenuNo
         BasketId: 0
         BasketState: 6
-    inline_response_200_3:
+    inline_response_200_2:
       type: object
       properties:
+        OrderNo:
+          type: integer
         UserName:
           type: string
         PhoneNum:
           type: string
-        carId:
+        WebCarId_first:
+          type: string
+        WebCarId_mid:
+          type: string
+        WebCarId_end:
           type: string
         OrderToMenu_MenuNo:
           type: integer
@@ -528,60 +526,62 @@ components:
           type: integer
       example:
         UserName: UserName
-        MenuCount: 6
+        MenuCount: 1
         PhoneNum: PhoneNum
-        OrderPayment: 1
-        OrderToMenu_MenuNo: 0
-        carId: carId
-    inline_response_200_4:
+        WebCarId_first: WebCarId_first
+        OrderNo: 0
+        WebCarId_mid: WebCarId_mid
+        OrderPayment: 5
+        OrderToMenu_MenuNo: 6
+        WebCarId_end: WebCarId_end
+    inline_response_200_3:
       type: object
       properties:
+        OrderNo:
+          type: integer
         OrderToMenu_OrderNo:
           type: integer
         OrderToMenu_MenuNo:
           type: integer
+        OrderState:
+          type: integer
         Menucount:
           type: integer
       example:
-        Menucount: 1
-        OrderToMenu_OrderNo: 0
-        OrderToMenu_MenuNo: 6
-    inline_response_200_5:
+        Menucount: 5
+        OrderToMenu_OrderNo: 6
+        OrderNo: 0
+        OrderToMenu_MenuNo: 1
+        OrderState: 5
+    inline_response_200_4:
       type: object
       properties:
         OrderNo:
           type: integer
         OrderWebId:
           type: string
-        WebCarId:
+        CarWebId:
           type: string
-        ImageWebCarId:
+        WebCarId_first:
           type: string
-        IsEqualCarAndImage:
-          type: integer
+        WebCarId_mid:
+          type: string
+        WebCarId_end:
+          type: string
         OrderPayment:
           type: integer
       example:
         OrderWebId: OrderWebId
+        CarWebId: CarWebId
+        WebCarId_first: WebCarId_first
         OrderNo: 0
-        IsEqualCarAndImage: 6
-        OrderPayment: 1
-        ImageWebCarId: ImageWebCarId
-        WebCarId: WebCarId
-    inline_response_200_6:
+        WebCarId_mid: WebCarId_mid
+        OrderPayment: 6
+        WebCarId_end: WebCarId_end
+    inline_response_200_5:
       type: object
       properties:
         OrderState:
           type: integer
       example:
         OrderState: 0
-    inline_response_200_7:
-      type: object
-      properties:
-        OrderState:
-          type: integer
-      example:
-        WebCarId_first: '12'
-        WebCarId_mid: '나'
-        WebCarId_end: '3456'
-
