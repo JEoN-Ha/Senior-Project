@@ -9,18 +9,14 @@ import numpy as np
 
 class J_System():
     def __init__(self):
-        # self.VCB_Motor = Motor_Sensor.J_Servo(11) # VCB is Vehicle circuit breaker
-        # self.PC_Motor = Motor_Sensor.J_Servo(12)        # P_C is Product Classification
         self.USV_Sensor = Motor_Sensor.J_USV(16, 18)
         self.servo = Motor_Sensor.J_Servo_pigpio()
         print("Motor & Sensor Set")
         
         self.Car_Cam = Cam.J_Cam(2)
-        self.JeonhaURL = "http://localhost:4000"
+        self.JeonhaURL = "https://expressway-dt.azurewebsites.net"
         
         print("Cameras Set")
-        # self.VCB_Motor.pwm.start(self.VCB_Motor.angle_to_percent(90))
-        # self.PC_Motor.pwm.start(self.PC_Motor.angle_to_percent(90))
         
 
     def updateDistanceList(self):
@@ -59,16 +55,11 @@ class J_System():
                 orderNumber =  rq.json()
                 
                 print("Request End\n")
-                # if carNumber == '69구 4381':
-                #     isEqual = True
-                # print(rq.status_code)
                 if (rq.status_code == 200):
-                    # self.VCB_Motor.pwm.ChangeDutyCycle(self.VCB_Motor.angle_to_percent(180))   
                     self.servo.moveAngle(17, 180)  # 180도로 돌림 : 차단기 오픈
                     time.sleep(3)
 
                     if (self.updateDistanceList() > 5):
-                        # self.VCB_Motor.pwm.ChangeDutyCycle(self.VCB_Motor.angle_to_percent(90))   # 90도로 돌림 : 차단기 닫힘
                         self.servo.moveAngle(17, 90)  # 90도로 돌림 : 차단기 닫힘
 
                     # QR 코드 인식
@@ -82,11 +73,9 @@ class J_System():
 
                             # 함수 형태로 물건 가림막 작동 시작
                             print("Belt Screen Move")
-                            #self.PC_Motor.pwm.ChangeDutyCycle(self.PC_Motor.angle_to_percent(180))   # 180도로 돌림 : 가림막으로 가림
                             self.servo.moveAngle(18, 50)  # 160도로 돌림 : 가림막으로 가림
                             time.sleep(8)
                             self.servo.moveAngle(18, 170)  # 50도로 돌림 : 가림막으로 가림
-                            #self.PC_Motor.pwm.ChangeDutyCycle(self.PC_Motor.angle_to_percent(90))   # 180도로 돌림 : 가림막 원상태
                             break
         
     def qrCodeScan(self):

@@ -45,16 +45,12 @@ class J_Cam():
             decodeData = []
             for result in results:
                 decodeData.append(result.data.decode())
-            # decodeData = ""
-            
-
-            # decodeData = results.data.decode()
                 
             if (len(decodeData) == 0):
                 print("QR Code not detected")
                 return -1
             else:
                 print("Decoding QR : ", decodeData)
-                #if os.path.isfile(filePath):
-                    #os.remove(filePath)
+                if os.path.isfile(filePath):
+                    os.remove(filePath)
                 return decodeData[0]
