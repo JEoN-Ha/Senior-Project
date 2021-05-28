@@ -15,7 +15,6 @@ class J_Cam():
         
 
     def photoClick(self, isCarOrQR):
-        print('photoClick')
         if self.cap.isOpened():
             
             if (isCarOrQR == "car"):
@@ -37,7 +36,7 @@ class J_Cam():
             print("can't open camera")
 
     def qrCodeScanning(self, fileName):
-        print('qrCodeScanning')
+        print('Decode QR Code')
         if self.cap.isOpened():
             filePath = self.cuurentfolder + "/img/qrcode/" + fileName
             qrImg = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
@@ -55,7 +54,7 @@ class J_Cam():
                 print("QR Code not detected")
                 return -1
             else:
-                print(decodeData)
+                print("Decoding QR : ", decodeData)
                 #if os.path.isfile(filePath):
                     #os.remove(filePath)
                 return decodeData[0]

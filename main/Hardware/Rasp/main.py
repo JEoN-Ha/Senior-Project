@@ -6,7 +6,7 @@ import requests
 import json
 import numpy as np
 
-print("main Start")
+
 class J_System():
     def __init__(self):
         # self.VCB_Motor = Motor_Sensor.J_Servo(11) # VCB is Vehicle circuit breaker
@@ -25,7 +25,6 @@ class J_System():
 
     def updateDistanceList(self):
         print('updateDistanceList')
-        
         distanceList = []
         for i in range(9):
             distanceList.append(self.USV_Sensor.getDistance())
@@ -34,11 +33,12 @@ class J_System():
         
 
     def start(self):
+        print("")
+        print("======= System Start =======")
         threshold = 8
         while True:
             self.servo.moveAngle(18, 170)  # 170도로 돌림 : 가림막 열림 
             self.servo.moveAngle(17, 90)  # 90도로 돌림 : 차단기 닫힘
-            print('start')
             testDistance = self.updateDistanceList()
             print(testDistance, "cm")
             if ((testDistance <= threshold) and (testDistance > 0)):
@@ -51,16 +51,18 @@ class J_System():
 
  
                 # Api응답에 따른 Logic
-                print("OCR End")
+                print("OCR End\n")
+                
+                print("Server Request")
                 data = {"imgCarNumber": carNumber}
-                #rq = requests.post(self.JeonhaURL + '/carNumberIsEqual', json=data)
-                #orderNumber =  rq.json()
-                orderNumber = 1
-
+                rq = requests.post(self.JeonhaURL + '/carNumberIsEqual', json=data)
+                orderNumber =  rq.json()
+                
+                print("Request End\n")
                 # if carNumber == '69구 4381':
                 #     isEqual = True
                 # print(rq.status_code)
-                if (True):# rq.status_code == 200):
+                if (rq.status_code == 200):
                     # self.VCB_Motor.pwm.ChangeDutyCycle(self.VCB_Motor.angle_to_percent(180))   
                     self.servo.moveAngle(17, 180)  # 180도로 돌림 : 차단기 오픈
                     time.sleep(3)
@@ -71,17 +73,15 @@ class J_System():
 
                     # QR 코드 인식
                     productNumber = 0
-                    #while(True):
-                    # for i in range(30):
-                    print("Here")
                     while True:
                         productNumber = self.qrCodeScan()
                         # print(productNumber, type(productNumber), int(productNumber))
                         if int(productNumber) == orderNumber:
-                            print('is Same!!')
+                            print('======= is Same!! ======')
 
 
                             # 함수 형태로 물건 가림막 작동 시작
+                            print("Belt Screen Move")
                             #self.PC_Motor.pwm.ChangeDutyCycle(self.PC_Motor.angle_to_percent(180))   # 180도로 돌림 : 가림막으로 가림
                             self.servo.moveAngle(18, 50)  # 160도로 돌림 : 가림막으로 가림
                             time.sleep(8)
@@ -90,10 +90,10 @@ class J_System():
                             break
         
     def qrCodeScan(self):
-        
         qrcode_Cam = Cam.J_Cam(0)
         while True:
-            print("qrCodeScan")
+            print("")
+            print("QR Code Scanning")
             filePath = qrcode_Cam.photoClick("qr")
             resultQRCode = qrcode_Cam.qrCodeScanning(filePath)
             if (resultQRCode != -1):
@@ -120,7 +120,7 @@ class J_System():
 
 if __name__ == "__main__":
     JEoNHa = J_System()
-    print("System setting Complete")
+    
     # while True:
     #     print("here test")
     #JEoNHa.test()

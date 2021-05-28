@@ -53,11 +53,10 @@ def requestREST_handwritten(imgString):
     if recognize_handwriting_result.status == OperationStatusCodes.succeeded:
         for text_result in recognize_handwriting_result.analyze_result.read_results:
             for line in text_result.lines:
-                print(line.text)
+                # print(line.text)
                 result += line.text
                 # print(line.bounding_box)
-    print('OCR')
-    print(result)
+    print('OCR Result : ', result)
     
     return result
     '''
