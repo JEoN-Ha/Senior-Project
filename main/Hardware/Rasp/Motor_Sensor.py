@@ -33,32 +33,6 @@ class J_Servo_pigpio():
         self.servo.stop()
 
 
-class J_Servo():
-    def __init__(self, pinNumber):
-        # GPIO.setUp pin Number 7, 11, 12, 13, 15
-        self.pinNumber = pinNumber
-        self.frequency = 50
-        GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode
-        GPIO.setup(self.pinNumber, GPIO.OUT)
-        self.pwm = GPIO.PWM(self.pinNumber, self.frequency)        
-
-    #Set function to calculate percent from angle
-    def angle_to_percent(self, angle):
-        print('angle_to_percent')
-        if angle > 180 or angle < 0:
-            return False
-
-        start = 4
-        end = 12.5
-        ratio = (end - start)/180 #Calcul ratio from angle to percent
-
-        angle_as_percent = angle * ratio
-
-        return start + angle_as_percent
-
-    def exitServo(self):
-        self.pwm.stop()
-        GPIO.cleanup()
 
 class J_USV(): # USV is UltraSonic Wave
     def __init__(self, trig, echo):
@@ -161,7 +135,7 @@ class J_USV(): # USV is UltraSonic Wave
             distance = round(distance, 2)
 
             # 표시
-            self.print_distance(distance)
+            # self.print_distance(distance)
             
             return distance
         
