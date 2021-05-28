@@ -10,7 +10,9 @@ router.post('/signUp', (req, res) => {
     const username = `'${req.body.userName}'`;
     const pw = `'${req.body.pw}'`;
     const phonenum = `'${req.body.phoneNum}'`;
-    const carid = `'${req.body.carId}'`;
+    const carid_first = `'${req.body.carId_first}'`;
+    const carid_mid = `'${req.body.carId_mid}'`;
+    const carid_end = `'${req.body.carId_end}'`;
 
     const sqlCodeToUserTable = `
     insert into usertable(UserWebId, UserName, PW, PhoneNum)
@@ -27,8 +29,8 @@ router.post('/signUp', (req, res) => {
     })
 
     const sqlCodeToCarTable = `
-    insert into car(CarWebId, CarId)
-    values (${userwebid}, ${carid});`;
+    insert into car(CarWebId, CarId_first, CarId_mid, CarId_end)
+    values (${userwebid}, ${carid_first}, ${carid_mid}, ${carid_end});`;
 
     db.query(sqlCodeToCarTable, (err, rows) => {
         if (err) {
@@ -304,7 +306,9 @@ router.get('/getLastOrderNo', (req, res) => {
 router.post('/order', (req, res) => {
     const orderNo = `'${req.body.orderNo}'`;
     const userwebid = `'${req.body.userWebId}'`;
-    const carid = `'${req.body.carid}'`;
+    const carid_first = `'${req.body.carid_first}'`;
+    const carid_mid = `'${req.body.carid_mid}'`;
+    const carid_end = `'${req.body.carid_end}'`;
     const payment = `${req.body.payment}`;
 
     console.log(orderNo);
@@ -314,8 +318,8 @@ router.post('/order', (req, res) => {
     let currentOrderNo = 0;
 
     const sqlCodeToOrderTable = `
-    insert into ordertable(OrderNo,OrderWebId, WebCarId, OrderPayment)
-    values (${orderNo},${userwebid}, ${carid}, ${payment});`;
+    insert into ordertable(OrderNo,OrderWebId, WebCarId_first, WebCarId_mid, WebCarId_end, OrderPayment)
+    values (${orderNo},${userwebid}, ${carid_first}, ${carid_mid}, ${carid_end}, ${payment});`;
 
     db.query(sqlCodeToOrderTable, (err, results) => {
         if (err) {
