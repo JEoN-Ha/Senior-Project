@@ -65,13 +65,6 @@ export default class Basket extends Component {
             isLoading: true
             });
         })
-        //     console.log(this.state.basketData);
-        //     //this.state.basketData = 
-        //     // 확인을 위한 console.log
-        //     // if (getMenuIsError) {
-        //     //     console.log(whatIsError);
-        //     // }
-        // })
     }
 
     getTotalPrice(_basketdata){
@@ -86,9 +79,6 @@ export default class Basket extends Component {
                 }
             }  
         }
-        // if(totalPrice === 0){
-        //     this.props.zeroTotal()
-        // }
         return totalPrice
     }
 

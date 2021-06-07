@@ -217,15 +217,6 @@ router.post('/getUserInfo', (req, res) => {
                 })
             }  
         })
-
-        // if (!err) {
-        //     console.log(userData);
-        //     res.status(200).json({
-        //         user: userData,
-        //         isError: false,
-        //         explainError: null
-        //     })
-        // }  
     })
 })
 // ----------------------------------------------------------------------------------------------
@@ -441,18 +432,6 @@ router.post('/getOrder', (req, res) => {
             }
         }
     })
-
-    // if (getOrderNoToOrderToMenu && getOrderMenuError) {
-    //     res.status(200).json({
-    //         isError: false,
-    //         orderAllData: orderData
-    //     })
-    // } else {
-    //     res.status(400).json({
-    //         isError: true,
-    //         orderAllData: null
-    //     })
-    // }
 })
 
 
