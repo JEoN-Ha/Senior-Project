@@ -58,10 +58,10 @@ export default createStore(function(state, action){
         return {...state, orderCount: state.orderCount - 1}
     }
     if(action.type === 'BASKET_CLICK') {
-        return {...state, orderName:'상품을 선택해주세요.'}   //DB에 넘겨주고 orderCount와 orderName을 null로 만들기
+        return {...state, orderName:'상품을 선택해주세요.'}  
     }
     if(action.type === 'MENU SAVE') {
-        return {...state, menuAllData:action.menuAllData}   //DB에 넘겨주고 orderCount와 orderName을 null로 만들기
+        return {...state, menuAllData:action.menuAllData}   
     }
 
     // 장바구니
