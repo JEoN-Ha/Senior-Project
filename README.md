@@ -1,5 +1,5 @@
 # 고속도로 휴게소를 위한 Untact Automatic Drive-Thru Model
-# 서론
+
 ## 배경 및 필요성
 코로나19 여파로 외식시장에 비대면이 일상으로 자리잡고 있습니다. 코로나19 발생 이전에도 비대면 서비스는 존재하였지만 최근들어 그 수요가 점차 늘어나는 추세입니다. 드라이브 스루, 배달 APP, 사이렌오더 등 비대면 서비스 이용이 급상승하고 있고 다양한 서비스 전략을 펼치고 있습니다. 
 
@@ -32,3 +32,74 @@
     2. 차량 번호 인식 후 주문 내역을 구매자에게 전송 후 음식 조리 시작
 3. 음식 전달을 위한 컨테이너 벨트 픽업대
    1. 구매자와 판매자 간 접촉을 제거하기 위해 컨테이너 벨트로 조리 완료된 음식을 전달
+### 추가 기능 (시간적 여유가 있을 경우, 구현)
+1. TypeScript로 구현한다.
+2. 픽업 예상시간을 사용자에게 알려준다.
+3. 사용자가 픽업 예상시간을 입력하고 그에 맞춰 조리를 시작한다.
+
+
+# Document
+## Development Environment
+
+Node.js `v14.15.1`<br>
+yarn `1.22.5`<br>
+npx `6.14.8`<br>
+create-react-app `4.0.1`
+
+
+## Build and Run
+### Run 
+``` 
+<!-- proeject root 폴더에서  -->
+yarn start
+```
+
+## Manual
+Enjoy yourself
+
+## License
+MIT License
+
+
+# Contributing
+- Issue 
+- PR
+- fora22@naver.com
+  
+
+# Known issues
+Issue 또는 WIKI를 참고해주세요
+# Team Rule
+## 노션과 깃허브의 사용
+어느 파일은 노션에 있고 어느 내용은 깃허브에 있는걸 방지하고자 Senior Project는 과감하게 삭제할 예정
+- 모든 논의와 의견은 깃허브에 기록할 것
+- 다만 회의록은 노션 별도 페이지가 있으니 노션에 적어 둔 후 나중에 깃허브로 옮길 예정
+
+## Branch 및 폴더에 관하여
+### 폴더에 관하여
+- 폴더는 각자 개인 폴더를 나눠가져서 작업한다.
+  - ex) `fora22`, `Armful`, `jiyeon`, `jongfeel` [예시 링크](https://github.com/JEoN-Ha/Senior-Project)
+### Branch의 경우
+- `[닉네임]/Develop`을 기본 branch로 만들어 각자 작업한다.
+  - `fora22/Develop`
+- 기능을 추가하거나 만들때는 `[닉네임]/Feature/[기능명]` branch를 만들어 작업한 뒤, 완료 후 PR(Pull Request) 혹은 merge한다.
+  - ex) `fora22/Feature/Index`, `fora22/Feature/payment_page` 등
+
+## Meeting Rule
+- 회의가 끝나면 다음 Review Meeting Issue 를 올린다.
+- 회의(의견을 묻거나, ~해줬으면 or ~했으면 좋겠다 싶은 거, 진행에 있는 결정 사항 의논 등) 내용이 생길 때마다 Issue에 올려서 대화한다.
+  - 이 때 각 주제별로 새로 Issue를 올리고 Review Meeting Issue에 링크를 남긴다.
+  - #을 쓰면 알아서 Issue와 PR에 대한 링크를 고를 수 있다.
+  - 만약 Issue를 올릴 정도로 복잡하지 않을 것 같다면 Review Meeting Issue에 comment를 남긴다.
+- 회의 날짜까지 모든 Issue에 대하여 결론이 지어지면 해당 날짜의 회의는 없어진다.
+- 만약 결론이 지어지지 않거나 Comment로 이야기를 나누기 어렵다는 생각이 들 경우 회의날짜에 회의를 진행한다.
+
+## Issue & PR Rule
+### Issue
+- Assignees Or Reviewers 는 Issue를 확인하면 이모티콘을 남긴다.
+  - 여기서 확인은 'Issue 가 올라왔구나'가 아닌 'Issue를 읽고 내용에 대해 인지를 했을 때'를 뜻한다.
+  - 당장 확인 하기 힘들다면 나중에 확인 후 이모티콘을 남기도록 한다.
+- '주의 깊게', '가능한 한 빠르게' 확인해줬으면 하는 내용이 있다면 제목에 [중요]를 추가하고 `Important` Labeling을 한다.
+### Pull Request
+- PR이 올라가고 2일(48시간)안에는 Review를 해준다.
+- '주의 깊게', '가능한 한 빠르게' 확인해줬으면 하는 내용이 있다면 제목에 [중요]를 추가하고 `Important` Labeling을 한다.

@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.deploySubpath": ".",
+    "appService.defaultWebAppToDeploy": "/subscriptions/ac1668bb-7c4d-432d-bb54-c9a24b998b59/resourceGroups/Jeonha/providers/Microsoft.Web/sites/expressway-dt"
+}

@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Raspberry Pi
+__pycache__/
+
+# VScode Setting
+.vscode

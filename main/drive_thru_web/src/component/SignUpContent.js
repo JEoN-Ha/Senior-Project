@@ -1,0 +1,140 @@
+import React, { Component } from 'react';
+import store from '../store';
+import "./Component.css";
+
+class SignUpContent extends Component {
+    state = {
+        ID:null,PW:null,PW_check:null,
+        name:null,phoneNum:null,carNum1:null,carNum2:null,
+        PW_state:store.getState().PW_state,
+        jeonhaUrl:store.getState().jeonhaUrl
+    }
+    constructor(props){
+        super(props);
+        store.subscribe(function () {
+            this.setState({PW_state:store.getState().PW_state});           
+        }.bind(this));
+    }
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+      }
+    
+    getFetch(_body){
+        fetch(this.state.jeonhaUrl + '/signUp', {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: _body
+        })
+        .then(res => {
+            if (res.status == 200) {
+                // 정상 작동
+                console.log('Success!');
+            } else if (res.status == 400) {
+                // 실패시
+                console.log('Failed!');
+            }
+            return res.json();
+        })
+        .then(data => {
+            // 아이디 중복, 패스워드 중복, 그 외 에러
+            const overlapId = data.id;
+            const overlapPw = data.pw;
+            const errorDB = data.db;
+    
+            // 확인을 위한 console.log
+            // console.log(overlapId, overlapPw, errorDB);
+        })
+    }
+      
+    render() {
+    const btnStyle = {
+        color: "white",
+        background: "#815854",
+        margin: "10px",
+        border: "1px solid #815854",
+        borderRadius: ".25rem",
+        fontSize: "1rem",
+        lineHeight: 1.5,
+        width: "230px"
+    }
+    const bodySignUp = JSON.stringify({
+        userWebId: this.state.ID,
+        userName: this.state.name,
+        pw: this.state.PW,
+        phoneNum: this.state.phoneNum,
+        carId_first: this.state.carNum_first,
+        carId_mid: this.state.carNum_mid,
+        carId_end: this.state.carNum_end
+    });
+      return (
+        <div className="SignUp">
+            <h2>회원가입</h2>
+            이름<br></br>
+            <input type="text" name="name" placeholder="이름을 입력해주세요."
+                size="30"
+                name={this.state.name}
+                onChange={function (e) {
+                    this.setState({name:e.target.value});                    
+                }.bind(this)}></input><br></br>
+            ID<br></br>
+            <input type="text" name="ID" placeholder="아이디를 입력해주세요."
+                size="30"
+                ID={this.state.ID}
+                onChange={function (e) {
+                    this.setState({ID:e.target.value});                    
+                }.bind(this)}></input><br></br>
+            Password<br></br>
+            <input type="text" name="PW" placeholder="비밀번호를 입력해주세요."
+                size="30"
+                PW={this.state.PW}
+                onChange={function (e) {
+                    this.setState({PW:e.target.value});                    
+                }.bind(this)}></input><br></br>
+            <input type="text" name="PW_check" placeholder="비밀번호를 한번 더 입력해주세요."
+                size="30"
+                PW_check={this.state.PW_check}
+                onChange={function (e) {
+                    this.setState({PW_check:e.target.value});                    
+                }.bind(this)}></input><br></br>
+            <input style={btnStyle}
+                type="button" value="확인" onClick={function () {
+                this.props.onClickCheck(this.state.PW,this.state.PW_check)                     
+            }.bind(this)}></input><br></br>
+            Phone Number<br></br>
+            <input type="text" name="PhoneNum" placeholder="전화번호를 입력해주세요."
+                size="30"
+                phoneNum={this.state.phoneNum}
+                onChange={function (e) {
+                    this.setState({phoneNum:e.target.value});                    
+                }.bind(this)}></input><br></br>
+            차량번호<br></br>
+            <input type="text" name="carNum_first" size="6" placeholder="예시) 12"
+                carNum_first={this.state.carNum_first}
+                onChange={function (e) {
+                    this.setState({carNum_first:e.target.value});                    
+                }.bind(this)}></input>&nbsp;
+            <input type="text" name="carNum_mid" size="4" placeholder="가"
+            carNum_mid={this.state.carNum_mid}
+            onChange={function (e) {
+                this.setState({carNum_mid:e.target.value});                    
+            }.bind(this)}></input>&nbsp;
+            <input type="text" name="carNum_end" size="6" placeholder="3456"
+                carNum_end={this.state.carNum_end}
+                onChange={function (e) {
+                    this.setState({carNum_end:e.target.value});                    
+                }.bind(this)}></input><br></br>
+            <input style={btnStyle}
+                type="button" value="Sign up" onClick={function(){
+                this.props.onClickSignUp(this.state.name,this.state.ID,
+                this.state.PW_state,this.state.phoneNum,this.state.carNum_first,this.state.carNum_mid,this.state.carNum_end)
+                this.getFetch(bodySignUp)
+                }.bind(this)}></input>
+        </div>
+      );
+    }
+  }
+
+  export default SignUpContent;

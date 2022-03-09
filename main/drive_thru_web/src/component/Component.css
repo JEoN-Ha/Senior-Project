@@ -1,0 +1,92 @@
+.MainTitle {
+    text-align: center;
+    color:"red";
+    border: 4px dashed #815854; 
+    text-decoration: 'none' !important;
+  }
+
+.basicText {
+  margin: 10px;
+  font-size: large;
+}
+
+.basicBtn {
+  color: "white";
+  background: "#815854";
+  margin: "10px";
+  border: "1px solid #815854";
+  border-radius: ".25rem";
+  font-size: "1rem";
+  line-height: 1.5;
+  width: "230px";
+}
+
+.Root {
+  display: flex;
+  flex-direction: column;
+}
+
+.TopBarRoot {
+  display: flex;
+  border: 2px solid #815854;
+  border-top-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  padding:10px;
+}
+
+.TopBarItem {
+  width: 25%;
+  font-weight: bold;
+  text-align: center;
+}
+
+.LoginTotal {
+  display: flex;
+}
+
+.Login {
+  font-weight: bold;
+  /* border: 2px solid #815854; */
+  margin-left: 35%;
+  margin-top: 30px;
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.SelectType {
+  font-weight: bold;
+  margin-top: 50px;
+  margin-left: 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SignUp {
+  text-align: center;
+  padding:20px;
+}
+
+.BasketTitle{
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.OrderInfoTitle{
+  border: 1px solid black;
+  padding: 10px;
+}
+
+@media screen and (max-width:600px){
+  .Login{
+    margin-left: 10%;
+  }
+  .TopBarRoot{
+    font-size: small;
+  }
+}
